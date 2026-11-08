@@ -93,9 +93,11 @@ class TurmaModel extends Model
     public function buscarComOcupacao(?string $situacao = null): array
     {
         $this->select('turmas.*, modalidades.nome AS modalidade_nome, professores.nome AS professor_nome, '
-            . '(SELECT COUNT(*) FROM matriculas WHERE matriculas.turma_id = turmas.id AND matriculas.situacao = "ATIVA") AS ocupadas', false)
+            . 'COUNT(matriculas.id) AS ocupadas', false)
             ->join('modalidades', 'modalidades.id = turmas.modalidade_id')
             ->join('professores', 'professores.id = turmas.professor_id')
+            ->join('matriculas', "matriculas.turma_id = turmas.id AND matriculas.situacao = 'ATIVA'", 'left')
+            ->groupBy('turmas.id, modalidades.nome, professores.nome')
             ->orderBy('turmas.nome');
 
         if ($situacao !== null) {
@@ -113,9 +115,11 @@ class TurmaModel extends Model
     public function buscarDetalhe(int $id): ?array
     {
         $lista = $this->select('turmas.*, modalidades.nome AS modalidade_nome, professores.nome AS professor_nome, '
-            . '(SELECT COUNT(*) FROM matriculas WHERE matriculas.turma_id = turmas.id AND matriculas.situacao = "ATIVA") AS ocupadas', false)
+            . 'COUNT(matriculas.id) AS ocupadas', false)
             ->join('modalidades', 'modalidades.id = turmas.modalidade_id')
             ->join('professores', 'professores.id = turmas.professor_id')
+            ->join('matriculas', "matriculas.turma_id = turmas.id AND matriculas.situacao = 'ATIVA'", 'left')
+            ->groupBy('turmas.id, modalidades.nome, professores.nome')
             ->where('turmas.id', $id)
             ->findAll();
 
@@ -157,5 +161,16 @@ class TurmaModel extends Model
         }
 
         return $comVagas;
+    }
+
+    /**
+     * Trava a linha da turma até o fim da transação atual, serializando matrículas simultâneas (RF08).
+     *
+     * Sem a trava, duas recepcionistas poderiam matricular na última vaga ao mesmo tempo e estourar o
+     * limite. É a única consulta em SQL escrito à mão do projeto: o Query Builder não tem `FOR UPDATE`.
+     */
+    public function travarParaMatricula(int $turmaId): void
+    {
+        $this->db->query('SELECT id FROM turmas WHERE id = ? FOR UPDATE', [$turmaId]);
     }
 }

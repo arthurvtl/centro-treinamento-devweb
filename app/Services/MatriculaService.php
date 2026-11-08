@@ -165,6 +165,6 @@ class MatriculaService
      */
     private function travarTurma(int $turmaId): void
     {
-        db_connect()->query('SELECT id FROM turmas WHERE id = ? FOR UPDATE', [$turmaId]);
+        $this->turmaModel->travarParaMatricula($turmaId);
     }
 }

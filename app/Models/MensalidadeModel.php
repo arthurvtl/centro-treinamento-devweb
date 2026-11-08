@@ -209,16 +209,20 @@ class MensalidadeModel extends Model
     {
         $this->atualizarAtrasadas();
 
+        // Intervalo [primeiro dia do mês, primeiro dia do mês seguinte): comparar datas é mais simples que formatá-las.
+        $inicio = $mes . '-01';
+        $fim    = date('Y-m-d', strtotime($inicio . ' +1 month'));
+
         $porVencimento = $this->db->table($this->table)
             ->select('situacao, COUNT(*) AS quantidade, COALESCE(SUM(valor), 0) AS total')
-            ->where("DATE_FORMAT(vencimento, '%Y-%m') =", $mes)
+            ->where('vencimento >=', $inicio)->where('vencimento <', $fim)
             ->groupBy('situacao')->get()->getResultArray();
         $total = array_column($porVencimento, 'total', 'situacao');
 
         $recebidas = $this->db->table($this->table)
             ->select('forma_pagamento, COALESCE(SUM(valor), 0) AS total')
             ->where('situacao', 'PAGO')
-            ->where("DATE_FORMAT(data_pagamento, '%Y-%m') =", $mes)
+            ->where('data_pagamento >=', $inicio)->where('data_pagamento <', $fim)
             ->groupBy('forma_pagamento')->get()->getResultArray();
         $porForma = array_map('floatval', array_column($recebidas, 'total', 'forma_pagamento'));
 
