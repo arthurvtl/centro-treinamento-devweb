@@ -414,7 +414,7 @@ A coluna **Implementação** liga cada história às funcionalidades do sistema 
 |---|---|---|---|
 | RNF01 | A interface deve ser simples e intuitiva para usuários com pouca experiência em informática. | Executar tarefas representativas sem instruções técnicas; avaliar clareza de campos e mensagens. | Essencial |
 | RNF02 | O sistema deve permitir acesso por dispositivos móveis para consultas rápidas. | Verificar navegação, formulários e tabelas em larguras de tela comuns (Bootstrap 5 responsivo). | Importante |
-| RNF03 | Deve existir backup periódico dos dados. | Documentar rotina, frequência, local de armazenamento e procedimento de restauração. | Essencial |
+| RNF03 | Deve existir backup periódico dos dados. | Documentar rotina, frequência, local de armazenamento e procedimento de restauração. **Implementado:** `php spark backup:banco` gera o backup compactado em `writable/backups` (retenção dos últimos 14), `php spark backup:restaurar` restaura com confirmação, e a rotina diária, a cópia para fora do servidor e o procedimento de restauração estão no README. | Essencial |
 | RNF04 | As informações operacionais devem ficar centralizadas. | Confirmar que os módulos usam a mesma base relacional e compartilham identificadores consistentes. | Essencial |
 | RNF05 | O acesso deve ser restrito a usuários autenticados, com permissões por perfil. | Testar acesso direto a URLs e submissão de operações por perfis sem autorização. | Essencial |
 | RNF06 | Os dados pessoais devem ser tratados conforme a LGPD (Lei 13.709/2018); a condição de saúde é dado pessoal sensível. | Coletar apenas o necessário; restringir a visualização da condição de saúde; não expor dados em URLs ou logs; credenciais apenas no arquivo `.env`. | Essencial |
