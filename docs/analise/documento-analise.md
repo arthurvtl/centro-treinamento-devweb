@@ -400,13 +400,13 @@ A coluna **Implementação** liga cada história às funcionalidades do sistema 
 
 | História | Requisitos | Funcionalidade no sistema (módulo / telas) | Persona | Implementação |
 |---|---|---|---|---|
-| HU01 — Cadastro de alunos | RF01–RF03 | CRUD de alunos com formulário de responsável legal condicional | Camila | Planejado |
-| HU02 — Professores e modalidades | RF04–RF05 | CRUD de professores e modalidades; seleção de modalidades habilitadas | Marcos | Planejado |
-| HU03 — Turmas e matrículas | RF06–RF09, RF22–RF23 | CRUD de turmas; matrícula com checagem de vaga; troca de turma; suspender/encerrar | Camila / Marcos | Planejado |
-| HU04 — Frequência | RF10–RF11 | Tela de chamada por turma e data; lista de alunos abaixo de 75% | Camila | Planejado |
-| HU05 — Planos e cobranças | RF12–RF15, RF24–RF25 | CRUD de planos; vínculo aluno-plano; mensalidades e quitação; lista de inadimplentes | Marcos | Planejado |
-| HU06 — Relatórios | RF16–RF19 | Painel com totais, alunos por modalidade, vagas e financeiro mensal | Marcos | Planejado |
-| HU07 — Acesso | RF20–RF21 | Login/logout; filtros de autenticação e de perfil nas rotas | Marcos | Planejado |
+| HU01 — Cadastro de alunos | RF01–RF03 | CRUD de alunos com formulário de responsável legal condicional | Camila | **Implementado** (PR #2): CRUD, busca por nome/código/CPF, código automático imutável (RN06), CPF válido e único, responsável obrigatório para menores (RN04), condição de saúde só para o proprietário (LGPD) |
+| HU02 — Professores e modalidades | RF04–RF05 | CRUD de professores e modalidades; seleção de modalidades habilitadas | Marcos | **Implementado** (PR #3): CRUD de professores com habilitações e de modalidades com capacidade por categoria (RN01, RN02); a aptidão é conferida ao criar turma (RN03) |
+| HU03 — Turmas e matrículas | RF06–RF09, RF22–RF23 | CRUD de turmas; matrícula com checagem de vaga; troca de turma; suspender/encerrar | Camila / Marcos | **Implementado** (PR #4 e #7): turmas com professor habilitado, suspender/reativar (RN10), matrícula com vagas, duplicidade e menor de idade, troca de turma, cancelamento e encerramento com certificado a partir de 75% e inativação do aluno sem outra turma (RN09) |
+| HU04 — Frequência | RF10–RF11 | Tela de chamada por turma e data; lista de alunos abaixo de 75% | Camila | **Implementado** (PR #5): chamada por turma e data, correção do mesmo dia sem duplicar, bloqueio de turma suspensa ou encerrada (RN10) e percentual de presença por aluno |
+| HU05 — Planos e cobranças | RF12–RF15, RF24–RF25 | CRUD de planos; vínculo aluno-plano; mensalidades e quitação; lista de inadimplentes | Marcos | **Implementado** (PR #6 e #8): planos, um só plano ativo por aluno (RN08), mensalidades, quitação com forma de pagamento, atraso calculado pelo vencimento (RN07), adimplência (RN11) e inadimplentes; a recepcionista dá baixa e vincula plano, o restante é do proprietário |
+| HU06 — Relatórios | RF16–RF19 | Painel com totais, alunos por modalidade, vagas e financeiro mensal | Marcos | **Implementado** (PR #7): painel operacional para os dois perfis e relatório financeiro mensal restrito ao proprietário (RN05) |
+| HU07 — Acesso | RF20–RF21 | Login/logout; filtros de autenticação e de perfil nas rotas | Marcos | **Implementado** (PR #1): login e logout com sessão regenerada, `AuthFilter` e `PerfilFilter` nas rotas, CSRF global, senhas com `password_hash` |
 
 # 7. Requisitos não funcionais
 
