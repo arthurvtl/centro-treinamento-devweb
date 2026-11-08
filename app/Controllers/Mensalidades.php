@@ -11,7 +11,11 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 
 /**
  * Telas financeiras: mensalidades, quitação, inadimplentes e situação por aluno
- * (HU05: RF13, RF14, RF15, RF24, RF25). Acesso restrito ao proprietário pelas rotas (RN05).
+ * (HU05: RF13, RF14, RF15, RF24, RF25).
+ *
+ * Permissões (RN05), definidas nas rotas: a recepcionista vê o financeiro de um aluno, vincula plano e
+ * registra quitação, porque isso é atendimento de balcão e não um relatório financeiro restrito.
+ * Lista geral de mensalidades, inadimplentes e geração de cobranças ficam só com o proprietário.
  */
 class Mensalidades extends BaseController
 {
@@ -25,7 +29,7 @@ class Mensalidades extends BaseController
     }
 
     /**
-     * Lista mensalidades com filtro por situação e busca por aluno.
+     * Lista todas as mensalidades com filtro por situação e busca por aluno (só proprietário).
      */
     public function index()
     {
@@ -42,7 +46,7 @@ class Mensalidades extends BaseController
     }
 
     /**
-     * Lista alunos com mensalidades vencidas e não pagas (RF15).
+     * Lista alunos com mensalidades vencidas e não pagas (RF15). Só proprietário: é análise de carteira.
      */
     public function inadimplentes()
     {
@@ -54,6 +58,7 @@ class Mensalidades extends BaseController
 
     /**
      * Mostra a situação financeira do aluno: plano ativo, adimplência e histórico de quitações (RF24).
+     * Liberada à recepcionista para o atendimento do aluno no balcão.
      */
     public function aluno(int $alunoId)
     {
@@ -74,7 +79,7 @@ class Mensalidades extends BaseController
     }
 
     /**
-     * Vincula o aluno a um plano, encerrando o anterior (RF13, RN08).
+     * Vincula o aluno a um plano, encerrando o anterior (RF13, RN08). Faz parte do atendimento ao aluno.
      */
     public function vincularPlano(int $alunoId)
     {
@@ -85,7 +90,7 @@ class Mensalidades extends BaseController
     }
 
     /**
-     * Gera uma mensalidade para o plano ativo do aluno (RF14).
+     * Gera uma mensalidade para o plano ativo do aluno (RF14). Só proprietário: define cobranças.
      */
     public function criar(int $alunoId)
     {
@@ -100,6 +105,7 @@ class Mensalidades extends BaseController
 
     /**
      * Registra a quitação de uma mensalidade (RF14, RF25) e volta para a tela de origem.
+     * A recepcionista também dá baixa: receber o pagamento no balcão é operação de atendimento, não relatório restrito (RN05).
      */
     public function quitar(int $id)
     {

@@ -9,6 +9,8 @@ use App\Models\PlanoModel;
 
 /**
  * Fluxos financeiros do aluno: plano, mensalidade e quitação (RF13, RF14, RF24, RF25, RN08, RN11, HU05).
+ *
+ * A regra não depende do perfil: quem pode chamar cada fluxo é decidido pelas rotas (RN05).
  */
 class PagamentoService
 {

@@ -87,7 +87,7 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
         $routes->get('turma/(:num)/baixa-frequencia', 'Frequencias::baixaFrequencia/$1', ['as' => 'frequencias_baixa']);
     });
 
-    // Planos e financeiro (HU05): somente o proprietário (RN05)
+    // Planos (HU05): somente o proprietário. Definir preços e planos é gestão do negócio (RN05).
     $routes->group('planos', ['filter' => 'perfil:proprietario'], static function (RouteCollection $routes): void {
         $routes->get('', 'Planos::index', ['as' => 'planos']);
         $routes->get('novo', 'Planos::novo', ['as' => 'planos_novo']);
@@ -99,13 +99,21 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
         $routes->post('(:num)/excluir', 'Planos::excluir/$1', ['as' => 'planos_excluir']);
     });
 
-    $routes->group('mensalidades', ['filter' => 'perfil:proprietario'], static function (RouteCollection $routes): void {
-        $routes->get('', 'Mensalidades::index', ['as' => 'mensalidades']);
-        $routes->get('inadimplentes', 'Mensalidades::inadimplentes', ['as' => 'mensalidades_inadimplentes']);
+    // Mensalidades (HU05). RN05 proíbe à recepcionista os relatórios financeiros restritos, mas dar baixa
+    // numa mensalidade, ver o financeiro de um aluno e vinculá-lo a um plano são operações de atendimento
+    // do balcão (o aluno paga na recepção), então ficam liberadas aos dois perfis.
+    $routes->group('mensalidades', static function (RouteCollection $routes): void {
         $routes->get('aluno/(:num)', 'Mensalidades::aluno/$1', ['as' => 'mensalidades_aluno']);
         $routes->post('aluno/(:num)/plano', 'Mensalidades::vincularPlano/$1', ['as' => 'mensalidades_vincular_plano']);
-        $routes->post('aluno/(:num)/criar', 'Mensalidades::criar/$1', ['as' => 'mensalidades_criar']);
         $routes->post('(:num)/quitar', 'Mensalidades::quitar/$1', ['as' => 'mensalidades_quitar']);
+
+        // Visão consolidada da carteira (todas as mensalidades, inadimplentes) e geração de cobranças:
+        // análise financeira restrita, somente do proprietário (RN05).
+        $routes->group('', ['filter' => 'perfil:proprietario'], static function (RouteCollection $routes): void {
+            $routes->get('', 'Mensalidades::index', ['as' => 'mensalidades']);
+            $routes->get('inadimplentes', 'Mensalidades::inadimplentes', ['as' => 'mensalidades_inadimplentes']);
+            $routes->post('aluno/(:num)/criar', 'Mensalidades::criar/$1', ['as' => 'mensalidades_criar']);
+        });
     });
 
     // Relatórios (HU06): operacionais para os dois perfis; financeiro só do proprietário (RN05)

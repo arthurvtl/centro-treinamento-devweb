@@ -18,9 +18,7 @@ $ativo          = $aluno['situacao'] === 'ATIVO';
     </h1>
     <div class="d-flex flex-wrap gap-2">
         <a href="<?= url_to('alunos_editar', $aluno['id']) ?>" class="btn btn-outline-primary">Editar</a>
-        <?php if ($ehProprietario) : ?>
-            <a href="<?= url_to('mensalidades_aluno', $aluno['id']) ?>" class="btn btn-outline-success">Financeiro</a>
-        <?php endif; ?>
+        <a href="<?= url_to('mensalidades_aluno', $aluno['id']) ?>" class="btn btn-outline-success">Financeiro</a>
         <form action="<?= url_to($ativo ? 'alunos_inativar' : 'alunos_reativar', $aluno['id']) ?>" method="post">
             <?= csrf_field() ?>
             <button type="submit" class="btn btn-outline-warning"><?= $ativo ? 'Inativar' : 'Reativar' ?></button>
