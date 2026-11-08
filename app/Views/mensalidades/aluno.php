@@ -11,6 +11,8 @@
 $situacoes = \App\Models\MensalidadeModel::SITUACOES;
 $estilos   = ['EM_ABERTO' => 'text-bg-info', 'PAGO' => 'text-bg-success', 'ATRASADO' => 'text-bg-danger'];
 $periodicidades = \App\Models\PlanoModel::PERIODICIDADES;
+// Recepcionista atende o aluno (vincula plano e dá baixa), mas só o proprietário gera cobranças (RN05).
+$ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 ?>
 <?= $this->extend('layouts/main') ?>
 
@@ -47,7 +49,7 @@ $periodicidades = \App\Models\PlanoModel::PERIODICIDADES;
     </form>
 </section>
 
-<?php if ($planoAtivo !== null) : ?>
+<?php if ($planoAtivo !== null && $ehProprietario) : ?>
     <section class="card card-body mb-4" aria-labelledby="tituloNova">
         <h2 class="h5" id="tituloNova">Gerar mensalidade</h2>
         <form action="<?= url_to('mensalidades_criar', $aluno['id']) ?>" method="post" class="row g-2 align-items-end" novalidate>
