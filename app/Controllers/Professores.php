@@ -56,6 +56,21 @@ class Professores extends BaseController
     }
 
     /**
+     * Mostra o professor com as modalidades em que é habilitado e as turmas que conduz (HU02).
+     */
+    public function ver(int $id)
+    {
+        $professor = $this->buscarOuFalhar($id);
+
+        return view('professores/ver', [
+            'titulo'      => $professor['nome'],
+            'professor'   => $professor,
+            'modalidades' => $this->professorModel->buscarModalidadesHabilitadas($id),
+            'turmas'      => $this->professorModel->buscarTurmas($id),
+        ]);
+    }
+
+    /**
      * Exibe o formulário de edição preenchido, com as habilitações atuais marcadas.
      */
     public function editar(int $id)

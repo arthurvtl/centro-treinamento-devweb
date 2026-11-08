@@ -55,6 +55,20 @@ class Planos extends BaseController
     }
 
     /**
+     * Mostra o plano com os alunos que o têm como plano ativo (RF12, RF13).
+     */
+    public function ver(int $id)
+    {
+        $plano = $this->buscarOuFalhar($id);
+
+        return view('planos/ver', [
+            'titulo' => $plano['nome'],
+            'plano'  => $plano,
+            'alunos' => $this->planoModel->buscarAlunosAtivos($id),
+        ]);
+    }
+
+    /**
      * Exibe o formulário de edição preenchido.
      */
     public function editar(int $id)

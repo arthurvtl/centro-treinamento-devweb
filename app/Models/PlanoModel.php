@@ -96,4 +96,20 @@ class PlanoModel extends Model
     {
         return $this->where('situacao', 'ATIVO')->orderBy('nome')->findAll();
     }
+
+    /**
+     * Lista os alunos que têm o plano como plano ATIVO, com a data de início (RN08).
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function buscarAlunosAtivos(int $planoId): array
+    {
+        return $this->db->table('aluno_planos')
+            ->select('alunos.id, alunos.codigo, alunos.nome, aluno_planos.data_inicio')
+            ->join('alunos', 'alunos.id = aluno_planos.aluno_id')
+            ->where('aluno_planos.plano_id', $planoId)
+            ->where('aluno_planos.situacao', 'ATIVO')
+            ->orderBy('alunos.nome')
+            ->get()->getResultArray();
+    }
 }
