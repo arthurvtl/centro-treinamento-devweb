@@ -4,6 +4,7 @@
  *
  * @var array<string, mixed>       $turma
  * @var list<array<string, mixed>> $alunos
+ * @var list<array<string, mixed>> $finalizadas  matrículas finalizadas (turma encerrada)
  */
 $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 $situacao       = $turma['situacao'];
@@ -27,6 +28,13 @@ $estilos        = ['ATIVA' => 'text-bg-success', 'SUSPENSA' => 'text-bg-warning'
                 <button type="submit" class="btn btn-outline-warning"><?= $situacao === 'ATIVA' ? 'Suspender' : 'Reativar' ?></button>
             </form>
         <?php endif; ?>
+        <?php if ($ehProprietario && $situacao !== 'ENCERRADA') : ?>
+            <form action="<?= url_to('turmas_encerrar', $turma['id']) ?>" method="post"
+                  onsubmit="return confirm('Encerrar a turma? As matrículas serão finalizadas e alunos sem outra turma ativa ficarão inativos.');">
+                <?= csrf_field() ?>
+                <button type="submit" class="btn btn-outline-dark">Encerrar turma</button>
+            </form>
+        <?php endif; ?>
         <?php if ($ehProprietario) : ?>
             <form action="<?= url_to('turmas_excluir', $turma['id']) ?>" method="post" onsubmit="return confirm('Excluir esta turma?');">
                 <?= csrf_field() ?>
@@ -48,6 +56,27 @@ $estilos        = ['ATIVA' => 'text-bg-success', 'SUSPENSA' => 'text-bg-warning'
         <dd class="col-sm-9"><?= esc(formatar_data($turma['data_inicio'])) ?> até <?= esc(formatar_data($turma['data_termino'])) ?></dd>
     </dl>
 </section>
+
+<?php if ($situacao === 'ENCERRADA') : ?>
+    <section class="mb-4" aria-labelledby="tituloFinalizadas">
+        <h2 class="h5" id="tituloFinalizadas">Alunos concluintes</h2>
+        <ul class="list-group">
+            <?php if ($finalizadas === []) : ?>
+                <li class="list-group-item text-muted">Nenhuma matrícula foi finalizada nesta turma.</li>
+            <?php endif; ?>
+            <?php foreach ($finalizadas as $matricula) : ?>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><?= esc($matricula['aluno_codigo']) ?> · <?= esc($matricula['aluno_nome']) ?></span>
+                    <?php if ((int) $matricula['certificado_emitido'] === 1) : ?>
+                        <a href="<?= url_to('matriculas_certificado', $matricula['id']) ?>" class="btn btn-sm btn-outline-success">Certificado</a>
+                    <?php else : ?>
+                        <span class="badge text-bg-secondary">Sem certificado (frequência abaixo de 75%)</span>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </section>
+<?php endif; ?>
 
 <section aria-labelledby="tituloAlunos">
     <h2 class="h5" id="tituloAlunos">Alunos matriculados</h2>

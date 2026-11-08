@@ -6,6 +6,7 @@ use App\Models\MatriculaModel;
 use App\Models\ModalidadeModel;
 use App\Models\ProfessorModel;
 use App\Models\TurmaModel;
+use App\Services\EncerramentoTurmaService;
 use App\Services\TurmaService;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
@@ -49,6 +50,7 @@ class Turmas extends BaseController
             'titulo' => $turma['nome'],
             'turma'  => $turma,
             'alunos' => (new MatriculaModel())->buscarAlunosDaTurma($id),
+            'finalizadas' => (new MatriculaModel())->buscarFinalizadasDaTurma($id),
         ]);
     }
 
@@ -111,6 +113,16 @@ class Turmas extends BaseController
     public function reativar(int $id)
     {
         return $this->responderSituacao($id, $this->turmaService->reativar($id));
+    }
+
+    /**
+     * Encerra a turma: finaliza matrículas, emite certificados e inativa alunos sem outra turma (RF23, RN09).
+     */
+    public function encerrar(int $id)
+    {
+        $resultado = (new EncerramentoTurmaService())->encerrar($id);
+
+        return $this->responderSituacao($id, $resultado);
     }
 
     /**
