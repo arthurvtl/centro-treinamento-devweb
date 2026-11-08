@@ -77,4 +77,11 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
         $routes->post('(:num)/efetivar-troca', 'Matriculas::efetivarTroca/$1', ['as' => 'matriculas_efetivar_troca']);
         $routes->post('(:num)/cancelar', 'Matriculas::cancelar/$1', ['as' => 'matriculas_cancelar']);
     });
+
+    // Frequência (HU04): recepcionista e proprietário
+    $routes->group('frequencias', static function (RouteCollection $routes): void {
+        $routes->get('', 'Frequencias::index', ['as' => 'frequencias']);
+        $routes->post('registrar', 'Frequencias::registrar', ['as' => 'frequencias_registrar']);
+        $routes->get('turma/(:num)/baixa-frequencia', 'Frequencias::baixaFrequencia/$1', ['as' => 'frequencias_baixa']);
+    });
 });
