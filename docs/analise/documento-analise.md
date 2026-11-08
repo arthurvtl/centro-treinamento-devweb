@@ -12,24 +12,16 @@ lang: pt-BR
 
 <p class="titulo">DOCUMENTO DE ANÁLISE DE NEGÓCIO</p>
 <p class="subtitulo">SISTEMA WEB DE GESTÃO DE CENTRO DE TREINAMENTO (CT)</p>
-<p class="versao">Versão 3.0 — revisão da Parte A (análise de negócio) e reconstrução dos diagramas</p>
+<p class="versao">Versão 4.0 — análise de negócio e rastreabilidade da implementação</p>
 
 <p class="local">SERRA<br/>2026</p>
 
 </div>
 
-# Atendimento aos apontamentos da Sprint 2
-
-Esta versão responde aos apontamentos feitos pelo professor na apresentação da Sprint 2:
-
-| # | Apontamento do professor | Como foi atendido | Seção |
-|---|---|---|---|
-| 1 | Embasamento de dados (números) e potencial de negócio | Dimensionamento TAM/SAM/SOM com dados do IBGE e do Panorama Setorial Fitness Brasil; preços reais de concorrentes; projeção de clientes e receita em 3 anos | 2.4, 4.6, 11.1, 12.6 |
-| 2 | "Temos o local de teste, mas não temos noção do ambiente onde podemos aplicar" | Mapa do ambiente de aplicação: centro piloto → Serra/Vitória → Grande Vitória, outros tipos de negócio com a mesma lógica e o ambiente técnico necessário | 4.7 |
-| 3 | Vender por completo ou assinatura? | Comparação entre venda (licença perpétua) e assinatura (SaaS) do ponto de vista do cliente e da equipe, com decisão justificada | 11.2 |
-| 4 | Regra de negócio comercial: estimativa de valor, contrato, multa rescisória, acesso ao código | Tabela de ofertas e preços, cláusulas contratuais, fidelidade e multa rescisória, propriedade intelectual e acesso ao código, LGPD, SLA e cancelamento | 12.4, 12.7 |
-| 5 | Próxima sprint maior, com demonstração de código | Rastreabilidade história → requisito → funcionalidade, com coluna de situação de implementação, para guiar a demonstração | 6.8 |
-| 6 | Nota dada no final (recuperação cíclica) | Este documento é versionado no repositório e atualizado a cada sprint | — |
+<div class="sumario">
+<p class="sumario-titulo">SUMÁRIO</p>
+<!--SUMARIO-->
+</div>
 
 # 1. Introdução e delimitação do projeto
 
@@ -396,17 +388,17 @@ Critérios de aceitação:
 
 ## 6.8 Rastreabilidade: histórias, requisitos e implementação
 
-A coluna **Implementação** liga cada história às funcionalidades do sistema e deve ser atualizada a cada sprint, com a situação real no repositório.
+A coluna **Implementação** liga cada história à entrega no repositório (Pull Request no GitHub), onde estão o código, a descrição do que foi feito e como testar.
 
 | História | Requisitos | Funcionalidade no sistema (módulo / telas) | Persona | Implementação |
 |---|---|---|---|---|
-| HU01 — Cadastro de alunos | RF01–RF03 | CRUD de alunos com formulário de responsável legal condicional | Camila | **Implementado** (PR #2): CRUD, busca por nome/código/CPF, código automático imutável (RN06), CPF válido e único, responsável obrigatório para menores (RN04), condição de saúde só para o proprietário (LGPD) |
-| HU02 — Professores e modalidades | RF04–RF05 | CRUD de professores e modalidades; seleção de modalidades habilitadas | Marcos | **Implementado** (PR #3): CRUD de professores com habilitações e de modalidades com capacidade por categoria (RN01, RN02); a aptidão é conferida ao criar turma (RN03) |
-| HU03 — Turmas e matrículas | RF06–RF09, RF22–RF23 | CRUD de turmas; matrícula com checagem de vaga; troca de turma; suspender/encerrar | Camila / Marcos | **Implementado** (PR #4 e #7): turmas com professor habilitado, suspender/reativar (RN10), matrícula com vagas, duplicidade e menor de idade, troca de turma, cancelamento e encerramento com certificado a partir de 75% e inativação do aluno sem outra turma (RN09) |
-| HU04 — Frequência | RF10–RF11 | Tela de chamada por turma e data; lista de alunos abaixo de 75% | Camila | **Implementado** (PR #5): chamada por turma e data, correção do mesmo dia sem duplicar, bloqueio de turma suspensa ou encerrada (RN10) e percentual de presença por aluno |
-| HU05 — Planos e cobranças | RF12–RF15, RF24–RF25 | CRUD de planos; vínculo aluno-plano; mensalidades e quitação; lista de inadimplentes | Marcos | **Implementado** (PR #6 e #8): planos, um só plano ativo por aluno (RN08), mensalidades, quitação com forma de pagamento, atraso calculado pelo vencimento (RN07), adimplência (RN11) e inadimplentes; a recepcionista dá baixa e vincula plano, o restante é do proprietário |
-| HU06 — Relatórios | RF16–RF19 | Painel com totais, alunos por modalidade, vagas e financeiro mensal | Marcos | **Implementado** (PR #7): painel operacional para os dois perfis e relatório financeiro mensal restrito ao proprietário (RN05) |
-| HU07 — Acesso | RF20–RF21 | Login/logout; filtros de autenticação e de perfil nas rotas | Marcos | **Implementado** (PR #1): login e logout com sessão regenerada, `AuthFilter` e `PerfilFilter` nas rotas, CSRF global, senhas com `password_hash` |
+| HU01 — Cadastro de alunos | RF01–RF03 | CRUD de alunos com formulário de responsável legal condicional | Camila | **Implementado** (PR #2) |
+| HU02 — Professores e modalidades | RF04–RF05 | CRUD de professores e modalidades; seleção de modalidades habilitadas | Marcos | **Implementado** (PR #3) |
+| HU03 — Turmas e matrículas | RF06–RF09, RF22–RF23 | CRUD de turmas; matrícula com checagem de vaga; troca de turma; suspender/encerrar | Camila / Marcos | **Implementado** (PR #4 e #7) |
+| HU04 — Frequência | RF10–RF11 | Tela de chamada por turma e data; lista de alunos abaixo de 75% | Camila | **Implementado** (PR #5) |
+| HU05 — Planos e cobranças | RF12–RF15, RF24–RF25 | CRUD de planos; vínculo aluno-plano; mensalidades e quitação; lista de inadimplentes | Marcos | **Implementado** (PR #6 e #8) |
+| HU06 — Relatórios | RF16–RF19 | Painel com totais, alunos por modalidade, vagas e financeiro mensal | Marcos | **Implementado** (PR #7) |
+| HU07 — Acesso | RF20–RF21 | Login/logout; filtros de autenticação e de perfil nas rotas | Marcos | **Implementado** (PR #1) |
 
 # 7. Requisitos não funcionais
 
@@ -414,7 +406,7 @@ A coluna **Implementação** liga cada história às funcionalidades do sistema 
 |---|---|---|---|
 | RNF01 | A interface deve ser simples e intuitiva para usuários com pouca experiência em informática. | Executar tarefas representativas sem instruções técnicas; avaliar clareza de campos e mensagens. | Essencial |
 | RNF02 | O sistema deve permitir acesso por dispositivos móveis para consultas rápidas. | Verificar navegação, formulários e tabelas em larguras de tela comuns (Bootstrap 5 responsivo). | Importante |
-| RNF03 | Deve existir backup periódico dos dados. | Documentar rotina, frequência, local de armazenamento e procedimento de restauração. **Implementado:** `php spark backup:banco` gera o backup compactado em `writable/backups` (retenção dos últimos 14), `php spark backup:restaurar` restaura com confirmação, e a rotina diária, a cópia para fora do servidor e o procedimento de restauração estão no README. | Essencial |
+| RNF03 | Deve existir backup periódico dos dados. | Documentar rotina, frequência, local de armazenamento e procedimento de restauração. **Implementado:** comandos `php spark backup:banco` e `backup:restaurar` (ver README). | Essencial |
 | RNF04 | As informações operacionais devem ficar centralizadas. | Confirmar que os módulos usam a mesma base relacional e compartilham identificadores consistentes. | Essencial |
 | RNF05 | O acesso deve ser restrito a usuários autenticados, com permissões por perfil. | Testar acesso direto a URLs e submissão de operações por perfis sem autorização. | Essencial |
 | RNF06 | Os dados pessoais devem ser tratados conforme a LGPD (Lei 13.709/2018); a condição de saúde é dado pessoal sensível. | Coletar apenas o necessário; restringir a visualização da condição de saúde; não expor dados em URLs ou logs; credenciais apenas no arquivo `.env`. | Essencial |
@@ -470,7 +462,7 @@ A matriz MoSCoW organiza o escopo conforme a necessidade de entrega: **Must have
 | Classe | Itens priorizados | Requisitos | Justificativa |
 |---|---|---|---|
 | **Must have** | Autenticação e perfis; CRUD de alunos (com responsável legal), professores, modalidades e turmas; matrícula com validação de vagas e situação; regras críticas (RN01–RN06, RN08, RN10); validação no servidor; CSRF, escape de saída e POST para alterações | RF01–RF08, RF20–RF22 | Sem esses itens não há fluxo central confiável nem a base técnica exigida. Implementam o diferencial definido na estratégia ofensiva da SWOT (S1+O3) e a estratégia defensiva de segurança (W4+T4). |
-| **Should have** | Registro de frequência; planos e mensalidades; adimplência e lista de inadimplentes; troca de turma; responsividade; backup documentado; testes dos fluxos principais | RF09–RF15, RF24–RF25 | Completa a rotina operacional e resolve as dores de Marcos (inadimplência) e Camila (chamada). |
+| **Should have** | Registro de frequência; planos e mensalidades; adimplência e lista de inadimplentes; troca de turma; responsividade; backup documentado | RF09–RF15, RF24–RF25 | Completa a rotina operacional e resolve as dores de Marcos (inadimplência) e Camila (chamada). |
 | **Could have** | Painel resumido; relatórios por modalidade e financeiro mensal; encerramento com certificado em layout aprimorado; filtros adicionais | RF16–RF19, RF23 | Agrega valor, mas não deve comprometer os fluxos centrais e os critérios obrigatórios. |
 | **Won't have (MVP)** | Integração bancária; cobrança automática por WhatsApp; aplicativo nativo; gateway de pagamento; multiempresa | — | Aumenta custo, dependências externas e complexidade de segurança (W3, W4, W5). Reavaliar após validar o MVP com os primeiros clientes. |
 
@@ -671,7 +663,7 @@ As condições abaixo formam a base do contrato de prestação de serviço (assi
 | Disponibilidade | Meta de 99% ao mês, excluídas manutenções programadas avisadas com 48 h de antecedência |
 | Canais de suporte | WhatsApp e e-mail, em dias úteis, das 8 h às 18 h |
 | Tempo de resposta | Até 1 dia útil para dúvidas; até 4 horas úteis para sistema fora do ar |
-| Backup | Diário, com retenção de 7 dias, e teste de restauração mensal (RNF03) |
+| Backup | Diário, com retenção de 14 dias, e teste de restauração mensal (RNF03) |
 | Atualizações | Incluídas na assinatura, sem custo adicional |
 
 ### 12.7.5 Proteção de dados (LGPD) e cancelamento
