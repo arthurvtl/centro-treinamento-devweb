@@ -84,4 +84,25 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
         $routes->post('registrar', 'Frequencias::registrar', ['as' => 'frequencias_registrar']);
         $routes->get('turma/(:num)/baixa-frequencia', 'Frequencias::baixaFrequencia/$1', ['as' => 'frequencias_baixa']);
     });
+
+    // Planos e financeiro (HU05): somente o proprietário (RN05)
+    $routes->group('planos', ['filter' => 'perfil:proprietario'], static function (RouteCollection $routes): void {
+        $routes->get('', 'Planos::index', ['as' => 'planos']);
+        $routes->get('novo', 'Planos::novo', ['as' => 'planos_novo']);
+        $routes->post('criar', 'Planos::criar', ['as' => 'planos_criar']);
+        $routes->get('(:num)/editar', 'Planos::editar/$1', ['as' => 'planos_editar']);
+        $routes->post('(:num)/atualizar', 'Planos::atualizar/$1', ['as' => 'planos_atualizar']);
+        $routes->post('(:num)/inativar', 'Planos::inativar/$1', ['as' => 'planos_inativar']);
+        $routes->post('(:num)/reativar', 'Planos::reativar/$1', ['as' => 'planos_reativar']);
+        $routes->post('(:num)/excluir', 'Planos::excluir/$1', ['as' => 'planos_excluir']);
+    });
+
+    $routes->group('mensalidades', ['filter' => 'perfil:proprietario'], static function (RouteCollection $routes): void {
+        $routes->get('', 'Mensalidades::index', ['as' => 'mensalidades']);
+        $routes->get('inadimplentes', 'Mensalidades::inadimplentes', ['as' => 'mensalidades_inadimplentes']);
+        $routes->get('aluno/(:num)', 'Mensalidades::aluno/$1', ['as' => 'mensalidades_aluno']);
+        $routes->post('aluno/(:num)/plano', 'Mensalidades::vincularPlano/$1', ['as' => 'mensalidades_vincular_plano']);
+        $routes->post('aluno/(:num)/criar', 'Mensalidades::criar/$1', ['as' => 'mensalidades_criar']);
+        $routes->post('(:num)/quitar', 'Mensalidades::quitar/$1', ['as' => 'mensalidades_quitar']);
+    });
 });

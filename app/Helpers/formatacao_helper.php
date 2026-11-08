@@ -48,3 +48,13 @@ if (! function_exists('formatar_data')) {
         return ($data === null || $data === '') ? '—' : date('d/m/Y', strtotime($data));
     }
 }
+
+if (! function_exists('formatar_moeda')) {
+    /**
+     * Formata um valor decimal como moeda brasileira, ex.: R$ 1.250,50.
+     */
+    function formatar_moeda(string|float|int|null $valor): string
+    {
+        return 'R$ ' . number_format((float) $valor, 2, ',', '.');
+    }
+}
