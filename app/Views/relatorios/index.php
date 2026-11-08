@@ -1,0 +1,80 @@
+<?php
+/**
+ * Painel de relatórios operacionais (RF16, RF17, RF18).
+ *
+ * @var array{total: int, ativos: int, inativos: int} $totais
+ * @var list<array<string, mixed>>                    $modalidades
+ * @var list<array<string, mixed>>                    $turmasComVaga
+ */
+$categorias     = \App\Models\ModalidadeModel::CATEGORIAS;
+$ehProprietario = session()->get('usuario_perfil') === 'proprietario';
+?>
+<?= $this->extend('layouts/main') ?>
+
+<?= $this->section('conteudo') ?>
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <h1 class="h3 mb-0">Relatórios</h1>
+    <?php if ($ehProprietario) : ?>
+        <a href="<?= url_to('relatorios_financeiro') ?>" class="btn btn-outline-success">Relatório financeiro</a>
+    <?php endif; ?>
+</div>
+
+<section class="mb-4" aria-labelledby="tituloTotais">
+    <h2 class="h5" id="tituloTotais">Total de alunos</h2>
+    <div class="row g-3">
+        <div class="col-12 col-md-4"><div class="card card-body text-center"><span class="fs-2 fw-bold"><?= esc((string) $totais['total']) ?></span><span class="text-muted">cadastrados</span></div></div>
+        <div class="col-6 col-md-4"><div class="card card-body text-center"><span class="fs-2 fw-bold text-success"><?= esc((string) $totais['ativos']) ?></span><span class="text-muted">ativos</span></div></div>
+        <div class="col-6 col-md-4"><div class="card card-body text-center"><span class="fs-2 fw-bold text-secondary"><?= esc((string) $totais['inativos']) ?></span><span class="text-muted">inativos</span></div></div>
+    </div>
+</section>
+
+<section class="mb-4" aria-labelledby="tituloModalidades">
+    <h2 class="h5" id="tituloModalidades">Alunos por modalidade</h2>
+    <p class="text-muted small mb-2">Considera alunos com matrícula ativa; cada aluno conta uma vez por modalidade.</p>
+    <div class="table-responsive">
+        <table class="table table-striped bg-white align-middle">
+            <caption class="visually-hidden">Alunos por modalidade</caption>
+            <thead><tr><th scope="col">Modalidade</th><th scope="col">Categoria</th><th scope="col">Alunos</th></tr></thead>
+            <tbody>
+                <?php if ($modalidades === []) : ?>
+                    <tr><td colspan="3" class="text-center text-muted">Nenhuma modalidade cadastrada.</td></tr>
+                <?php endif; ?>
+                <?php foreach ($modalidades as $modalidade) : ?>
+                    <tr>
+                        <td><?= esc($modalidade['nome']) ?></td>
+                        <td><?= esc($categorias[$modalidade['categoria']] ?? $modalidade['categoria']) ?></td>
+                        <td><?= esc((string) $modalidade['alunos']) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="mb-4" aria-labelledby="tituloVagas">
+    <h2 class="h5" id="tituloVagas">Turmas com vagas disponíveis</h2>
+    <p class="text-muted small mb-2">Só turmas ativas: suspensas e encerradas não aceitam matrícula.</p>
+    <div class="table-responsive">
+        <table class="table table-striped bg-white align-middle">
+            <caption class="visually-hidden">Turmas com vagas</caption>
+            <thead>
+                <tr><th scope="col">Turma</th><th scope="col">Modalidade</th><th scope="col">Professor</th><th scope="col">Ocupação</th><th scope="col">Vagas livres</th></tr>
+            </thead>
+            <tbody>
+                <?php if ($turmasComVaga === []) : ?>
+                    <tr><td colspan="5" class="text-center text-muted">Nenhuma turma ativa com vaga.</td></tr>
+                <?php endif; ?>
+                <?php foreach ($turmasComVaga as $turma) : ?>
+                    <tr>
+                        <td><a href="<?= url_to('turmas_ver', $turma['id']) ?>"><?= esc($turma['nome']) ?></a></td>
+                        <td><?= esc($turma['modalidade_nome']) ?></td>
+                        <td><?= esc($turma['professor_nome']) ?></td>
+                        <td><?= esc((string) $turma['ocupadas']) ?>/<?= esc((string) $turma['limite_vagas']) ?></td>
+                        <td><span class="badge text-bg-success"><?= esc((string) $turma['vagas_livres']) ?></span></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+<?= $this->endSection() ?>
