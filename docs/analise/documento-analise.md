@@ -109,17 +109,35 @@ O segmento inicial são centros de treinamento esportivo independentes de pequen
 
 ## 4.2 Segmentação
 
-| Dimensão | Critério | Definição para o Sistema CT |
-|---|---|---|
-| **Geográfica** | Localização | Serra (577.060 hab.) e Vitória (343.378 hab.), estimativas IBGE de 2025; expansão posterior para Vila Velha e Cariacica |
-| **Demográfica (da empresa)** | Tipo de negócio | Academia de lutas, centro de artes marciais ou espaço de esportes coletivos |
-| | Porte | Até ~150 alunos ativos, de 3 a 15 turmas, equipe administrativa de 1 a 3 pessoas |
-| | Natureza | Independente (não pertence a rede ou franquia) |
-| **Demográfica (do decisor)** | Perfil | Proprietário-gestor, 30 a 50 anos, geralmente ex-atleta ou professor da modalidade |
-| **Comportamental** | Maturidade digital | Usa smartphone, WhatsApp e planilhas, mas não usa sistema de gestão integrado |
-| | Necessidade principal | Consolidar cadastros, matrículas, frequência e cobranças |
-| | Sensibilidade a preço | Alta: compara com o custo zero da planilha |
-| | Processo de compra | Decisão do proprietário; usuário diário é o recepcionista |
++----------------------------+--------------------------+------------------------------------------------+
+| Dimensão                   | Critério                 | Definição para o Sistema CT                    |
++============================+==========================+================================================+
+| **Geográfica**             | Localização              | Serra (577.060 hab.) e Vitória (343.378 hab.), |
+|                            |                          | estimativas IBGE de 2025; expansão posterior   |
+|                            |                          | para Vila Velha e Cariacica                    |
++----------------------------+--------------------------+------------------------------------------------+
+| **Demográfica (da          | Tipo de negócio          | Academia de lutas, centro de artes marciais ou |
+| empresa)**                 |                          | espaço de esportes coletivos                   |
+|                            +--------------------------+------------------------------------------------+
+|                            | Porte                    | Até ~150 alunos ativos, de 3 a 15 turmas,      |
+|                            |                          | equipe administrativa de 1 a 3 pessoas         |
+|                            +--------------------------+------------------------------------------------+
+|                            | Natureza                 | Independente (não pertence a rede ou franquia) |
++----------------------------+--------------------------+------------------------------------------------+
+| **Demográfica (do          | Perfil                   | Proprietário-gestor, 30 a 50 anos, geralmente  |
+| decisor)**                 |                          | ex-atleta ou professor da modalidade           |
++----------------------------+--------------------------+------------------------------------------------+
+| **Comportamental**         | Maturidade digital       | Usa smartphone, WhatsApp e planilhas, mas não  |
+|                            |                          | usa sistema de gestão integrado                |
+|                            +--------------------------+------------------------------------------------+
+|                            | Necessidade principal    | Consolidar cadastros, matrículas, frequência e |
+|                            |                          | cobranças                                      |
+|                            +--------------------------+------------------------------------------------+
+|                            | Sensibilidade a preço    | Alta: compara com o custo zero da planilha     |
+|                            +--------------------------+------------------------------------------------+
+|                            | Processo de compra       | Decisão do proprietário; usuário diário é o    |
+|                            |                          | recepcionista                                  |
++----------------------------+--------------------------+------------------------------------------------+
 
 **Por que esse público precisa da solução:** centros de lutas e coletivos têm turmas com **limite físico de vagas** (tatame, quadra) e **frequência** como critério de evolução e certificação. Essas regras não aparecem em planilhas genéricas. Ao mesmo tempo, esses centros são pequenos demais para sistemas corporativos de academia, cujo custo estimado é de R$ 800 a R$ 6.500 por mês (seção 11).
 
