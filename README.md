@@ -84,7 +84,17 @@ Abra <http://localhost:8080> no navegador.
 | Proprietário | `proprietario@ct.local` | `ct123456` |
 | Recepcionista | `recepcao@ct.local` | `ct123456` |
 
-Os dados de demonstração incluem 4 modalidades (lutas com capacidade 20 e esportes coletivos com 25), 3 professores, 3 turmas, 4 alunos (um deles menor de idade, com responsável), 2 planos e mensalidades paga, em aberto e atrasada.
+### Dados de demonstração
+
+O `php spark db:seed DatabaseSeeder` carrega uma demonstração realista, toda fictícia (nomes, CPFs válidos gerados por dígito verificador, telefones e endereços de Serra e Vitória):
+
+- **60 alunos** de 7 a 60 anos, sendo 12 menores com responsável legal (parentescos variados), 10 com condição de saúde preenchida e 4 inativos; matrículas espalhadas pelos últimos 12 meses.
+- **7 modalidades**: 4 lutas (jiu-jitsu, muay thai, boxe, judô, capacidade 20) e 3 esportes coletivos (futsal, vôlei, basquete, capacidade 25), com 8 professores habilitados (alguns em duas modalidades).
+- **13 turmas** de manhã, tarde e noite, infantis e adultas: uma **lotada** (Jiu-jitsu Adulto Noite, 20 de 20), uma quase lotada (Futsal Misto Sábado, 22 de 25), uma **suspensa** (Judô Adulto) e uma **encerrada** (Jiu-jitsu Iniciante Manhã, com 10 certificados e 2 alunos inativados pela regra RN09).
+- Matrículas ativas, transferidas e canceladas (cada aluno ativo em 1 ou 2 turmas) e **8 semanas de chamadas**, com alguns alunos abaixo de 75% de presença.
+- **5 planos** (mensal básico, mensal plus, trimestral, semestral e família) e mensalidades dos últimos meses: a maioria paga (PIX, cartão e dinheiro), algumas em aberto e **8 alunos inadimplentes**. O modelo de dados não tem periodicidade anual, por isso não há plano anual.
+
+A demonstração é **determinística**: usa uma semente fixa, então a estrutura é sempre a mesma. As datas são relativas ao dia em que o seed roda, para o sistema parecer em uso no dia da apresentação.
 
 ## Permissões por perfil (RN05)
 

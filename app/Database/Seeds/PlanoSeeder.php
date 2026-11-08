@@ -5,45 +5,102 @@ namespace App\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * Planos, vínculos aluno-plano (um ativo por aluno, RN08) e mensalidades de demonstração
- * nos três estados: paga, em aberto e atrasada (RN07).
+ * Planos de pagamento e vínculos aluno-plano (RF12, RF13, RN08).
+ *
+ * Cada aluno ATIVO termina com exatamente um plano ATIVO; aluno INATIVO só tem plano ENCERRADO.
+ * Seis alunos antigos trocaram de plano: o primeiro ficou ENCERRADO e o novo é o ATIVO.
+ *
+ * Observação: o modelo de dados aceita as periodicidades MENSAL, TRIMESTRAL e SEMESTRAL (ENUM do DER),
+ * por isso não há plano "anual"; o plano "Família Mensal" cobre o desconto para familiares.
  */
 class PlanoSeeder extends Seeder
 {
     public function run(): void
     {
+        mt_srand(DadosDemonstracao::SEMENTE + 3);
         $agora = date('Y-m-d H:i:s');
 
-        $this->db->table('planos')->insertBatch([
-            ['nome' => 'Mensal Básico', 'valor' => 120.00, 'periodicidade' => 'MENSAL', 'beneficios' => 'Uma modalidade.',
-             'situacao' => 'ATIVO', 'created_at' => $agora, 'updated_at' => $agora],
-            ['nome' => 'Trimestral', 'valor' => 330.00, 'periodicidade' => 'TRIMESTRAL', 'beneficios' => 'Até duas modalidades.',
-             'situacao' => 'ATIVO', 'created_at' => $agora, 'updated_at' => $agora],
-        ]);
-
-        // Aluno 1: plano 1; aluno 2: plano 1; aluno 3: plano 2; aluno 4: plano 1.
-        foreach ([[1, 1], [2, 1], [3, 2], [4, 1]] as [$alunoId, $planoId]) {
-            $this->db->table('aluno_planos')->insert([
-                'aluno_id' => $alunoId, 'plano_id' => $planoId, 'data_inicio' => date('Y-m-01', strtotime('-2 months')),
-                'data_fim' => null, 'situacao' => 'ATIVO', 'created_at' => $agora, 'updated_at' => $agora,
-            ]);
-        }
-
-        $mensalidades = [
-            // [aluno_plano_id, valor, vencimento, pagamento, forma, situacao]
-            [1, 120.00, date('Y-m-d', strtotime('-20 days')), date('Y-m-d', strtotime('-18 days')), 'PIX', 'PAGO'],
-            [1, 120.00, date('Y-m-d', strtotime('+10 days')), null, null, 'EM_ABERTO'],
-            [2, 120.00, date('Y-m-d', strtotime('-15 days')), null, null, 'ATRASADO'],
-            [3, 330.00, date('Y-m-d', strtotime('+5 days')), null, null, 'EM_ABERTO'],
-            [4, 120.00, date('Y-m-d', strtotime('-5 days')), date('Y-m-d', strtotime('-4 days')), 'DINHEIRO', 'PAGO'],
+        $planos = [
+            ['Mensal Básico', 120.00, 'MENSAL', 'Uma modalidade, até 3 aulas por semana.'],
+            ['Mensal Plus', 160.00, 'MENSAL', 'Duas modalidades à escolha.'],
+            ['Trimestral', 330.00, 'TRIMESTRAL', 'Uma modalidade, com desconto de 8%.'],
+            ['Semestral', 600.00, 'SEMESTRAL', 'Uma modalidade, com desconto de 17%.'],
+            ['Família Mensal', 99.00, 'MENSAL', 'Valor por aluno para dois ou mais familiares; ideal para turmas infantis.'],
         ];
-
-        foreach ($mensalidades as [$vinculoId, $valor, $vencimento, $pagamento, $forma, $situacao]) {
-            $this->db->table('mensalidades')->insert([
-                'aluno_plano_id' => $vinculoId, 'valor' => $valor, 'vencimento' => $vencimento,
-                'data_pagamento' => $pagamento, 'forma_pagamento' => $forma, 'situacao' => $situacao,
-                'created_at' => $agora, 'updated_at' => $agora,
+        $ids = [];
+        foreach ($planos as [$nome, $valor, $periodicidade, $beneficios]) {
+            $this->db->table('planos')->insert([
+                'nome' => $nome, 'valor' => $valor, 'periodicidade' => $periodicidade, 'beneficios' => $beneficios,
+                'situacao' => 'ATIVO', 'created_at' => $agora, 'updated_at' => $agora,
             ]);
+            $ids[$nome] = (int) $this->db->insertID();
         }
+
+        $alunos = $this->db->table('alunos')->select('id, data_matricula, situacao')->orderBy('id')->get()->getResultArray();
+        $ativasPorAluno = array_column(
+            $this->db->query("SELECT aluno_id, COUNT(*) AS total FROM matriculas WHERE situacao = 'ATIVA' GROUP BY aluno_id")->getResultArray(),
+            'total',
+            'aluno_id',
+        );
+
+        // Quem trocou de plano: seis adultos ativos e antigos (matriculados há mais de 120 dias).
+        $antigos = [];
+        foreach ($alunos as $i => $aluno) {
+            if ($i >= AlunoSeeder::TOTAL_MENORES && $aluno['situacao'] === 'ATIVO' && $aluno['data_matricula'] <= DadosDemonstracao::diasAtras(120)) {
+                $antigos[] = $i;
+            }
+        }
+        shuffle($antigos);
+        $trocaram = array_slice($antigos, 0, 6);
+
+        foreach ($alunos as $i => $aluno) {
+            $inicio = $aluno['data_matricula'];
+
+            if ($aluno['situacao'] !== 'ATIVO') {
+                $fim = $this->db->query('SELECT MAX(data_encerramento) AS fim FROM matriculas WHERE aluno_id = ?', [$aluno['id']])->getRow()->fim
+                    ?? DadosDemonstracao::diasAtras(30);
+                $this->vincular((int) $aluno['id'], $ids[$this->escolherPlano($i, (int) ($ativasPorAluno[$aluno['id']] ?? 0))], $inicio, $fim, 'ENCERRADO');
+
+                continue;
+            }
+
+            if (in_array($i, $trocaram, true)) {
+                $dataDaTroca = date('Y-m-d', strtotime($inicio . ' +90 days'));
+                $this->vincular((int) $aluno['id'], $ids['Mensal Básico'], $inicio, $dataDaTroca, 'ENCERRADO');
+                $inicio = $dataDaTroca;
+            }
+
+            $this->vincular((int) $aluno['id'], $ids[$this->escolherPlano($i, (int) ($ativasPorAluno[$aluno['id']] ?? 0))], $inicio, null, 'ATIVO');
+        }
+    }
+
+    /**
+     * Escolhe o plano pelo perfil do aluno: criança no plano família; quem treina em duas turmas
+     * tende ao Plus ou aos planos longos; os demais se dividem entre os planos de uma modalidade.
+     */
+    private function escolherPlano(int $indice, int $turmasAtivas): string
+    {
+        if ($indice < AlunoSeeder::TOTAL_MENORES) {
+            return 'Família Mensal';
+        }
+
+        $sorteio = mt_rand(1, 100);
+
+        if ($turmasAtivas >= 2) {
+            return $sorteio <= 35 ? 'Mensal Plus' : ($sorteio <= 55 ? 'Mensal Básico' : ($sorteio <= 80 ? 'Trimestral' : 'Semestral'));
+        }
+
+        return $sorteio <= 50 ? 'Mensal Básico' : ($sorteio <= 75 ? 'Trimestral' : ($sorteio <= 90 ? 'Semestral' : 'Mensal Plus'));
+    }
+
+    /**
+     * Grava o vínculo do aluno com o plano.
+     */
+    private function vincular(int $alunoId, int $planoId, string $inicio, ?string $fim, string $situacao): void
+    {
+        $this->db->table('aluno_planos')->insert([
+            'aluno_id' => $alunoId, 'plano_id' => $planoId, 'data_inicio' => $inicio, 'data_fim' => $fim,
+            'situacao' => $situacao, 'created_at' => $inicio . ' 09:00:00', 'updated_at' => $inicio . ' 09:00:00',
+        ]);
     }
 }

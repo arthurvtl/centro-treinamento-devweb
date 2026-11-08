@@ -5,31 +5,44 @@ namespace App\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 
 /**
- * Professores e suas habilitações por modalidade (RF04, RN03).
+ * Professores e as modalidades em que são habilitados (RF04, RN03).
+ *
+ * Alguns professores atuam em duas modalidades; as turmas só usam professores habilitados.
  */
 class ProfessorSeeder extends Seeder
 {
     public function run(): void
     {
+        mt_srand(DadosDemonstracao::SEMENTE);
         $agora = date('Y-m-d H:i:s');
-        $tabela = $this->db->table('professores');
 
-        $tabela->insertBatch([
-            ['nome' => 'Marcão Gomes', 'cpf' => CpfDemonstracao::gerar('111222333'), 'telefone' => '(27) 99999-0001',
-             'email' => 'marcao@ct.local', 'situacao' => 'ATIVO', 'created_at' => $agora, 'updated_at' => $agora],
-            ['nome' => 'Vanclei Moura', 'cpf' => CpfDemonstracao::gerar('222333444'), 'telefone' => '(27) 99999-0002',
-             'email' => 'vanclei@ct.local', 'situacao' => 'ATIVO', 'created_at' => $agora, 'updated_at' => $agora],
-            ['nome' => 'Renata Lima', 'cpf' => CpfDemonstracao::gerar('333444555'), 'telefone' => '(27) 99999-0003',
-             'email' => 'renata@ct.local', 'situacao' => 'ATIVO', 'created_at' => $agora, 'updated_at' => $agora],
-        ]);
+        $modalidades = array_column($this->db->table('modalidades')->select('id, nome')->get()->getResultArray(), 'id', 'nome');
 
-        // Marcão: jiu-jitsu e muay thai; Vanclei: muay thai; Renata: vôlei e futsal.
-        $this->db->table('professor_modalidade')->insertBatch([
-            ['professor_id' => 1, 'modalidade_id' => 1, 'created_at' => $agora, 'updated_at' => $agora],
-            ['professor_id' => 1, 'modalidade_id' => 2, 'created_at' => $agora, 'updated_at' => $agora],
-            ['professor_id' => 2, 'modalidade_id' => 2, 'created_at' => $agora, 'updated_at' => $agora],
-            ['professor_id' => 3, 'modalidade_id' => 3, 'created_at' => $agora, 'updated_at' => $agora],
-            ['professor_id' => 3, 'modalidade_id' => 4, 'created_at' => $agora, 'updated_at' => $agora],
-        ]);
+        // [nome, e-mail, modalidades em que é habilitado]
+        $professores = [
+            ['Marcão Gomes', 'marcao', ['Jiu-jitsu', 'Judô']],
+            ['Vanclei Moura', 'vanclei', ['Boxe', 'Muay thai']],
+            ['Renata Lima', 'renata', ['Vôlei', 'Basquete']],
+            ['Carlos Eduardo Souza', 'carlos', ['Futsal']],
+            ['Patrícia Nunes', 'patricia', ['Jiu-jitsu']],
+            ['Rafael Teixeira', 'rafael', ['Muay thai']],
+            ['Juliana Prado', 'juliana', ['Judô']],
+            ['Thiago Barbosa', 'thiago', ['Basquete', 'Futsal']],
+        ];
+
+        foreach ($professores as $ordem => [$nome, $login, $habilitacoes]) {
+            $this->db->table('professores')->insert([
+                'nome' => $nome, 'cpf' => DadosDemonstracao::cpf($ordem + 1), 'telefone' => DadosDemonstracao::telefone(),
+                'email' => $login . '@ct.local', 'situacao' => 'ATIVO', 'created_at' => $agora, 'updated_at' => $agora,
+            ]);
+            $professorId = (int) $this->db->insertID();
+
+            foreach ($habilitacoes as $modalidade) {
+                $this->db->table('professor_modalidade')->insert([
+                    'professor_id' => $professorId, 'modalidade_id' => $modalidades[$modalidade],
+                    'created_at' => $agora, 'updated_at' => $agora,
+                ]);
+            }
+        }
     }
 }
