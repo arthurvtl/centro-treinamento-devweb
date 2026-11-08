@@ -103,12 +103,13 @@ A demonstração é **determinística**: usa uma semente fixa, então a estrutur
 | Alunos (cadastro, busca, inativar) | Sim | Sim (sem ver a condição de saúde, LGPD) |
 | Excluir aluno | Sim | Não |
 | Matrículas, troca de turma e cancelamento | Sim | Sim |
+| Excluir matrícula ativa sem frequência (lançada por engano) | Sim | Não |
 | Turmas: consultar | Sim | Sim |
 | Turmas: criar, editar, suspender, encerrar | Sim | Não |
-| Frequência (chamada) | Sim | Sim |
+| Frequência (lançar, corrigir e excluir a chamada) | Sim | Sim |
 | Professores e modalidades | Sim | Não |
 | Financeiro do aluno, vincular plano e dar baixa em mensalidade | Sim | Sim |
-| Planos, lista de mensalidades, inadimplentes, gerar mensalidade | Sim | Não |
+| Planos, lista de mensalidades, inadimplentes, gerar, editar e excluir mensalidade em aberto | Sim | Não |
 | Relatórios operacionais (alunos, modalidades, vagas) | Sim | Sim |
 | Relatório financeiro mensal | Sim | Não |
 
