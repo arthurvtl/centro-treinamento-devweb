@@ -94,15 +94,20 @@ class FrequenciaModel extends Model
     }
 
     /**
-     * Filtra o resumo da turma deixando só quem está abaixo do mínimo de presença (RF11).
+     * Apaga todos os lançamentos de uma turma numa data e devolve quantos foram apagados.
      *
-     * @return list<array<string, mixed>>
+     * Serve para desfazer uma chamada lançada por engano (HU04); depois dá para lançar de novo.
      */
-    public function buscarAbaixoDoMinimo(int $turmaId): array
+    public function excluirLancamentosDaAula(int $turmaId, string $dataAula): int
     {
-        return array_values(array_filter(
-            $this->resumirPresencaDaTurma($turmaId),
-            static fn (array $resumo): bool => $resumo['percentual'] !== null && $resumo['percentual'] < self::FREQUENCIA_MINIMA,
-        ));
+        $ids = array_column($this->buscarLancamentosDaAula($turmaId, $dataAula), 'id');
+
+        if ($ids === []) {
+            return 0;
+        }
+
+        $this->whereIn('id', $ids)->delete();
+
+        return count($ids);
     }
 }

@@ -66,9 +66,33 @@ class Frequencias extends BaseController
             (array) $this->request->getPost('observacao'),
         );
 
-        $retorno = url_to('frequencias') . '?turma_id=' . $turmaId . '&data=' . urlencode($dataAula);
+        $redirecionamento = redirect()->to($this->urlDaChamada($turmaId, $dataAula));
 
-        return redirect()->to($retorno)->with($resultado['sucesso'] ? 'sucesso' : 'erro', $resultado['mensagem']);
+        // Em caso de erro, devolve as marcações digitadas para a pessoa não precisar refazer a chamada.
+        if (! $resultado['sucesso']) {
+            $redirecionamento->withInput();
+        }
+
+        return $redirecionamento->with($resultado['sucesso'] ? 'sucesso' : 'erro', $resultado['mensagem']);
+    }
+
+    /**
+     * Desfaz a chamada de uma turma numa data, lançada por engano (HU04).
+     */
+    public function excluir(int $turmaId, string $dataAula)
+    {
+        $resultado = (new FrequenciaService())->excluirChamada($turmaId, $dataAula);
+
+        return redirect()->to($this->urlDaChamada($turmaId, $dataAula))
+            ->with($resultado['sucesso'] ? 'sucesso' : 'erro', $resultado['mensagem']);
+    }
+
+    /**
+     * Monta o endereço da tela de chamada de uma turma numa data.
+     */
+    private function urlDaChamada(int $turmaId, string $dataAula): string
+    {
+        return url_to('frequencias') . '?turma_id=' . $turmaId . '&data=' . urlencode($dataAula);
     }
 
     /**

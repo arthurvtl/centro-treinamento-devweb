@@ -80,4 +80,35 @@ class FrequenciaService
             ? ['sucesso' => true, 'mensagem' => 'Frequência de ' . formatar_data($dataAula) . ' registrada.']
             : ['sucesso' => false, 'mensagem' => 'Não foi possível registrar a frequência. Tente novamente.'];
     }
+
+    /**
+     * Desfaz a chamada de uma turma numa data (HU04).
+     *
+     * Turma encerrada não permite: a frequência dela já foi apurada para os certificados (RN09).
+     *
+     * @return array{sucesso: bool, mensagem: string}
+     */
+    public function excluirChamada(int $turmaId, string $dataAula): array
+    {
+        helper('formatacao');
+
+        $turma = $this->turmaModel->find($turmaId);
+        if ($turma === null) {
+            return ['sucesso' => false, 'mensagem' => 'Turma não encontrada.'];
+        }
+
+        if ($turma['situacao'] === 'ENCERRADA') {
+            return ['sucesso' => false, 'mensagem' => 'A turma está encerrada: a frequência dela já foi apurada e não pode ser apagada.'];
+        }
+
+        if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $dataAula) !== 1) {
+            return ['sucesso' => false, 'mensagem' => 'Data da aula inválida.'];
+        }
+
+        $apagados = $this->frequenciaModel->excluirLancamentosDaAula($turmaId, $dataAula);
+
+        return $apagados > 0
+            ? ['sucesso' => true, 'mensagem' => 'Chamada de ' . formatar_data($dataAula) . ' excluída (' . $apagados . ' lançamentos).']
+            : ['sucesso' => false, 'mensagem' => 'Não há chamada lançada nesta data.'];
+    }
 }
