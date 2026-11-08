@@ -81,8 +81,8 @@ Abra <http://localhost:8080> no navegador.
 
 | Perfil | E-mail | Senha |
 |---|---|---|
-| Proprietário | `proprietario@ct.local` | `ct123456` |
-| Recepcionista | `recepcao@ct.local` | `ct123456` |
+| Proprietário ("Dono") | `dono@ct.local` | `ct123456` |
+| Recepcionista ("Recepção") | `recepcao@ct.local` | `ct123456` |
 
 ### Dados de demonstração
 
