@@ -27,6 +27,7 @@ class Validation extends BaseConfig
         CreditCardRules::class,
         \App\Validation\RegrasCpf::class,
         \App\Validation\RegrasData::class,
+        \App\Validation\RegrasModalidade::class,
     ];
 
     /**
