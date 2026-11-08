@@ -157,7 +157,7 @@ class Turmas extends BaseController
             'titulo'      => $titulo,
             'turma'       => $turma,
             'modalidades' => (new ModalidadeModel())->buscarTodasOrdenadas(),
-            'professores' => (new ProfessorModel())->where('situacao', 'ATIVO')->orderBy('nome')->findAll(),
+            'professores' => (new ProfessorModel())->buscarAtivosOrdenados(),
             'acao'        => $acao,
         ]);
     }

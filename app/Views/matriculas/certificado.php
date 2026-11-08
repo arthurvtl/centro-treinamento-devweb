@@ -22,6 +22,6 @@
 </article>
 <div class="text-center d-print-none">
     <button type="button" class="btn btn-primary" onclick="window.print()">Imprimir</button>
-    <a href="<?= url_to('turmas_ver', $certificado['turma_id']) ?>" class="btn btn-outline-secondary">Voltar para a turma</a>
+    <a href="<?= esc(url_to('turmas_ver', $certificado['turma_id']), 'html') ?>" class="btn btn-outline-secondary">Voltar para a turma</a>
 </div>
 <?= $this->endSection() ?>

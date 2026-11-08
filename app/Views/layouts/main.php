@@ -8,6 +8,7 @@ $perfil    = session()->get('usuario_perfil');
 $ehDono    = $perfil === 'proprietario';
 $logado    = session()->get('usuario_id') !== null;
 $erros     = session()->getFlashdata('erros') ?? [];
+$secaoAtual = service('uri')->getSegment(1);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -18,10 +19,11 @@ $erros     = session()->getFlashdata('erros') ?? [];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+<a class="visually-hidden-focusable" href="#conteudo">Pular para o conteúdo</a>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Menu principal">
         <div class="container">
-            <a class="navbar-brand" href="<?= site_url('painel') ?>">Sistema CT</a>
+            <a class="navbar-brand" href="<?= esc(site_url('painel'), 'html') ?>">Sistema CT</a>
             <?php if ($logado) : ?>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
                         aria-controls="menuPrincipal" aria-expanded="false" aria-label="Alternar menu">
@@ -30,13 +32,16 @@ $erros     = session()->getFlashdata('erros') ?? [];
                 <div class="collapse navbar-collapse" id="menuPrincipal">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <?php foreach (itens_menu($perfil) as $item) : ?>
-                            <li class="nav-item"><a class="nav-link" href="<?= site_url($item['rota']) ?>"><?= esc($item['rotulo']) ?></a></li>
+                            <li class="nav-item">
+                                <a class="nav-link<?= $secaoAtual === $item['rota'] ? ' active' : '' ?>" href="<?= esc(site_url($item['rota']), 'html') ?>"
+                                   <?= $secaoAtual === $item['rota'] ? 'aria-current="page"' : '' ?>><?= esc($item['rotulo']) ?></a>
+                            </li>
                         <?php endforeach; ?>
                     </ul>
                     <span class="navbar-text me-3">
                         <?= esc(session()->get('usuario_nome')) ?> (<?= esc($ehDono ? 'Proprietário' : 'Recepcionista') ?>)
                     </span>
-                    <form action="<?= site_url('sair') ?>" method="post" class="d-inline">
+                    <form action="<?= esc(site_url('sair'), 'html') ?>" method="post" class="d-inline">
                         <?= csrf_field() ?>
                         <button type="submit" class="btn btn-outline-light btn-sm">Sair</button>
                     </form>
@@ -46,7 +51,7 @@ $erros     = session()->getFlashdata('erros') ?? [];
     </nav>
 </header>
 
-<main class="container py-4">
+<main class="container py-4" id="conteudo">
     <?php if (session()->getFlashdata('sucesso')) : ?>
         <div class="alert alert-success" role="alert"><?= esc(session()->getFlashdata('sucesso')) ?></div>
     <?php endif; ?>

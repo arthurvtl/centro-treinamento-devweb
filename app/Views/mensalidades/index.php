@@ -6,7 +6,7 @@
  * @var string                     $situacao
  * @var string                     $busca
  */
-$situacoes = \App\Models\MensalidadeModel::SITUACOES;
+$situacoes = rotulos_de('situacoes_mensalidade');
 $estilos   = ['EM_ABERTO' => 'text-bg-info', 'PAGO' => 'text-bg-success', 'ATRASADO' => 'text-bg-danger'];
 ?>
 <?= $this->extend('layouts/main') ?>
@@ -14,10 +14,10 @@ $estilos   = ['EM_ABERTO' => 'text-bg-info', 'PAGO' => 'text-bg-success', 'ATRAS
 <?= $this->section('conteudo') ?>
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
     <h1 class="h3 mb-0">Mensalidades</h1>
-    <a href="<?= url_to('mensalidades_inadimplentes') ?>" class="btn btn-outline-danger">Ver inadimplentes</a>
+    <a href="<?= esc(url_to('mensalidades_inadimplentes'), 'html') ?>" class="btn btn-outline-danger">Ver inadimplentes</a>
 </div>
 
-<form action="<?= url_to('mensalidades') ?>" method="get" class="row g-2 mb-3" role="search">
+<form action="<?= esc(url_to('mensalidades'), 'html') ?>" method="get" class="row g-2 mb-3" role="search">
     <div class="col-12 col-md-5">
         <label for="busca" class="visually-hidden">Buscar aluno</label>
         <input type="search" class="form-control" id="busca" name="busca" value="<?= esc($busca) ?>" placeholder="Buscar por nome ou código do aluno">
@@ -34,12 +34,12 @@ $estilos   = ['EM_ABERTO' => 'text-bg-info', 'PAGO' => 'text-bg-success', 'ATRAS
     <div class="col-12 col-md-4 d-flex gap-2">
         <button type="submit" class="btn btn-outline-primary">Filtrar</button>
         <?php if ($busca !== '' || $situacao !== '') : ?>
-            <a href="<?= url_to('mensalidades') ?>" class="btn btn-outline-secondary">Limpar</a>
+            <a href="<?= esc(url_to('mensalidades'), 'html') ?>" class="btn btn-outline-secondary">Limpar</a>
         <?php endif; ?>
     </div>
 </form>
 
-<div class="table-responsive">
+<div class="table-responsive position-relative">
     <table class="table table-striped align-middle bg-white">
         <caption class="visually-hidden">Mensalidades</caption>
         <thead>
@@ -58,17 +58,22 @@ $estilos   = ['EM_ABERTO' => 'text-bg-info', 'PAGO' => 'text-bg-success', 'ATRAS
             <?php endif; ?>
             <?php foreach ($mensalidades as $mensalidade) : ?>
                 <tr>
-                    <td><a href="<?= url_to('mensalidades_aluno', $mensalidade['aluno_id']) ?>"><?= esc($mensalidade['aluno_codigo']) ?> · <?= esc($mensalidade['aluno_nome']) ?></a></td>
+                    <td><a href="<?= esc(url_to('mensalidades_aluno', $mensalidade['aluno_id']), 'html') ?>"><?= esc($mensalidade['aluno_codigo']) ?> · <?= esc($mensalidade['aluno_nome']) ?></a></td>
                     <td><?= esc($mensalidade['plano_nome']) ?></td>
                     <td><?= esc(formatar_data($mensalidade['vencimento'])) ?></td>
                     <td><?= esc(formatar_moeda($mensalidade['valor'])) ?></td>
                     <td>
                         <span class="badge <?= esc($estilos[$mensalidade['situacao']] ?? 'text-bg-secondary', 'attr') ?>"><?= esc($situacoes[$mensalidade['situacao']] ?? $mensalidade['situacao']) ?></span>
                         <?php if ($mensalidade['situacao'] === 'PAGO') : ?>
-                            <small class="text-muted d-block"><?= esc(formatar_data($mensalidade['data_pagamento'])) ?> · <?= esc(\App\Models\MensalidadeModel::FORMAS_PAGAMENTO[$mensalidade['forma_pagamento']] ?? '') ?></small>
+                            <small class="text-muted d-block"><?= esc(formatar_data($mensalidade['data_pagamento'])) ?> · <?= esc(rotulos_de('formas_pagamento')[$mensalidade['forma_pagamento']] ?? '') ?></small>
                         <?php endif; ?>
                     </td>
-                    <td class="text-end"><?= $mensalidade['situacao'] === 'PAGO' ? '' : view('mensalidades/_quitacao', ['mensalidade' => $mensalidade]) ?></td>
+                    <td class="text-end">
+                        <?php if ($mensalidade['situacao'] !== 'PAGO') : ?>
+                            <?= view('mensalidades/_quitacao', ['mensalidade' => $mensalidade]) ?>
+                            <?= view('mensalidades/_acoes', ['mensalidade' => $mensalidade]) ?>
+                        <?php endif; ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

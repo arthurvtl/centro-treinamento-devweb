@@ -24,7 +24,7 @@ class Planos extends BaseController
     {
         return view('planos/index', [
             'titulo' => 'Planos',
-            'planos' => $this->planoModel->orderBy('nome')->findAll(),
+            'planos' => $this->planoModel->buscarTodosOrdenados(),
         ]);
     }
 
@@ -52,6 +52,20 @@ class Planos extends BaseController
         }
 
         return redirect()->to(url_to('planos'))->with('sucesso', 'Plano cadastrado com sucesso.');
+    }
+
+    /**
+     * Mostra o plano com os alunos que o têm como plano ativo (RF12, RF13).
+     */
+    public function ver(int $id)
+    {
+        $plano = $this->buscarOuFalhar($id);
+
+        return view('planos/ver', [
+            'titulo' => $plano['nome'],
+            'plano'  => $plano,
+            'alunos' => $this->planoModel->buscarAlunosAtivos($id),
+        ]);
     }
 
     /**

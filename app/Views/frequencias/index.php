@@ -15,7 +15,7 @@ $turmaAtual = $turma['id'] ?? 0;
 <?= $this->section('conteudo') ?>
 <h1 class="h3 mb-3">Frequência</h1>
 
-<form action="<?= url_to('frequencias') ?>" method="get" class="row g-2 mb-4">
+<form action="<?= esc(url_to('frequencias'), 'html') ?>" method="get" class="row g-2 mb-4">
     <div class="col-12 col-md-6">
         <label for="turma_id" class="form-label">Turma</label>
         <select class="form-select" id="turma_id" name="turma_id" required>
@@ -39,7 +39,7 @@ $turmaAtual = $turma['id'] ?? 0;
 <?php if ($turma !== null) : ?>
     <h2 class="h5">
         <?= esc($turma['nome']) ?> · <?= esc(formatar_data($dataAula)) ?>
-        <a href="<?= url_to('frequencias_baixa', $turma['id']) ?>" class="btn btn-sm btn-outline-secondary ms-2">Alunos abaixo de 75%</a>
+        <a href="<?= esc(url_to('frequencias_baixa', $turma['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary ms-2">Alunos abaixo de 75%</a>
     </h2>
 
     <?php if ($turma['situacao'] !== 'ATIVA') : ?>
@@ -49,12 +49,12 @@ $turmaAtual = $turma['id'] ?? 0;
     <?php elseif ($alunos === []) : ?>
         <div class="alert alert-info" role="status">Nenhum aluno matriculado nesta turma.</div>
     <?php else : ?>
-        <form action="<?= url_to('frequencias_registrar') ?>" method="post">
+        <form action="<?= esc(url_to('frequencias_registrar'), 'html') ?>" method="post">
             <?= csrf_field() ?>
             <input type="hidden" name="turma_id" value="<?= esc($turma['id'], 'attr') ?>">
             <input type="hidden" name="data_aula" value="<?= esc($dataAula, 'attr') ?>">
 
-            <div class="table-responsive">
+            <div class="table-responsive position-relative">
                 <table class="table table-striped align-middle bg-white">
                     <caption class="visually-hidden">Chamada da turma</caption>
                     <thead>
@@ -70,7 +70,7 @@ $turmaAtual = $turma['id'] ?? 0;
                             $matriculaId = (int) $aluno['id'];
                             $anterior    = $lancamentos[$matriculaId] ?? null;
                             // Sem lançamento prévio, a chamada começa com todos presentes para agilizar a recepção.
-                            $situacaoAtual = $anterior['situacao'] ?? 'PRESENTE';
+                            $situacaoAtual = old('situacao.' . $matriculaId, $anterior['situacao'] ?? 'PRESENTE');
                             ?>
                             <tr>
                                 <td><?= esc($aluno['aluno_codigo']) ?> · <?= esc($aluno['aluno_nome']) ?></td>
@@ -90,7 +90,7 @@ $turmaAtual = $turma['id'] ?? 0;
                                     <label class="visually-hidden" for="obs_<?= esc($matriculaId, 'attr') ?>">Observação de <?= esc($aluno['aluno_nome']) ?></label>
                                     <input type="text" class="form-control form-control-sm" id="obs_<?= esc($matriculaId, 'attr') ?>"
                                            name="observacao[<?= esc($matriculaId, 'attr') ?>]" maxlength="255"
-                                           value="<?= esc($anterior['observacao'] ?? '', 'attr') ?>">
+                                           value="<?= esc(old('observacao.' . $matriculaId, $anterior['observacao'] ?? ''), 'attr') ?>">
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -99,6 +99,14 @@ $turmaAtual = $turma['id'] ?? 0;
             </div>
             <button type="submit" class="btn btn-primary">Salvar chamada</button>
         </form>
+
+        <?php if ($lancamentos !== []) : ?>
+            <form action="<?= esc(url_to('frequencias_excluir', $turma['id'], $dataAula), 'html') ?>" method="post" class="mt-3"
+                  onsubmit="return confirm('Excluir a chamada desta data? Os lançamentos serão apagados.');">
+                <?= csrf_field() ?>
+                <button type="submit" class="btn btn-outline-danger btn-sm">Excluir a chamada de <?= esc(formatar_data($dataAula)) ?></button>
+            </form>
+        <?php endif; ?>
     <?php endif; ?>
 <?php endif; ?>
 <?= $this->endSection() ?>

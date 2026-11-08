@@ -121,4 +121,28 @@ class MatriculaModel extends Model
             ->where('matriculas.certificado_emitido', 1)
             ->first();
     }
+
+    /**
+     * Busca uma matrícula com os dados do aluno, da turma e da modalidade (tela de detalhe).
+     *
+     * @return array<string, mixed>|null
+     */
+    public function buscarDetalhe(int $matriculaId): ?array
+    {
+        return $this->select('matriculas.*, alunos.nome AS aluno_nome, alunos.codigo AS aluno_codigo, '
+                . 'turmas.nome AS turma_nome, turmas.situacao AS turma_situacao, modalidades.nome AS modalidade_nome')
+            ->join('alunos', 'alunos.id = matriculas.aluno_id')
+            ->join('turmas', 'turmas.id = matriculas.turma_id')
+            ->join('modalidades', 'modalidades.id = turmas.modalidade_id')
+            ->where('matriculas.id', $matriculaId)
+            ->first();
+    }
+
+    /**
+     * Informa se a matrícula já tem frequência lançada, o que impede excluí-la (HU04).
+     */
+    public function possuiFrequencias(int $matriculaId): bool
+    {
+        return $this->db->table('frequencias')->where('matricula_id', $matriculaId)->countAllResults() > 0;
+    }
 }

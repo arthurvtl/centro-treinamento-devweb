@@ -3,47 +3,30 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
-use CodeIgniter\HTTP\CLIRequest;
-use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * BaseController provides a convenient place for loading components
- * and performing functions that are needed by all your controllers.
+ * Classe base de todos os Controllers do Sistema CT.
  *
- * Extend this class in any new controllers:
- * ```
- *     class Home extends BaseController
- * ```
- *
- * For security, be sure to declare any new methods as protected or private.
+ * Concentra o que todos precisam: os helpers usados pelas Views (formulários, URLs, menu por
+ * perfil e formatação de CPF, telefone, data e moeda).
  */
 abstract class BaseController extends Controller
 {
     /**
-     * Be sure to declare properties for any property fetch you initialized.
-     * The creation of dynamic property is deprecated in PHP 8.2.
+     * Helpers carregados em todos os Controllers.
+     *
+     * @var list<string>
      */
-
-    // protected $session;
+    protected $helpers = ['form', 'url', 'menu', 'formatacao'];
 
     /**
-     * @param CLIRequest|IncomingRequest $request
-     *
-     * @return void
+     * Prepara o Controller para atender a requisição.
      */
-    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger): void
     {
-        // Load here all helpers you want to be available in your controllers that extend BaseController.
-        // Caution: Do not put the this below the parent::initController() call below.
-        $this->helpers = ['form', 'url', 'menu', 'formatacao'];
-
-        // Caution: Do not edit this line.
         parent::initController($request, $response, $logger);
-
-        // Preload any models, libraries, etc, here.
-        // $this->session = service('session');
     }
 }

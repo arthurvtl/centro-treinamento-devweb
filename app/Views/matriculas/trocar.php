@@ -13,7 +13,7 @@
 <h1 class="h3 mb-3"><?= esc($titulo) ?></h1>
 <p>Aluno: <strong><?= esc($aluno['codigo']) ?> · <?= esc($aluno['nome']) ?></strong></p>
 
-<form action="<?= url_to('matriculas_efetivar_troca', $matricula['id']) ?>" method="post" novalidate>
+<form action="<?= esc(url_to('matriculas_efetivar_troca', $matricula['id']), 'html') ?>" method="post" novalidate>
     <?= csrf_field() ?>
     <div class="card card-body mb-3">
         <label for="turma_id" class="form-label">Nova turma</label>
@@ -29,7 +29,7 @@
     </div>
     <div class="d-flex gap-2">
         <button type="submit" class="btn btn-primary">Trocar de turma</button>
-        <a href="<?= url_to('matriculas') ?>" class="btn btn-outline-secondary">Cancelar</a>
+        <a href="<?= esc(url_to('matriculas'), 'html') ?>" class="btn btn-outline-secondary">Cancelar</a>
     </div>
 </form>
 <?= $this->endSection() ?>

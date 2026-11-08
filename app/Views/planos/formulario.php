@@ -5,7 +5,7 @@
  * @var array<string, mixed> $plano
  * @var string               $acao
  */
-$periodicidades = \App\Models\PlanoModel::PERIODICIDADES;
+$periodicidades = rotulos_de('periodicidades');
 $periodicidadeAtual = old('periodicidade', $plano['periodicidade'] ?? '');
 $valorAtual = old('valor', isset($plano['valor']) ? number_format((float) $plano['valor'], 2, ',', '') : '');
 ?>
@@ -14,7 +14,7 @@ $valorAtual = old('valor', isset($plano['valor']) ? number_format((float) $plano
 <?= $this->section('conteudo') ?>
 <h1 class="h3 mb-3"><?= esc($titulo) ?></h1>
 
-<form action="<?= esc($acao, 'attr') ?>" method="post" novalidate>
+<form action="<?= esc($acao, 'html') ?>" method="post" novalidate>
     <?= csrf_field() ?>
     <div class="card card-body mb-3">
         <div class="row g-3">
@@ -45,7 +45,7 @@ $valorAtual = old('valor', isset($plano['valor']) ? number_format((float) $plano
     </div>
     <div class="d-flex gap-2">
         <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="<?= url_to('planos') ?>" class="btn btn-outline-secondary">Cancelar</a>
+        <a href="<?= esc(url_to('planos'), 'html') ?>" class="btn btn-outline-secondary">Cancelar</a>
     </div>
 </form>
 <?= $this->endSection() ?>

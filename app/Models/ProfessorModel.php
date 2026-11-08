@@ -122,4 +122,44 @@ class ProfessorModel extends Model
     {
         return $this->db->table('turmas')->where('professor_id', $professorId)->countAllResults() > 0;
     }
+
+    /**
+     * Lista os professores ativos em ordem alfabética, para escolher o responsável da turma.
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function buscarAtivosOrdenados(): array
+    {
+        return $this->where('situacao', 'ATIVO')->orderBy('nome')->findAll();
+    }
+
+    /**
+     * Lista as modalidades em que o professor está habilitado, em ordem alfabética (RN03).
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function buscarModalidadesHabilitadas(int $professorId): array
+    {
+        return $this->db->table('professor_modalidade')
+            ->select('modalidades.id, modalidades.nome, modalidades.categoria')
+            ->join('modalidades', 'modalidades.id = professor_modalidade.modalidade_id')
+            ->where('professor_modalidade.professor_id', $professorId)
+            ->orderBy('modalidades.nome')
+            ->get()->getResultArray();
+    }
+
+    /**
+     * Lista as turmas do professor, com a modalidade de cada uma.
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function buscarTurmas(int $professorId): array
+    {
+        return $this->db->table('turmas')
+            ->select('turmas.id, turmas.nome, turmas.situacao, turmas.dias_semana, turmas.hora_inicio, turmas.hora_termino, modalidades.nome AS modalidade_nome')
+            ->join('modalidades', 'modalidades.id = turmas.modalidade_id')
+            ->where('turmas.professor_id', $professorId)
+            ->orderBy('turmas.nome')
+            ->get()->getResultArray();
+    }
 }

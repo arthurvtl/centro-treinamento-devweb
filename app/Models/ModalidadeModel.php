@@ -86,4 +86,34 @@ class ModalidadeModel extends Model
             ->orderBy('modalidades.nome')
             ->get()->getResultArray();
     }
+
+    /**
+     * Lista os professores habilitados na modalidade, em ordem alfabética (RN03).
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function buscarProfessoresHabilitados(int $modalidadeId): array
+    {
+        return $this->db->table('professor_modalidade')
+            ->select('professores.id, professores.nome, professores.situacao')
+            ->join('professores', 'professores.id = professor_modalidade.professor_id')
+            ->where('professor_modalidade.modalidade_id', $modalidadeId)
+            ->orderBy('professores.nome')
+            ->get()->getResultArray();
+    }
+
+    /**
+     * Lista as turmas da modalidade, com o professor de cada uma.
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function buscarTurmas(int $modalidadeId): array
+    {
+        return $this->db->table('turmas')
+            ->select('turmas.id, turmas.nome, turmas.situacao, turmas.limite_vagas, professores.nome AS professor_nome')
+            ->join('professores', 'professores.id = turmas.professor_id')
+            ->where('turmas.modalidade_id', $modalidadeId)
+            ->orderBy('turmas.nome')
+            ->get()->getResultArray();
+    }
 }

@@ -10,10 +10,10 @@
 <?= $this->section('conteudo') ?>
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
     <h1 class="h3 mb-0">Professores</h1>
-    <a href="<?= url_to('professores_novo') ?>" class="btn btn-primary">Novo professor</a>
+    <a href="<?= esc(url_to('professores_novo'), 'html') ?>" class="btn btn-primary">Novo professor</a>
 </div>
 
-<div class="table-responsive">
+<div class="table-responsive position-relative">
     <table class="table table-striped table-hover align-middle bg-white">
         <caption class="visually-hidden">Professores cadastrados e modalidades em que atuam</caption>
         <thead>
@@ -39,12 +39,13 @@
                     <td><?= esc($professor['modalidades'] ?: '—') ?></td>
                     <td><span class="badge <?= $ativo ? 'text-bg-success' : 'text-bg-secondary' ?>"><?= $ativo ? 'Ativo' : 'Inativo' ?></span></td>
                     <td class="text-end text-nowrap">
-                        <a href="<?= url_to('professores_editar', $professor['id']) ?>" class="btn btn-sm btn-outline-secondary">Editar</a>
-                        <form action="<?= url_to($ativo ? 'professores_inativar' : 'professores_reativar', $professor['id']) ?>" method="post" class="d-inline">
+                        <a href="<?= esc(url_to('professores_ver', $professor['id']), 'html') ?>" class="btn btn-sm btn-outline-primary">Ver</a>
+                        <a href="<?= esc(url_to('professores_editar', $professor['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        <form action="<?= esc(url_to($ativo ? 'professores_inativar' : 'professores_reativar', $professor['id']), 'html') ?>" method="post" class="d-inline">
                             <?= csrf_field() ?>
                             <button type="submit" class="btn btn-sm btn-outline-warning"><?= $ativo ? 'Inativar' : 'Reativar' ?></button>
                         </form>
-                        <form action="<?= url_to('professores_excluir', $professor['id']) ?>" method="post" class="d-inline"
+                        <form action="<?= esc(url_to('professores_excluir', $professor['id']), 'html') ?>" method="post" class="d-inline"
                               onsubmit="return confirm('Excluir este professor?');">
                             <?= csrf_field() ?>
                             <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>

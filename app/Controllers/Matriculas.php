@@ -44,7 +44,7 @@ class Matriculas extends BaseController
     {
         return view('matriculas/formulario', [
             'titulo'          => 'Nova matrícula',
-            'alunos'          => (new AlunoModel())->select('id, codigo, nome')->where('situacao', 'ATIVO')->orderBy('nome')->findAll(),
+            'alunos'          => (new AlunoModel())->buscarAtivosParaSelecao(),
             'turmas'          => (new TurmaModel())->buscarComOcupacao('ATIVA'),
             'turmaPreferida'  => (int) $this->request->getGet('turma_id'),
         ]);
@@ -77,7 +77,7 @@ class Matriculas extends BaseController
         return view('matriculas/trocar', [
             'titulo'    => 'Trocar de turma',
             'matricula' => $matricula,
-            'aluno'     => (new AlunoModel())->select('id, codigo, nome')->find($matricula['aluno_id']),
+            'aluno'     => (new AlunoModel())->buscarResumo((int) $matricula['aluno_id']),
             'turmas'    => array_filter(
                 (new TurmaModel())->buscarComOcupacao('ATIVA'),
                 static fn (array $turma): bool => (int) $turma['id'] !== (int) $matricula['turma_id'],
@@ -108,6 +108,31 @@ class Matriculas extends BaseController
         $resultado = $this->matriculaService->cancelar($id);
 
         return redirect()->to(url_to('matriculas'))->with($resultado['sucesso'] ? 'sucesso' : 'erro', $resultado['mensagem']);
+    }
+
+    /**
+     * Mostra os detalhes de uma matrícula, com as ações possíveis para a situação dela (HU03).
+     */
+    public function ver(int $id)
+    {
+        $matricula = $this->matriculaModel->buscarDetalhe($id);
+
+        if ($matricula === null) {
+            throw PageNotFoundException::forPageNotFound('Matrícula não encontrada.');
+        }
+
+        return view('matriculas/ver', ['titulo' => 'Matrícula de ' . $matricula['aluno_nome'], 'matricula' => $matricula]);
+    }
+
+    /**
+     * Exclui uma matrícula ativa sem frequência, lançada por engano (só proprietário).
+     */
+    public function excluir(int $id)
+    {
+        $resultado = $this->matriculaService->excluir($id);
+        $destino   = $resultado['sucesso'] ? url_to('matriculas') : url_to('matriculas_ver', $id);
+
+        return redirect()->to($destino)->with($resultado['sucesso'] ? 'sucesso' : 'erro', $resultado['mensagem']);
     }
 
     /**

@@ -53,6 +53,21 @@ class Modalidades extends BaseController
     }
 
     /**
+     * Mostra a modalidade com os professores habilitados e as turmas existentes (RF05).
+     */
+    public function ver(int $id)
+    {
+        $modalidade = $this->buscarOuFalhar($id);
+
+        return view('modalidades/ver', [
+            'titulo'      => $modalidade['nome'],
+            'modalidade'  => $modalidade,
+            'professores' => $this->modalidadeModel->buscarProfessoresHabilitados($id),
+            'turmas'      => $this->modalidadeModel->buscarTurmas($id),
+        ]);
+    }
+
+    /**
      * Exibe o formulário de edição preenchido.
      */
     public function editar(int $id)

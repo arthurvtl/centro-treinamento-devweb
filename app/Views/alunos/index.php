@@ -3,10 +3,10 @@
 <?= $this->section('conteudo') ?>
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
     <h1 class="h3 mb-0">Alunos</h1>
-    <a href="<?= url_to('alunos_novo') ?>" class="btn btn-primary">Novo aluno</a>
+    <a href="<?= esc(url_to('alunos_novo'), 'html') ?>" class="btn btn-primary">Novo aluno</a>
 </div>
 
-<form action="<?= url_to('alunos') ?>" method="get" class="row g-2 mb-3" role="search">
+<form action="<?= esc(url_to('alunos'), 'html') ?>" method="get" class="row g-2 mb-3" role="search">
     <div class="col-12 col-md-8">
         <label for="busca" class="visually-hidden">Buscar aluno</label>
         <input type="search" class="form-control" id="busca" name="busca" value="<?= esc($busca) ?>"
@@ -15,12 +15,12 @@
     <div class="col-12 col-md-4 d-flex gap-2">
         <button type="submit" class="btn btn-outline-primary">Buscar</button>
         <?php if ($busca !== '') : ?>
-            <a href="<?= url_to('alunos') ?>" class="btn btn-outline-secondary">Limpar</a>
+            <a href="<?= esc(url_to('alunos'), 'html') ?>" class="btn btn-outline-secondary">Limpar</a>
         <?php endif; ?>
     </div>
 </form>
 
-<div class="table-responsive">
+<div class="table-responsive position-relative">
     <table class="table table-striped table-hover align-middle bg-white">
         <caption class="visually-hidden">Lista de alunos cadastrados</caption>
         <thead>
@@ -49,8 +49,8 @@
                         </span>
                     </td>
                     <td class="text-end text-nowrap">
-                        <a href="<?= url_to('alunos_ver', $aluno['id']) ?>" class="btn btn-sm btn-outline-primary">Ver</a>
-                        <a href="<?= url_to('alunos_editar', $aluno['id']) ?>" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        <a href="<?= esc(url_to('alunos_ver', $aluno['id']), 'html') ?>" class="btn btn-sm btn-outline-primary">Ver</a>
+                        <a href="<?= esc(url_to('alunos_editar', $aluno['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Editar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

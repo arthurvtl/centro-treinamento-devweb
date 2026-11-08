@@ -11,7 +11,7 @@
 <h1 class="h3 mb-1">Inadimplentes</h1>
 <p class="text-muted">Alunos com mensalidade vencida e não quitada.</p>
 
-<div class="table-responsive">
+<div class="table-responsive position-relative">
     <table class="table table-striped align-middle bg-white">
         <caption class="visually-hidden">Alunos inadimplentes</caption>
         <thead>
@@ -35,11 +35,11 @@
                     <td><?= esc((string) $item['quantidade']) ?></td>
                     <td><?= esc(formatar_moeda($item['total'])) ?></td>
                     <td><?= esc(formatar_data($item['mais_antigo'])) ?></td>
-                    <td class="text-end"><a href="<?= url_to('mensalidades_aluno', $item['aluno_id']) ?>" class="btn btn-sm btn-outline-primary">Ver financeiro</a></td>
+                    <td class="text-end"><a href="<?= esc(url_to('mensalidades_aluno', $item['aluno_id']), 'html') ?>" class="btn btn-sm btn-outline-primary">Ver financeiro</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
-<a href="<?= url_to('mensalidades') ?>" class="btn btn-link px-0">Voltar para as mensalidades</a>
+<a href="<?= esc(url_to('mensalidades'), 'html') ?>" class="btn btn-link px-0">Voltar para as mensalidades</a>
 <?= $this->endSection() ?>

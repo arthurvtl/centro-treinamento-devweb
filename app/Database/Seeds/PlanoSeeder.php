@@ -38,7 +38,7 @@ class PlanoSeeder extends Seeder
 
         $alunos = $this->db->table('alunos')->select('id, data_matricula, situacao')->orderBy('id')->get()->getResultArray();
         $ativasPorAluno = array_column(
-            $this->db->query("SELECT aluno_id, COUNT(*) AS total FROM matriculas WHERE situacao = 'ATIVA' GROUP BY aluno_id")->getResultArray(),
+            $this->db->table('matriculas')->select('aluno_id, COUNT(*) AS total')->where('situacao', 'ATIVA')->groupBy('aluno_id')->get()->getResultArray(),
             'total',
             'aluno_id',
         );
@@ -57,7 +57,7 @@ class PlanoSeeder extends Seeder
             $inicio = $aluno['data_matricula'];
 
             if ($aluno['situacao'] !== 'ATIVO') {
-                $fim = $this->db->query('SELECT MAX(data_encerramento) AS fim FROM matriculas WHERE aluno_id = ?', [$aluno['id']])->getRow()->fim
+                $fim = $this->db->table('matriculas')->selectMax('data_encerramento', 'fim')->where('aluno_id', $aluno['id'])->get()->getRow()->fim
                     ?? DadosDemonstracao::diasAtras(30);
                 $this->vincular((int) $aluno['id'], $ids[$this->escolherPlano($i, (int) ($ativasPorAluno[$aluno['id']] ?? 0))], $inicio, $fim, 'ENCERRADO');
 

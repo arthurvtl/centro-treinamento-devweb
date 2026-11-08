@@ -9,10 +9,12 @@ use CodeIgniter\Router\RouteCollection;
  * Cada módulo tem seu grupo e rotas nomeadas (`as`), para as views usarem url_to().
  */
 
-// Acesso (público)
-$routes->get('/', static fn () => redirect()->to(site_url('painel')));
-$routes->get('login', 'Acesso::formularioLogin', ['as' => 'login']);
-$routes->post('login', 'Acesso::entrar', ['as' => 'login_entrar']);
+// Acesso (público): página inicial e login
+$routes->group('', static function (RouteCollection $routes): void {
+    $routes->get('/', static fn () => redirect()->to(site_url('painel')), ['as' => 'inicio']);
+    $routes->get('login', 'Acesso::formularioLogin', ['as' => 'login']);
+    $routes->post('login', 'Acesso::entrar', ['as' => 'login_entrar']);
+});
 
 // Área autenticada (RF20)
 $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection $routes): void {
@@ -37,6 +39,7 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
         $routes->get('', 'Modalidades::index', ['as' => 'modalidades']);
         $routes->get('novo', 'Modalidades::novo', ['as' => 'modalidades_novo']);
         $routes->post('criar', 'Modalidades::criar', ['as' => 'modalidades_criar']);
+        $routes->get('(:num)', 'Modalidades::ver/$1', ['as' => 'modalidades_ver']);
         $routes->get('(:num)/editar', 'Modalidades::editar/$1', ['as' => 'modalidades_editar']);
         $routes->post('(:num)/atualizar', 'Modalidades::atualizar/$1', ['as' => 'modalidades_atualizar']);
         $routes->post('(:num)/excluir', 'Modalidades::excluir/$1', ['as' => 'modalidades_excluir']);
@@ -46,6 +49,7 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
         $routes->get('', 'Professores::index', ['as' => 'professores']);
         $routes->get('novo', 'Professores::novo', ['as' => 'professores_novo']);
         $routes->post('criar', 'Professores::criar', ['as' => 'professores_criar']);
+        $routes->get('(:num)', 'Professores::ver/$1', ['as' => 'professores_ver']);
         $routes->get('(:num)/editar', 'Professores::editar/$1', ['as' => 'professores_editar']);
         $routes->post('(:num)/atualizar', 'Professores::atualizar/$1', ['as' => 'professores_atualizar']);
         $routes->post('(:num)/inativar', 'Professores::inativar/$1', ['as' => 'professores_inativar']);
@@ -78,12 +82,15 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
         $routes->post('(:num)/efetivar-troca', 'Matriculas::efetivarTroca/$1', ['as' => 'matriculas_efetivar_troca']);
         $routes->post('(:num)/cancelar', 'Matriculas::cancelar/$1', ['as' => 'matriculas_cancelar']);
         $routes->get('(:num)/certificado', 'Matriculas::certificado/$1', ['as' => 'matriculas_certificado']);
+        $routes->get('(:num)', 'Matriculas::ver/$1', ['as' => 'matriculas_ver']);
+        $routes->post('(:num)/excluir', 'Matriculas::excluir/$1', ['as' => 'matriculas_excluir', 'filter' => 'perfil:proprietario']);
     });
 
     // Frequência (HU04): recepcionista e proprietário
     $routes->group('frequencias', static function (RouteCollection $routes): void {
         $routes->get('', 'Frequencias::index', ['as' => 'frequencias']);
         $routes->post('registrar', 'Frequencias::registrar', ['as' => 'frequencias_registrar']);
+        $routes->post('turma/(:num)/chamada/(:segment)/excluir', 'Frequencias::excluir/$1/$2', ['as' => 'frequencias_excluir']);
         $routes->get('turma/(:num)/baixa-frequencia', 'Frequencias::baixaFrequencia/$1', ['as' => 'frequencias_baixa']);
     });
 
@@ -92,6 +99,7 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
         $routes->get('', 'Planos::index', ['as' => 'planos']);
         $routes->get('novo', 'Planos::novo', ['as' => 'planos_novo']);
         $routes->post('criar', 'Planos::criar', ['as' => 'planos_criar']);
+        $routes->get('(:num)', 'Planos::ver/$1', ['as' => 'planos_ver']);
         $routes->get('(:num)/editar', 'Planos::editar/$1', ['as' => 'planos_editar']);
         $routes->post('(:num)/atualizar', 'Planos::atualizar/$1', ['as' => 'planos_atualizar']);
         $routes->post('(:num)/inativar', 'Planos::inativar/$1', ['as' => 'planos_inativar']);
@@ -113,6 +121,9 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
             $routes->get('', 'Mensalidades::index', ['as' => 'mensalidades']);
             $routes->get('inadimplentes', 'Mensalidades::inadimplentes', ['as' => 'mensalidades_inadimplentes']);
             $routes->post('aluno/(:num)/criar', 'Mensalidades::criar/$1', ['as' => 'mensalidades_criar']);
+            $routes->get('(:num)/editar', 'Mensalidades::editar/$1', ['as' => 'mensalidades_editar']);
+            $routes->post('(:num)/atualizar', 'Mensalidades::atualizar/$1', ['as' => 'mensalidades_atualizar']);
+            $routes->post('(:num)/excluir', 'Mensalidades::excluir/$1', ['as' => 'mensalidades_excluir']);
         });
     });
 

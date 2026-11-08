@@ -7,7 +7,7 @@
  * @var list<array<string, mixed>> $professores
  * @var string                     $acao
  */
-$diasSemana     = \App\Models\TurmaModel::DIAS_SEMANA;
+$diasSemana     = rotulos_de('dias_semana');
 $diasMarcados   = (array) old('dias_semana', isset($turma['dias_semana']) ? explode(',', $turma['dias_semana']) : []);
 $modalidadeAtual = (int) old('modalidade_id', $turma['modalidade_id'] ?? 0);
 $professorAtual  = (int) old('professor_id', $turma['professor_id'] ?? 0);
@@ -17,7 +17,7 @@ $professorAtual  = (int) old('professor_id', $turma['professor_id'] ?? 0);
 <?= $this->section('conteudo') ?>
 <h1 class="h3 mb-3"><?= esc($titulo) ?></h1>
 
-<form action="<?= esc($acao, 'attr') ?>" method="post" novalidate>
+<form action="<?= esc($acao, 'html') ?>" method="post" novalidate>
     <?= csrf_field() ?>
     <fieldset class="card card-body mb-4">
         <legend class="h5">Dados da turma</legend>
@@ -89,7 +89,7 @@ $professorAtual  = (int) old('professor_id', $turma['professor_id'] ?? 0);
     </fieldset>
     <div class="d-flex gap-2">
         <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="<?= url_to('turmas') ?>" class="btn btn-outline-secondary">Cancelar</a>
+        <a href="<?= esc(url_to('turmas'), 'html') ?>" class="btn btn-outline-secondary">Cancelar</a>
     </div>
 </form>
 <?= $this->endSection() ?>
