@@ -126,6 +126,10 @@ class MatriculaService
      */
     private function conferirRegras(int $alunoId, int $turmaId): ?string
     {
+        if ($alunoId <= 0 || $turmaId <= 0) {
+            return 'Escolha o aluno e a turma.';
+        }
+
         $aluno = $this->alunoModel->find($alunoId);
         $turma = $this->turmaModel->buscarDetalhe($turmaId);
 
@@ -166,5 +170,30 @@ class MatriculaService
     private function travarTurma(int $turmaId): void
     {
         $this->turmaModel->travarParaMatricula($turmaId);
+    }
+
+    /**
+     * Exclui uma matrícula ativa lançada por engano, desde que ainda não tenha frequência.
+     *
+     * Matrícula com histórico (frequência, cancelada, transferida ou finalizada) não é apagada:
+     * o caminho correto é cancelar ou trocar de turma, para preservar o histórico do aluno.
+     *
+     * @return array{sucesso: bool, mensagem: string}
+     */
+    public function excluir(int $matriculaId): array
+    {
+        $matricula = $this->matriculaModel->find($matriculaId);
+
+        if ($matricula === null) {
+            return ['sucesso' => false, 'mensagem' => 'Matrícula não encontrada.'];
+        }
+
+        if ($matricula['situacao'] !== 'ATIVA' || $this->matriculaModel->possuiFrequencias($matriculaId)) {
+            return ['sucesso' => false, 'mensagem' => 'Só uma matrícula ativa e sem frequência pode ser excluída. Nos demais casos, cancele a matrícula.'];
+        }
+
+        $this->matriculaModel->delete($matriculaId);
+
+        return ['sucesso' => true, 'mensagem' => 'Matrícula excluída.'];
     }
 }

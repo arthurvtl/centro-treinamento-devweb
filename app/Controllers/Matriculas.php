@@ -111,6 +111,31 @@ class Matriculas extends BaseController
     }
 
     /**
+     * Mostra os detalhes de uma matrícula, com as ações possíveis para a situação dela (HU03).
+     */
+    public function ver(int $id)
+    {
+        $matricula = $this->matriculaModel->buscarDetalhe($id);
+
+        if ($matricula === null) {
+            throw PageNotFoundException::forPageNotFound('Matrícula não encontrada.');
+        }
+
+        return view('matriculas/ver', ['titulo' => 'Matrícula de ' . $matricula['aluno_nome'], 'matricula' => $matricula]);
+    }
+
+    /**
+     * Exclui uma matrícula ativa sem frequência, lançada por engano (só proprietário).
+     */
+    public function excluir(int $id)
+    {
+        $resultado = $this->matriculaService->excluir($id);
+        $destino   = $resultado['sucesso'] ? url_to('matriculas') : url_to('matriculas_ver', $id);
+
+        return redirect()->to($destino)->with($resultado['sucesso'] ? 'sucesso' : 'erro', $resultado['mensagem']);
+    }
+
+    /**
      * Exibe o certificado da matrícula finalizada com frequência mínima (RF23, RN09).
      */
     public function certificado(int $id)
