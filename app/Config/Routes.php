@@ -18,4 +18,17 @@ $routes->post('login', 'Acesso::entrar', ['as' => 'login_entrar']);
 $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection $routes): void {
     $routes->get('painel', 'Painel::index', ['as' => 'painel']);
     $routes->post('sair', 'Acesso::sair', ['as' => 'sair']);
+
+    // Alunos (HU01): recepcionista e proprietário; exclusão definitiva só do proprietário
+    $routes->group('alunos', static function (RouteCollection $routes): void {
+        $routes->get('', 'Alunos::index', ['as' => 'alunos']);
+        $routes->get('novo', 'Alunos::novo', ['as' => 'alunos_novo']);
+        $routes->post('criar', 'Alunos::criar', ['as' => 'alunos_criar']);
+        $routes->get('(:num)', 'Alunos::ver/$1', ['as' => 'alunos_ver']);
+        $routes->get('(:num)/editar', 'Alunos::editar/$1', ['as' => 'alunos_editar']);
+        $routes->post('(:num)/atualizar', 'Alunos::atualizar/$1', ['as' => 'alunos_atualizar']);
+        $routes->post('(:num)/inativar', 'Alunos::inativar/$1', ['as' => 'alunos_inativar']);
+        $routes->post('(:num)/reativar', 'Alunos::reativar/$1', ['as' => 'alunos_reativar']);
+        $routes->post('(:num)/excluir', 'Alunos::excluir/$1', ['as' => 'alunos_excluir', 'filter' => 'perfil:proprietario']);
+    });
 });
