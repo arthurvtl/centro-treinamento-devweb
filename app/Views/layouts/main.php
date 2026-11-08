@@ -2,6 +2,8 @@
 /**
  * Layout base: navbar por perfil (RF21), mensagens de retorno e Bootstrap 5.
  */
+// Garante o helper mesmo quando o layout é renderizado por um filtro (ex.: tela de acesso negado).
+helper('menu');
 $perfil    = session()->get('usuario_perfil');
 $ehDono    = $perfil === 'proprietario';
 $logado    = session()->get('usuario_id') !== null;
