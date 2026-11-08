@@ -85,8 +85,13 @@ class Mensalidades extends BaseController
     {
         $resultado = $this->pagamentoService->vincularPlano($alunoId, (int) $this->request->getPost('plano_id'));
 
-        return redirect()->to(url_to('mensalidades_aluno', $alunoId))
-            ->with($resultado['sucesso'] ? 'sucesso' : 'erro', $resultado['mensagem']);
+        $retorno = redirect()->to(url_to('mensalidades_aluno', $alunoId));
+
+        if (! $resultado['sucesso']) {
+            $retorno->withInput();
+        }
+
+        return $retorno->with($resultado['sucesso'] ? 'sucesso' : 'erro', $resultado['mensagem']);
     }
 
     /**
@@ -104,13 +109,63 @@ class Mensalidades extends BaseController
     }
 
     /**
+     * Exibe o formulário para corrigir valor e vencimento de uma mensalidade em aberto (só proprietário).
+     */
+    public function editar(int $id)
+    {
+        $mensalidade = $this->mensalidadeModel->buscarDetalhe($id);
+
+        if ($mensalidade === null) {
+            throw PageNotFoundException::forPageNotFound('Mensalidade não encontrada.');
+        }
+
+        // Mensalidade quitada é o registro do pagamento: nem abre para edição (RF24).
+        if ($mensalidade['situacao'] === 'PAGO') {
+            return redirect()->to(url_to('mensalidades_aluno', $mensalidade['aluno_id']))
+                ->with('erro', 'Mensalidade quitada não pode ser alterada: ela é o registro do pagamento.');
+        }
+
+        return view('mensalidades/formulario', ['titulo' => 'Editar mensalidade', 'mensalidade' => $mensalidade]);
+    }
+
+    /**
+     * Salva a correção da mensalidade em aberto (RF14).
+     */
+    public function atualizar(int $id)
+    {
+        $resultado = $this->pagamentoService->atualizarMensalidade($id, $this->request->getPost(['valor', 'vencimento']));
+
+        if (! $resultado['sucesso']) {
+            return redirect()->back()->withInput()->with('erros', $resultado['erros']);
+        }
+
+        return redirect()->to(url_to('mensalidades_aluno', $resultado['alunoId']))->with('sucesso', 'Mensalidade atualizada.');
+    }
+
+    /**
+     * Exclui uma mensalidade não paga, gerada por engano (só proprietário).
+     */
+    public function excluir(int $id)
+    {
+        $resultado = $this->pagamentoService->excluirMensalidade($id);
+        $destino   = $resultado['alunoId'] === null ? url_to('mensalidades') : url_to('mensalidades_aluno', $resultado['alunoId']);
+
+        return redirect()->to($destino)->with($resultado['sucesso'] ? 'sucesso' : 'erro', $resultado['mensagem']);
+    }
+
+    /**
      * Registra a quitação de uma mensalidade (RF14, RF25) e volta para a tela de origem.
      * A recepcionista também dá baixa: receber o pagamento no balcão é operação de atendimento, não relatório restrito (RN05).
      */
     public function quitar(int $id)
     {
         $resultado = $this->pagamentoService->quitar($id, $this->request->getPost(['data_pagamento', 'forma_pagamento']));
+        $retorno   = redirect()->back();
 
-        return redirect()->back()->with($resultado['sucesso'] ? 'sucesso' : 'erro', $resultado['mensagem']);
+        if (! $resultado['sucesso']) {
+            $retorno->withInput();
+        }
+
+        return $retorno->with($resultado['sucesso'] ? 'sucesso' : 'erro', $resultado['mensagem']);
     }
 }

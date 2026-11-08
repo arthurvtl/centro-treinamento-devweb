@@ -148,4 +148,72 @@ class PagamentoService
     {
         return $this->mensalidadeModel->alunoEstaAdimplente($alunoId);
     }
+
+    /**
+     * Corrige valor e vencimento de uma mensalidade que ainda não foi paga (RF14).
+     *
+     * Mensalidade quitada não muda: ela é o registro do pagamento (RF24). Depois da correção a
+     * mensalidade volta a EM_ABERTO e, se o novo vencimento já passou, a próxima consulta a marca
+     * como ATRASADO (RN07).
+     *
+     * @param array<string, mixed> $dados valor e vencimento
+     * @return array{sucesso: bool, erros: array<string, string>, alunoId: int|null}
+     */
+    public function atualizarMensalidade(int $mensalidadeId, array $dados): array
+    {
+        $mensalidade = $this->mensalidadeModel->find($mensalidadeId);
+
+        if ($mensalidade === null) {
+            return ['sucesso' => false, 'erros' => ['geral' => 'Mensalidade não encontrada.'], 'alunoId' => null];
+        }
+
+        $alunoId = (int) $this->alunoPlanoModel->find($mensalidade['aluno_plano_id'])['aluno_id'];
+
+        if ($mensalidade['situacao'] === 'PAGO') {
+            return ['sucesso' => false, 'erros' => ['geral' => 'Mensalidade quitada não pode ser alterada: ela é o registro do pagamento.'], 'alunoId' => $alunoId];
+        }
+
+        $novos = [
+            'aluno_plano_id' => (int) $mensalidade['aluno_plano_id'],
+            'valor'          => $this->planoModel->normalizarValor(['valor' => (string) ($dados['valor'] ?? '')])['valor'],
+            'vencimento'     => (string) ($dados['vencimento'] ?? ''),
+            'situacao'       => 'EM_ABERTO',
+        ];
+
+        if (! $this->mensalidadeModel->validate($novos)) {
+            return ['sucesso' => false, 'erros' => $this->mensalidadeModel->errors(), 'alunoId' => $alunoId];
+        }
+
+        if ($this->mensalidadeModel->existeNoVencimento($novos['aluno_plano_id'], $novos['vencimento'], $mensalidadeId)) {
+            return ['sucesso' => false, 'erros' => ['vencimento' => 'Já existe outra mensalidade deste plano com esse vencimento.'], 'alunoId' => $alunoId];
+        }
+
+        $this->mensalidadeModel->update($mensalidadeId, ['valor' => $novos['valor'], 'vencimento' => $novos['vencimento'], 'situacao' => 'EM_ABERTO']);
+
+        return ['sucesso' => true, 'erros' => [], 'alunoId' => $alunoId];
+    }
+
+    /**
+     * Exclui uma mensalidade ainda não paga, gerada por engano (RF14).
+     *
+     * @return array{sucesso: bool, mensagem: string, alunoId: int|null}
+     */
+    public function excluirMensalidade(int $mensalidadeId): array
+    {
+        $mensalidade = $this->mensalidadeModel->find($mensalidadeId);
+
+        if ($mensalidade === null) {
+            return ['sucesso' => false, 'mensagem' => 'Mensalidade não encontrada.', 'alunoId' => null];
+        }
+
+        $alunoId = (int) $this->alunoPlanoModel->find($mensalidade['aluno_plano_id'])['aluno_id'];
+
+        if ($mensalidade['situacao'] === 'PAGO') {
+            return ['sucesso' => false, 'mensagem' => 'Mensalidade quitada não pode ser excluída: ela faz parte do histórico de quitações.', 'alunoId' => $alunoId];
+        }
+
+        $this->mensalidadeModel->delete($mensalidadeId);
+
+        return ['sucesso' => true, 'mensagem' => 'Mensalidade excluída.', 'alunoId' => $alunoId];
+    }
 }

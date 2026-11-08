@@ -183,10 +183,17 @@ class MensalidadeModel extends Model
 
     /**
      * Informa se já existe mensalidade do vínculo com o mesmo vencimento, para não gerar em duplicidade.
+     * Na edição, `$ignorarId` tira a própria mensalidade da comparação.
      */
-    public function existeNoVencimento(int $alunoPlanoId, string $vencimento): bool
+    public function existeNoVencimento(int $alunoPlanoId, string $vencimento, ?int $ignorarId = null): bool
     {
-        return $this->where('aluno_plano_id', $alunoPlanoId)->where('vencimento', $vencimento)->countAllResults() > 0;
+        $this->where('aluno_plano_id', $alunoPlanoId)->where('vencimento', $vencimento);
+
+        if ($ignorarId !== null) {
+            $this->where('id !=', $ignorarId);
+        }
+
+        return $this->countAllResults() > 0;
     }
 
     /**
@@ -234,5 +241,22 @@ class MensalidadeModel extends Model
             'quantidade' => (int) array_sum(array_column($porVencimento, 'quantidade')),
             'por_forma'  => $porForma,
         ];
+    }
+
+    /**
+     * Busca uma mensalidade com aluno e plano, para a tela de edição (RF14).
+     *
+     * @return array<string, mixed>|null
+     */
+    public function buscarDetalhe(int $mensalidadeId): ?array
+    {
+        $this->atualizarAtrasadas();
+
+        return $this->select('mensalidades.*, aluno_planos.aluno_id, alunos.nome AS aluno_nome, alunos.codigo AS aluno_codigo, planos.nome AS plano_nome')
+            ->join('aluno_planos', 'aluno_planos.id = mensalidades.aluno_plano_id')
+            ->join('alunos', 'alunos.id = aluno_planos.aluno_id')
+            ->join('planos', 'planos.id = aluno_planos.plano_id')
+            ->where('mensalidades.id', $mensalidadeId)
+            ->first();
     }
 }
