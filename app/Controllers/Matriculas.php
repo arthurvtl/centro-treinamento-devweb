@@ -111,6 +111,20 @@ class Matriculas extends BaseController
     }
 
     /**
+     * Exibe o certificado da matrícula finalizada com frequência mínima (RF23, RN09).
+     */
+    public function certificado(int $id)
+    {
+        $certificado = $this->matriculaModel->buscarCertificado($id);
+
+        if ($certificado === null) {
+            throw PageNotFoundException::forPageNotFound('Certificado não encontrado para esta matrícula.');
+        }
+
+        return view('matriculas/certificado', ['titulo' => 'Certificado', 'certificado' => $certificado]);
+    }
+
+    /**
      * Busca a matrícula ATIVA ou responde 404.
      *
      * @return array<string, mixed>

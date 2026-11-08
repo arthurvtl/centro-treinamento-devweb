@@ -67,4 +67,23 @@ class ModalidadeModel extends Model
     {
         return $this->db->table('turmas')->where('modalidade_id', $modalidadeId)->countAllResults() > 0;
     }
+
+    /**
+     * Conta quantos alunos distintos têm matrícula ATIVA em cada modalidade (RF17).
+     *
+     * DISTINCT porque um aluno com duas turmas da mesma modalidade deve ser contado uma vez.
+     * Modalidades sem alunos aparecem com zero.
+     *
+     * @return list<array<string, mixed>> id, nome, categoria, alunos
+     */
+    public function contarAlunosPorModalidade(): array
+    {
+        return $this->db->table('modalidades')
+            ->select('modalidades.id, modalidades.nome, modalidades.categoria, COUNT(DISTINCT matriculas.aluno_id) AS alunos', false)
+            ->join('turmas', 'turmas.modalidade_id = modalidades.id', 'left')
+            ->join('matriculas', 'matriculas.turma_id = turmas.id AND matriculas.situacao = "ATIVA"', 'left')
+            ->groupBy('modalidades.id, modalidades.nome, modalidades.categoria')
+            ->orderBy('modalidades.nome')
+            ->get()->getResultArray();
+    }
 }

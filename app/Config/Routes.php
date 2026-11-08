@@ -64,6 +64,7 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
             $routes->post('(:num)/atualizar', 'Turmas::atualizar/$1', ['as' => 'turmas_atualizar']);
             $routes->post('(:num)/suspender', 'Turmas::suspender/$1', ['as' => 'turmas_suspender']);
             $routes->post('(:num)/reativar', 'Turmas::reativar/$1', ['as' => 'turmas_reativar']);
+            $routes->post('(:num)/encerrar', 'Turmas::encerrar/$1', ['as' => 'turmas_encerrar']);
             $routes->post('(:num)/excluir', 'Turmas::excluir/$1', ['as' => 'turmas_excluir']);
         });
     });
@@ -76,6 +77,7 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
         $routes->get('(:num)/trocar', 'Matriculas::trocar/$1', ['as' => 'matriculas_trocar']);
         $routes->post('(:num)/efetivar-troca', 'Matriculas::efetivarTroca/$1', ['as' => 'matriculas_efetivar_troca']);
         $routes->post('(:num)/cancelar', 'Matriculas::cancelar/$1', ['as' => 'matriculas_cancelar']);
+        $routes->get('(:num)/certificado', 'Matriculas::certificado/$1', ['as' => 'matriculas_certificado']);
     });
 
     // Frequência (HU04): recepcionista e proprietário
@@ -104,5 +106,11 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
         $routes->post('aluno/(:num)/plano', 'Mensalidades::vincularPlano/$1', ['as' => 'mensalidades_vincular_plano']);
         $routes->post('aluno/(:num)/criar', 'Mensalidades::criar/$1', ['as' => 'mensalidades_criar']);
         $routes->post('(:num)/quitar', 'Mensalidades::quitar/$1', ['as' => 'mensalidades_quitar']);
+    });
+
+    // Relatórios (HU06): operacionais para os dois perfis; financeiro só do proprietário (RN05)
+    $routes->group('relatorios', static function (RouteCollection $routes): void {
+        $routes->get('', 'Relatorios::index', ['as' => 'relatorios']);
+        $routes->get('financeiro', 'Relatorios::financeiro', ['as' => 'relatorios_financeiro', 'filter' => 'perfil:proprietario']);
     });
 });

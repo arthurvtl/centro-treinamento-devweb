@@ -88,4 +88,37 @@ class MatriculaModel extends Model
             ->orderBy('alunos.nome')
             ->findAll();
     }
+
+    /**
+     * Lista as matrículas FINALIZADAS de uma turma encerrada, com a indicação de certificado (RF23, RN09).
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function buscarFinalizadasDaTurma(int $turmaId): array
+    {
+        return $this->select('matriculas.id, matriculas.certificado_emitido, alunos.nome AS aluno_nome, alunos.codigo AS aluno_codigo')
+            ->join('alunos', 'alunos.id = matriculas.aluno_id')
+            ->where('matriculas.turma_id', $turmaId)
+            ->where('matriculas.situacao', 'FINALIZADA')
+            ->orderBy('alunos.nome')
+            ->findAll();
+    }
+
+    /**
+     * Busca os dados do certificado de uma matrícula, ou null se ela não tem certificado emitido (RN09).
+     *
+     * @return array<string, mixed>|null
+     */
+    public function buscarCertificado(int $matriculaId): ?array
+    {
+        return $this->select('matriculas.*, alunos.nome AS aluno_nome, alunos.codigo AS aluno_codigo, '
+                . 'turmas.nome AS turma_nome, modalidades.nome AS modalidade_nome, professores.nome AS professor_nome')
+            ->join('alunos', 'alunos.id = matriculas.aluno_id')
+            ->join('turmas', 'turmas.id = matriculas.turma_id')
+            ->join('modalidades', 'modalidades.id = turmas.modalidade_id')
+            ->join('professores', 'professores.id = turmas.professor_id')
+            ->where('matriculas.id', $matriculaId)
+            ->where('matriculas.certificado_emitido', 1)
+            ->first();
+    }
 }

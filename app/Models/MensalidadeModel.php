@@ -188,4 +188,47 @@ class MensalidadeModel extends Model
     {
         return $this->where('aluno_plano_id', $alunoPlanoId)->where('vencimento', $vencimento)->countAllResults() > 0;
     }
+
+    /**
+     * Garante um mês no formato AAAA-MM; qualquer valor inválido vira o mês atual (RF19).
+     */
+    public function normalizarMes(?string $mes): string
+    {
+        return ($mes !== null && preg_match('/^\d{4}-(0[1-9]|1[0-2])$/', $mes)) ? $mes : date('Y-m');
+    }
+
+    /**
+     * Consolida o financeiro de um mês: previsto, recebido, em aberto, atrasado e recebido por forma (RF19).
+     *
+     * "Previsto/em aberto/atrasado" olham o mês de vencimento; "recebido" olha o mês em que o
+     * dinheiro entrou (data do pagamento), porque é isso que o proprietário confere no caixa.
+     *
+     * @return array{previsto: float, recebido: float, em_aberto: float, atrasado: float, quantidade: int, por_forma: array<string, float>}
+     */
+    public function resumirMes(string $mes): array
+    {
+        $this->atualizarAtrasadas();
+
+        $porVencimento = $this->db->table($this->table)
+            ->select('situacao, COUNT(*) AS quantidade, COALESCE(SUM(valor), 0) AS total')
+            ->where("DATE_FORMAT(vencimento, '%Y-%m') =", $mes)
+            ->groupBy('situacao')->get()->getResultArray();
+        $total = array_column($porVencimento, 'total', 'situacao');
+
+        $recebidas = $this->db->table($this->table)
+            ->select('forma_pagamento, COALESCE(SUM(valor), 0) AS total')
+            ->where('situacao', 'PAGO')
+            ->where("DATE_FORMAT(data_pagamento, '%Y-%m') =", $mes)
+            ->groupBy('forma_pagamento')->get()->getResultArray();
+        $porForma = array_map('floatval', array_column($recebidas, 'total', 'forma_pagamento'));
+
+        return [
+            'previsto'   => (float) array_sum($total),
+            'recebido'   => array_sum($porForma),
+            'em_aberto'  => (float) ($total['EM_ABERTO'] ?? 0),
+            'atrasado'   => (float) ($total['ATRASADO'] ?? 0),
+            'quantidade' => (int) array_sum(array_column($porVencimento, 'quantidade')),
+            'por_forma'  => $porForma,
+        ];
+    }
 }
