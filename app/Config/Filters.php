@@ -80,8 +80,8 @@ class Filters extends BaseFilters
             'csrf',
         ],
         'after' => [
-            // 'honeypot',
-            // 'secureheaders',
+            // Cabeçalhos de segurança (X-Frame-Options, nosniff etc.) em todas as respostas.
+            'secureheaders',
         ],
     ];
 
