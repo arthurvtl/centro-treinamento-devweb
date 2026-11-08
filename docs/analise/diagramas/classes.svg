@@ -10,13 +10,12 @@
 <title>Classes</title>
 <polygon fill="white" stroke="none" points="-28.8,28.8 -28.8,-992.8 1711.67,-992.8 1711.67,28.8 -28.8,28.8"/>
 <text xml:space="preserve" text-anchor="start" x="729.69" y="-943.9" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="18.00">Diagrama de Classes UML</text>
-<text xml:space="preserve" text-anchor="start" x="706.44" y="-931.6" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#4b5563">Sistema de Gestão de Centro de Treinamento (CT)</text>
+<text xml:space="preserve" text-anchor="start" x="706.44" y="-931.6" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">Sistema de Gestão de Centro de Treinamento (CT)</text>
 <text xml:space="preserve" text-anchor="start" x="838.81" y="-913.9" font-family="Helvetica,sans-Serif" font-size="18.00"> </text>
 <!-- Usuario -->
 <g id="node1" class="node">
 <title>Usuario</title>
-<polygon fill="none" stroke="#1e3a8a" points="18.88,-604.5 18.88,-765.5 223.12,-765.5 223.12,-604.5 18.88,-604.5"/>
-<polygon fill="#dbeafe" stroke="none" points="19.88,-741.5 19.88,-764.5 222.12,-764.5 222.12,-741.5 19.88,-741.5"/>
+<polygon fill="none" stroke="#000000" points="18.88,-604.5 18.88,-765.5 223.12,-765.5 223.12,-604.5 18.88,-604.5"/>
 <text xml:space="preserve" text-anchor="start" x="95.88" y="-748.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">Usuario</text>
 <text xml:space="preserve" text-anchor="start" x="23.88" y="-726.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; id : int</text>
 <text xml:space="preserve" text-anchor="start" x="23.88" y="-711.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; nome : String</text>
@@ -24,15 +23,13 @@
 <text xml:space="preserve" text-anchor="start" x="23.88" y="-681.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; senhaHash : String</text>
 <text xml:space="preserve" text-anchor="start" x="23.88" y="-666.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; perfil : Perfil</text>
 <text xml:space="preserve" text-anchor="start" x="23.88" y="-651.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; situacao : SituacaoCadastro</text>
-<polygon fill="#f8fafc" stroke="none" points="19.88,-605.5 19.88,-643.5 222.12,-643.5 222.12,-605.5 19.88,-605.5"/>
 <text xml:space="preserve" text-anchor="start" x="23.88" y="-628.25" font-family="Helvetica,sans-Serif" font-size="14.00">+ autenticar(email, senha) : bool</text>
 <text xml:space="preserve" text-anchor="start" x="23.88" y="-613.25" font-family="Helvetica,sans-Serif" font-size="14.00">+ temPermissao(acao) : bool</text>
 </g>
 <!-- Aluno -->
 <g id="node2" class="node">
 <title>Aluno</title>
-<polygon fill="none" stroke="#1e3a8a" points="291,-559.5 291,-810.5 541,-810.5 541,-559.5 291,-559.5"/>
-<polygon fill="#dbeafe" stroke="none" points="292,-786.5 292,-809.5 540,-809.5 540,-786.5 292,-786.5"/>
+<polygon fill="none" stroke="#000000" points="291,-559.5 291,-810.5 541,-810.5 541,-559.5 291,-559.5"/>
 <text xml:space="preserve" text-anchor="start" x="396.88" y="-793.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">Aluno</text>
 <text xml:space="preserve" text-anchor="start" x="296" y="-771.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; id : int</text>
 <text xml:space="preserve" text-anchor="start" x="296" y="-756.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; codigo : String {único, somente leitura}</text>
@@ -46,15 +43,13 @@
 <text xml:space="preserve" text-anchor="start" x="296" y="-636.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; condicaoSaude : String</text>
 <text xml:space="preserve" text-anchor="start" x="296" y="-621.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; contatoEmergencia : String</text>
 <text xml:space="preserve" text-anchor="start" x="296" y="-606.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; situacao : SituacaoCadastro</text>
-<polygon fill="#f8fafc" stroke="none" points="292,-560.5 292,-598.5 540,-598.5 540,-560.5 292,-560.5"/>
 <text xml:space="preserve" text-anchor="start" x="296" y="-583.25" font-family="Helvetica,sans-Serif" font-size="14.00">+ isMenorDeIdade() : bool</text>
 <text xml:space="preserve" text-anchor="start" x="296" y="-568.25" font-family="Helvetica,sans-Serif" font-size="14.00">+ gerarCodigo() : String</text>
 </g>
 <!-- ResponsavelLegal -->
 <g id="node3" class="node">
 <title>ResponsavelLegal</title>
-<polygon fill="none" stroke="#1e3a8a" points="609.25,-623.5 609.25,-746.5 740.75,-746.5 740.75,-623.5 609.25,-623.5"/>
-<polygon fill="#dbeafe" stroke="none" points="610.25,-722.5 610.25,-745.5 739.75,-745.5 739.75,-722.5 610.25,-722.5"/>
+<polygon fill="none" stroke="#000000" points="609.25,-623.5 609.25,-746.5 740.75,-746.5 740.75,-623.5 609.25,-623.5"/>
 <text xml:space="preserve" text-anchor="start" x="615.75" y="-729.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">ResponsavelLegal</text>
 <text xml:space="preserve" text-anchor="start" x="614.25" y="-707.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; id : int</text>
 <text xml:space="preserve" text-anchor="start" x="614.25" y="-692.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; nome : String</text>
@@ -66,60 +61,55 @@
 <!-- Aluno&#45;&gt;ResponsavelLegal -->
 <g id="edge1" class="edge">
 <title>Aluno&#45;&gt;ResponsavelLegal</title>
-<path fill="none" stroke="#334155" d="M540.95,-685C564.62,-685 588.5,-685 609.41,-685"/>
-<text xml:space="preserve" text-anchor="middle" x="583.99" y="-673.6" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">possui</text>
-<text xml:space="preserve" text-anchor="middle" x="599.66" y="-686.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">0..1</text>
-<text xml:space="preserve" text-anchor="middle" x="544.32" y="-686.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">1</text>
+<path fill="none" stroke="#000000" d="M540.95,-685C564.62,-685 588.5,-685 609.41,-685"/>
+<text xml:space="preserve" text-anchor="middle" x="583.99" y="-673.6" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">possui</text>
+<text xml:space="preserve" text-anchor="middle" x="599.66" y="-686.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">0..1</text>
+<text xml:space="preserve" text-anchor="middle" x="544.32" y="-686.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">1</text>
 </g>
 <!-- Matricula -->
 <g id="node7" class="node">
 <title>Matricula</title>
-<polygon fill="none" stroke="#1e3a8a" points="0,-238.5 0,-384.5 220,-384.5 220,-238.5 0,-238.5"/>
-<polygon fill="#dbeafe" stroke="none" points="1,-360.5 1,-383.5 219,-383.5 219,-360.5 1,-360.5"/>
+<polygon fill="none" stroke="#000000" points="0,-238.5 0,-384.5 220,-384.5 220,-238.5 0,-238.5"/>
 <text xml:space="preserve" text-anchor="start" x="80" y="-367.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">Matricula</text>
 <text xml:space="preserve" text-anchor="start" x="5" y="-345.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; id : int</text>
 <text xml:space="preserve" text-anchor="start" x="5" y="-330.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; dataMatricula : Date</text>
 <text xml:space="preserve" text-anchor="start" x="5" y="-315.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; situacao : SituacaoMatricula</text>
 <text xml:space="preserve" text-anchor="start" x="5" y="-300.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; dataEncerramento : Date</text>
 <text xml:space="preserve" text-anchor="start" x="5" y="-285.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; certificadoEmitido : bool</text>
-<polygon fill="#f8fafc" stroke="none" points="1,-239.5 1,-277.5 219,-277.5 219,-239.5 1,-239.5"/>
 <text xml:space="preserve" text-anchor="start" x="5" y="-262.25" font-family="Helvetica,sans-Serif" font-size="14.00">+ percentualFrequencia() : decimal</text>
 <text xml:space="preserve" text-anchor="start" x="5" y="-247.25" font-family="Helvetica,sans-Serif" font-size="14.00">+ transferir(destino : Turma) : void</text>
 </g>
 <!-- Aluno&#45;&gt;Matricula -->
 <g id="edge2" class="edge">
 <title>Aluno&#45;&gt;Matricula</title>
-<path fill="none" stroke="#334155" d="M291.09,-582C210.04,-582 119.44,-582 119.44,-582 119.44,-582 119.44,-464.46 119.44,-384.34"/>
-<text xml:space="preserve" text-anchor="middle" x="101.44" y="-570.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">realiza</text>
-<text xml:space="preserve" text-anchor="middle" x="110.81" y="-385.69" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">0..*</text>
-<text xml:space="preserve" text-anchor="middle" x="287.72" y="-583.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">1</text>
+<path fill="none" stroke="#000000" d="M291.09,-582C210.04,-582 119.44,-582 119.44,-582 119.44,-582 119.44,-464.46 119.44,-384.34"/>
+<text xml:space="preserve" text-anchor="middle" x="101.44" y="-570.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">realiza</text>
+<text xml:space="preserve" text-anchor="middle" x="110.81" y="-385.69" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">0..*</text>
+<text xml:space="preserve" text-anchor="middle" x="287.72" y="-583.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">1</text>
 </g>
 <!-- AlunoPlano -->
 <g id="node10" class="node">
 <title>AlunoPlano</title>
-<polygon fill="none" stroke="#1e3a8a" points="1110.38,-253.5 1110.38,-369.5 1311.62,-369.5 1311.62,-253.5 1110.38,-253.5"/>
-<polygon fill="#dbeafe" stroke="none" points="1111.38,-345.5 1111.38,-368.5 1310.62,-368.5 1310.62,-345.5 1111.38,-345.5"/>
+<polygon fill="none" stroke="#000000" points="1110.38,-253.5 1110.38,-369.5 1311.62,-369.5 1311.62,-253.5 1110.38,-253.5"/>
 <text xml:space="preserve" text-anchor="start" x="1173.5" y="-352.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">AlunoPlano</text>
 <text xml:space="preserve" text-anchor="start" x="1115.38" y="-330.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; id : int</text>
 <text xml:space="preserve" text-anchor="start" x="1115.38" y="-315.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; dataInicio : Date</text>
 <text xml:space="preserve" text-anchor="start" x="1115.38" y="-300.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; dataFim : Date</text>
 <text xml:space="preserve" text-anchor="start" x="1115.38" y="-285.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; situacao : SituacaoAlunoPlano</text>
-<polygon fill="#f8fafc" stroke="none" points="1111.38,-254.5 1111.38,-277.5 1310.62,-277.5 1310.62,-254.5 1111.38,-254.5"/>
 <text xml:space="preserve" text-anchor="start" x="1115.38" y="-262.25" font-family="Helvetica,sans-Serif" font-size="14.00">+ isAdimplente() : bool</text>
 </g>
 <!-- Aluno&#45;&gt;AlunoPlano -->
 <g id="edge8" class="edge">
 <title>Aluno&#45;&gt;AlunoPlano</title>
-<path fill="none" stroke="#334155" d="M540.73,-592C757.08,-592 1179.08,-592 1179.08,-592 1179.08,-592 1179.08,-451.39 1179.08,-369.28"/>
-<text xml:space="preserve" text-anchor="middle" x="953.64" y="-593.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">assina</text>
-<text xml:space="preserve" text-anchor="middle" x="1170.46" y="-370.63" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">0..*</text>
-<text xml:space="preserve" text-anchor="middle" x="544.1" y="-593.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">1</text>
+<path fill="none" stroke="#000000" d="M540.73,-592C757.08,-592 1179.08,-592 1179.08,-592 1179.08,-592 1179.08,-451.39 1179.08,-369.28"/>
+<text xml:space="preserve" text-anchor="middle" x="953.64" y="-593.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">assina</text>
+<text xml:space="preserve" text-anchor="middle" x="1170.46" y="-370.63" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">0..*</text>
+<text xml:space="preserve" text-anchor="middle" x="544.1" y="-593.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">1</text>
 </g>
 <!-- Professor -->
 <g id="node4" class="node">
 <title>Professor</title>
-<polygon fill="none" stroke="#1e3a8a" points="288.38,-238.5 288.38,-384.5 519.62,-384.5 519.62,-238.5 288.38,-238.5"/>
-<polygon fill="#dbeafe" stroke="none" points="289.38,-360.5 289.38,-383.5 518.62,-383.5 518.62,-360.5 289.38,-360.5"/>
+<polygon fill="none" stroke="#000000" points="288.38,-238.5 288.38,-384.5 519.62,-384.5 519.62,-238.5 288.38,-238.5"/>
 <text xml:space="preserve" text-anchor="start" x="372.5" y="-367.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">Professor</text>
 <text xml:space="preserve" text-anchor="start" x="293.38" y="-345.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; id : int</text>
 <text xml:space="preserve" text-anchor="start" x="293.38" y="-330.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; nome : String</text>
@@ -127,14 +117,12 @@
 <text xml:space="preserve" text-anchor="start" x="293.38" y="-300.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; telefone : String</text>
 <text xml:space="preserve" text-anchor="start" x="293.38" y="-285.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; email : String</text>
 <text xml:space="preserve" text-anchor="start" x="293.38" y="-270.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; situacao : SituacaoCadastro</text>
-<polygon fill="#f8fafc" stroke="none" points="289.38,-239.5 289.38,-262.5 518.62,-262.5 518.62,-239.5 289.38,-239.5"/>
 <text xml:space="preserve" text-anchor="start" x="293.38" y="-247.25" font-family="Helvetica,sans-Serif" font-size="14.00">+ isHabilitado(m : Modalidade) : bool</text>
 </g>
 <!-- Modalidade -->
 <g id="node5" class="node">
 <title>Modalidade</title>
-<polygon fill="none" stroke="#1e3a8a" points="588,-257.5 588,-365.5 802,-365.5 802,-257.5 588,-257.5"/>
-<polygon fill="#dbeafe" stroke="none" points="589,-341.5 589,-364.5 801,-364.5 801,-341.5 589,-341.5"/>
+<polygon fill="none" stroke="#000000" points="588,-257.5 588,-365.5 802,-365.5 802,-257.5 588,-257.5"/>
 <text xml:space="preserve" text-anchor="start" x="657.5" y="-348.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">Modalidade</text>
 <text xml:space="preserve" text-anchor="start" x="593" y="-326.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; id : int</text>
 <text xml:space="preserve" text-anchor="start" x="593" y="-311.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; nome : String {único}</text>
@@ -145,16 +133,15 @@
 <!-- Professor&#45;&gt;Modalidade -->
 <g id="edge7" class="edge">
 <title>Professor&#45;&gt;Modalidade</title>
-<path fill="none" stroke="#334155" d="M519.43,-312C542.12,-312 565.83,-312 588.22,-312"/>
-<text xml:space="preserve" text-anchor="middle" x="553.83" y="-300.6" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">apto a ministrar</text>
-<text xml:space="preserve" text-anchor="middle" x="579.6" y="-313.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">1..*</text>
-<text xml:space="preserve" text-anchor="middle" x="528.05" y="-313.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">0..*</text>
+<path fill="none" stroke="#000000" d="M519.43,-312C542.12,-312 565.83,-312 588.22,-312"/>
+<text xml:space="preserve" text-anchor="middle" x="553.83" y="-300.6" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">apto a ministrar</text>
+<text xml:space="preserve" text-anchor="middle" x="579.6" y="-313.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">1..*</text>
+<text xml:space="preserve" text-anchor="middle" x="528.05" y="-313.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">0..*</text>
 </g>
 <!-- Turma -->
 <g id="node6" class="node">
 <title>Turma</title>
-<polygon fill="none" stroke="#1e3a8a" points="870,-201 870,-422 1042,-422 1042,-201 870,-201"/>
-<polygon fill="#dbeafe" stroke="none" points="871,-398 871,-421 1041,-421 1041,-398 871,-398"/>
+<polygon fill="none" stroke="#000000" points="870,-201 870,-422 1042,-422 1042,-201 870,-201"/>
 <text xml:space="preserve" text-anchor="start" x="935" y="-404.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">Turma</text>
 <text xml:space="preserve" text-anchor="start" x="875" y="-382.75" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; id : int</text>
 <text xml:space="preserve" text-anchor="start" x="875" y="-367.75" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; nome : String</text>
@@ -165,7 +152,6 @@
 <text xml:space="preserve" text-anchor="start" x="875" y="-292.75" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; situacao : SituacaoTurma</text>
 <text xml:space="preserve" text-anchor="start" x="875" y="-277.75" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; dataInicio : Date</text>
 <text xml:space="preserve" text-anchor="start" x="875" y="-262.75" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; dataTermino : Date</text>
-<polygon fill="#f8fafc" stroke="none" points="871,-202 871,-255 1041,-255 1041,-202 871,-202"/>
 <text xml:space="preserve" text-anchor="start" x="875" y="-239.75" font-family="Helvetica,sans-Serif" font-size="14.00">+ vagasDisponiveis() : int</text>
 <text xml:space="preserve" text-anchor="start" x="875" y="-224.75" font-family="Helvetica,sans-Serif" font-size="14.00">+ aceitaMatricula() : bool</text>
 <text xml:space="preserve" text-anchor="start" x="875" y="-209.75" font-family="Helvetica,sans-Serif" font-size="14.00">+ encerrar() : void</text>
@@ -173,32 +159,31 @@
 <!-- Professor&#45;&gt;Turma -->
 <g id="edge6" class="edge">
 <title>Professor&#45;&gt;Turma</title>
-<path fill="none" stroke="#334155" d="M519.38,-375C624,-375 775.83,-375 870.1,-375"/>
-<text xml:space="preserve" text-anchor="middle" x="673.74" y="-376.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">ministra</text>
-<text xml:space="preserve" text-anchor="middle" x="861.48" y="-376.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">0..*</text>
-<text xml:space="preserve" text-anchor="middle" x="522.76" y="-376.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">1</text>
+<path fill="none" stroke="#000000" d="M519.38,-375C624,-375 775.83,-375 870.1,-375"/>
+<text xml:space="preserve" text-anchor="middle" x="673.74" y="-376.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">ministra</text>
+<text xml:space="preserve" text-anchor="middle" x="861.48" y="-376.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">0..*</text>
+<text xml:space="preserve" text-anchor="middle" x="522.76" y="-376.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">1</text>
 </g>
 <!-- Modalidade&#45;&gt;Turma -->
 <g id="edge5" class="edge">
 <title>Modalidade&#45;&gt;Turma</title>
-<path fill="none" stroke="#334155" d="M801.91,-312C824.72,-312 848.52,-312 870.4,-312"/>
-<text xml:space="preserve" text-anchor="middle" x="836.16" y="-300.6" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">classifica</text>
-<text xml:space="preserve" text-anchor="middle" x="861.78" y="-313.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">0..*</text>
-<text xml:space="preserve" text-anchor="middle" x="805.29" y="-313.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">1</text>
+<path fill="none" stroke="#000000" d="M801.91,-312C824.72,-312 848.52,-312 870.4,-312"/>
+<text xml:space="preserve" text-anchor="middle" x="836.16" y="-300.6" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">classifica</text>
+<text xml:space="preserve" text-anchor="middle" x="861.78" y="-313.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">0..*</text>
+<text xml:space="preserve" text-anchor="middle" x="805.29" y="-313.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">1</text>
 </g>
 <!-- Turma&#45;&gt;Matricula -->
 <g id="edge3" class="edge">
 <title>Turma&#45;&gt;Matricula</title>
-<path fill="none" stroke="#334155" d="M870.07,-220C672.05,-220 200.5,-220 200.5,-220 200.5,-220 200.5,-227.65 200.5,-238.52"/>
-<text xml:space="preserve" text-anchor="middle" x="507.65" y="-221.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">recebe</text>
-<text xml:space="preserve" text-anchor="middle" x="191.88" y="-227.12" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">0..*</text>
-<text xml:space="preserve" text-anchor="middle" x="866.7" y="-221.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">1</text>
+<path fill="none" stroke="#000000" d="M870.07,-220C672.05,-220 200.5,-220 200.5,-220 200.5,-220 200.5,-227.65 200.5,-238.52"/>
+<text xml:space="preserve" text-anchor="middle" x="507.65" y="-221.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">recebe</text>
+<text xml:space="preserve" text-anchor="middle" x="191.88" y="-227.12" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">0..*</text>
+<text xml:space="preserve" text-anchor="middle" x="866.7" y="-221.35" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">1</text>
 </g>
 <!-- Frequencia -->
 <g id="node8" class="node">
 <title>Frequencia</title>
-<polygon fill="none" stroke="#1e3a8a" points="39,-34 39,-127 181,-127 181,-34 39,-34"/>
-<polygon fill="#dbeafe" stroke="none" points="40,-103 40,-126 180,-126 180,-103 40,-103"/>
+<polygon fill="none" stroke="#000000" points="39,-34 39,-127 181,-127 181,-34 39,-34"/>
 <text xml:space="preserve" text-anchor="start" x="74" y="-109.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">Frequencia</text>
 <text xml:space="preserve" text-anchor="start" x="44" y="-87.75" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; id : int</text>
 <text xml:space="preserve" text-anchor="start" x="44" y="-72.75" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; dataAula : Date</text>
@@ -208,16 +193,15 @@
 <!-- Matricula&#45;&gt;Frequencia -->
 <g id="edge4" class="edge">
 <title>Matricula&#45;&gt;Frequencia</title>
-<path fill="none" stroke="#334155" d="M110,-238.73C110,-202.09 110,-158.79 110,-126.75"/>
-<text xml:space="preserve" text-anchor="middle" x="90.12" y="-184.09" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">registra</text>
-<text xml:space="preserve" text-anchor="middle" x="101.38" y="-128.1" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">0..*</text>
-<text xml:space="preserve" text-anchor="middle" x="106.62" y="-227.33" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">1</text>
+<path fill="none" stroke="#000000" d="M110,-238.73C110,-202.09 110,-158.79 110,-126.75"/>
+<text xml:space="preserve" text-anchor="middle" x="90.12" y="-184.09" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">registra</text>
+<text xml:space="preserve" text-anchor="middle" x="101.38" y="-128.1" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">0..*</text>
+<text xml:space="preserve" text-anchor="middle" x="106.62" y="-227.33" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">1</text>
 </g>
 <!-- Plano -->
 <g id="node9" class="node">
 <title>Plano</title>
-<polygon fill="none" stroke="#1e3a8a" points="1115.25,-623.5 1115.25,-746.5 1306.75,-746.5 1306.75,-623.5 1115.25,-623.5"/>
-<polygon fill="#dbeafe" stroke="none" points="1116.25,-722.5 1116.25,-745.5 1305.75,-745.5 1305.75,-722.5 1116.25,-722.5"/>
+<polygon fill="none" stroke="#000000" points="1115.25,-623.5 1115.25,-746.5 1306.75,-746.5 1306.75,-623.5 1115.25,-623.5"/>
 <text xml:space="preserve" text-anchor="start" x="1192.62" y="-729.2" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">Plano</text>
 <text xml:space="preserve" text-anchor="start" x="1120.25" y="-707.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; id : int</text>
 <text xml:space="preserve" text-anchor="start" x="1120.25" y="-692.25" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; nome : String</text>
@@ -229,16 +213,15 @@
 <!-- Plano&#45;&gt;AlunoPlano -->
 <g id="edge9" class="edge">
 <title>Plano&#45;&gt;AlunoPlano</title>
-<path fill="none" stroke="#334155" d="M1242.92,-623.74C1242.92,-553.27 1242.92,-438.44 1242.92,-369.41"/>
-<text xml:space="preserve" text-anchor="middle" x="1205.04" y="-497.93" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">contratado em</text>
-<text xml:space="preserve" text-anchor="middle" x="1234.29" y="-370.76" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">0..*</text>
-<text xml:space="preserve" text-anchor="middle" x="1239.54" y="-612.34" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">1</text>
+<path fill="none" stroke="#000000" d="M1242.92,-623.74C1242.92,-553.27 1242.92,-438.44 1242.92,-369.41"/>
+<text xml:space="preserve" text-anchor="middle" x="1205.04" y="-497.93" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">contratado em</text>
+<text xml:space="preserve" text-anchor="middle" x="1234.29" y="-370.76" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">0..*</text>
+<text xml:space="preserve" text-anchor="middle" x="1239.54" y="-612.34" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">1</text>
 </g>
 <!-- Mensalidade -->
 <g id="node11" class="node">
 <title>Mensalidade</title>
-<polygon fill="none" stroke="#1e3a8a" points="1083.38,0 1083.38,-161 1338.62,-161 1338.62,0 1083.38,0"/>
-<polygon fill="#dbeafe" stroke="none" points="1084.38,-137 1084.38,-160 1337.62,-160 1337.62,-137 1084.38,-137"/>
+<polygon fill="none" stroke="#000000" points="1083.38,0 1083.38,-161 1338.62,-161 1338.62,0 1083.38,0"/>
 <text xml:space="preserve" text-anchor="start" x="1170.12" y="-143.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">Mensalidade</text>
 <text xml:space="preserve" text-anchor="start" x="1088.38" y="-121.75" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; id : int</text>
 <text xml:space="preserve" text-anchor="start" x="1088.38" y="-106.75" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; valor : decimal</text>
@@ -246,84 +229,73 @@
 <text xml:space="preserve" text-anchor="start" x="1088.38" y="-76.75" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; dataPagamento : Date</text>
 <text xml:space="preserve" text-anchor="start" x="1088.38" y="-61.75" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; formaPagamento : FormaPagamento</text>
 <text xml:space="preserve" text-anchor="start" x="1088.38" y="-46.75" font-family="Helvetica,sans-Serif" font-size="14.00">&#45; situacao : SituacaoMensalidade</text>
-<polygon fill="#f8fafc" stroke="none" points="1084.38,-1 1084.38,-39 1337.62,-39 1337.62,-1 1084.38,-1"/>
 <text xml:space="preserve" text-anchor="start" x="1088.38" y="-23.75" font-family="Helvetica,sans-Serif" font-size="14.00">+ registrarPagamento(data, forma) : void</text>
 <text xml:space="preserve" text-anchor="start" x="1088.38" y="-8.75" font-family="Helvetica,sans-Serif" font-size="14.00">+ isAtrasada() : bool</text>
 </g>
 <!-- AlunoPlano&#45;&gt;Mensalidade -->
 <g id="edge10" class="edge">
 <title>AlunoPlano&#45;&gt;Mensalidade</title>
-<path fill="none" stroke="#334155" d="M1211,-253.51C1211,-225.44 1211,-191.29 1211,-160.77"/>
-<text xml:space="preserve" text-anchor="middle" x="1199" y="-208.49" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">gera</text>
-<text xml:space="preserve" text-anchor="middle" x="1202.38" y="-162.12" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">0..*</text>
-<text xml:space="preserve" text-anchor="middle" x="1207.62" y="-242.11" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#111827">1</text>
+<path fill="none" stroke="#000000" d="M1211,-253.51C1211,-225.44 1211,-191.29 1211,-160.77"/>
+<text xml:space="preserve" text-anchor="middle" x="1199" y="-208.49" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">gera</text>
+<text xml:space="preserve" text-anchor="middle" x="1202.38" y="-162.12" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">0..*</text>
+<text xml:space="preserve" text-anchor="middle" x="1207.62" y="-242.11" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">1</text>
 </g>
 <!-- Enums -->
 <g id="node12" class="node">
 <title>Enums</title>
-<polygon fill="none" stroke="#9a3412" points="1381.12,-820 1381.12,-902 1520.38,-902 1520.38,-820 1381.12,-820"/>
-<polygon fill="#ffedd5" stroke="none" points="1382.12,-864.5 1382.12,-901 1519.38,-901 1519.38,-864.5 1382.12,-864.5"/>
+<polygon fill="none" stroke="#000000" points="1381.12,-820 1381.12,-902 1520.38,-902 1520.38,-820 1381.12,-820"/>
 <text xml:space="preserve" text-anchor="start" x="1419.62" y="-886.7" font-family="Helvetica,sans-Serif" font-size="9.00">«enumeration»</text>
 <text xml:space="preserve" text-anchor="start" x="1433.88" y="-872.95" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">Perfil</text>
 <text xml:space="preserve" text-anchor="start" x="1385.12" y="-846.5" font-family="Helvetica,sans-Serif" font-size="14.00">PROPRIETARIO</text>
 <text xml:space="preserve" text-anchor="start" x="1385.12" y="-831.5" font-family="Helvetica,sans-Serif" font-size="14.00">RECEPCIONISTA</text>
-<polygon fill="none" stroke="#9a3412" points="1526.38,-820 1526.38,-902 1676.88,-902 1676.88,-820 1526.38,-820"/>
-<polygon fill="#ffedd5" stroke="none" points="1527.38,-872 1527.38,-901 1675.88,-901 1675.88,-872 1527.38,-872"/>
+<polygon fill="none" stroke="#000000" points="1526.38,-820 1526.38,-902 1676.88,-902 1676.88,-820 1526.38,-820"/>
 <text xml:space="preserve" text-anchor="start" x="1570.5" y="-890.45" font-family="Helvetica,sans-Serif" font-size="9.00">«enumeration»</text>
 <text xml:space="preserve" text-anchor="start" x="1533" y="-876.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">CategoriaModalidade</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-857.75" font-family="Helvetica,sans-Serif" font-size="14.00">LUTA</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-842.75" font-family="Helvetica,sans-Serif" font-size="14.00">ESPORTE_COLETIVO</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-827.75" font-family="Helvetica,sans-Serif" font-size="14.00">INDIVIDUAL</text>
-<polygon fill="none" stroke="#9a3412" points="1381.12,-717 1381.12,-814 1520.38,-814 1520.38,-717 1381.12,-717"/>
-<polygon fill="#ffedd5" stroke="none" points="1382.12,-776.5 1382.12,-813 1519.38,-813 1519.38,-776.5 1382.12,-776.5"/>
+<polygon fill="none" stroke="#000000" points="1381.12,-717 1381.12,-814 1520.38,-814 1520.38,-717 1381.12,-717"/>
 <text xml:space="preserve" text-anchor="start" x="1419.62" y="-798.7" font-family="Helvetica,sans-Serif" font-size="9.00">«enumeration»</text>
 <text xml:space="preserve" text-anchor="start" x="1401.62" y="-784.95" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">SituacaoTurma</text>
 <text xml:space="preserve" text-anchor="start" x="1385.12" y="-758.5" font-family="Helvetica,sans-Serif" font-size="14.00">ATIVA</text>
 <text xml:space="preserve" text-anchor="start" x="1385.12" y="-743.5" font-family="Helvetica,sans-Serif" font-size="14.00">SUSPENSA</text>
 <text xml:space="preserve" text-anchor="start" x="1385.12" y="-728.5" font-family="Helvetica,sans-Serif" font-size="14.00">ENCERRADA</text>
-<polygon fill="none" stroke="#9a3412" points="1526.38,-717 1526.38,-814 1676.88,-814 1676.88,-717 1526.38,-717"/>
-<polygon fill="#ffedd5" stroke="none" points="1527.38,-784 1527.38,-813 1675.88,-813 1675.88,-784 1527.38,-784"/>
+<polygon fill="none" stroke="#000000" points="1526.38,-717 1526.38,-814 1676.88,-814 1676.88,-717 1526.38,-717"/>
 <text xml:space="preserve" text-anchor="start" x="1570.5" y="-802.45" font-family="Helvetica,sans-Serif" font-size="9.00">«enumeration»</text>
 <text xml:space="preserve" text-anchor="start" x="1543.5" y="-788.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">SituacaoMatricula</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-769.75" font-family="Helvetica,sans-Serif" font-size="14.00">ATIVA</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-754.75" font-family="Helvetica,sans-Serif" font-size="14.00">CANCELADA</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-739.75" font-family="Helvetica,sans-Serif" font-size="14.00">TRANSFERIDA</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-724.75" font-family="Helvetica,sans-Serif" font-size="14.00">FINALIZADA</text>
-<polygon fill="none" stroke="#9a3412" points="1381.12,-629 1381.12,-711 1520.38,-711 1520.38,-629 1381.12,-629"/>
-<polygon fill="#ffedd5" stroke="none" points="1382.12,-673.5 1382.12,-710 1519.38,-710 1519.38,-673.5 1382.12,-673.5"/>
+<polygon fill="none" stroke="#000000" points="1381.12,-629 1381.12,-711 1520.38,-711 1520.38,-629 1381.12,-629"/>
 <text xml:space="preserve" text-anchor="start" x="1419.62" y="-695.7" font-family="Helvetica,sans-Serif" font-size="9.00">«enumeration»</text>
 <text xml:space="preserve" text-anchor="start" x="1420.75" y="-681.95" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">Presenca</text>
 <text xml:space="preserve" text-anchor="start" x="1385.12" y="-655.5" font-family="Helvetica,sans-Serif" font-size="14.00">PRESENTE</text>
 <text xml:space="preserve" text-anchor="start" x="1385.12" y="-640.5" font-family="Helvetica,sans-Serif" font-size="14.00">FALTA</text>
-<polygon fill="none" stroke="#9a3412" points="1526.38,-629 1526.38,-711 1676.88,-711 1676.88,-629 1526.38,-629"/>
-<polygon fill="#ffedd5" stroke="none" points="1527.38,-681 1527.38,-710 1675.88,-710 1675.88,-681 1527.38,-681"/>
+<polygon fill="none" stroke="#000000" points="1526.38,-629 1526.38,-711 1676.88,-711 1676.88,-629 1526.38,-629"/>
 <text xml:space="preserve" text-anchor="start" x="1570.5" y="-699.45" font-family="Helvetica,sans-Serif" font-size="9.00">«enumeration»</text>
 <text xml:space="preserve" text-anchor="start" x="1557.38" y="-685.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">Periodicidade</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-666.75" font-family="Helvetica,sans-Serif" font-size="14.00">MENSAL</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-651.75" font-family="Helvetica,sans-Serif" font-size="14.00">TRIMESTRAL</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-636.75" font-family="Helvetica,sans-Serif" font-size="14.00">SEMESTRAL</text>
-<polygon fill="none" stroke="#9a3412" points="1381.12,-541 1381.12,-623 1520.38,-623 1520.38,-541 1381.12,-541"/>
-<polygon fill="#ffedd5" stroke="none" points="1382.12,-593 1382.12,-622 1519.38,-622 1519.38,-593 1382.12,-593"/>
+<polygon fill="none" stroke="#000000" points="1381.12,-541 1381.12,-623 1520.38,-623 1520.38,-541 1381.12,-541"/>
 <text xml:space="preserve" text-anchor="start" x="1419.62" y="-611.45" font-family="Helvetica,sans-Serif" font-size="9.00">«enumeration»</text>
 <text xml:space="preserve" text-anchor="start" x="1393" y="-597.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">FormaPagamento</text>
 <text xml:space="preserve" text-anchor="start" x="1385.12" y="-578.75" font-family="Helvetica,sans-Serif" font-size="14.00">PIX</text>
 <text xml:space="preserve" text-anchor="start" x="1385.12" y="-563.75" font-family="Helvetica,sans-Serif" font-size="14.00">CARTAO</text>
 <text xml:space="preserve" text-anchor="start" x="1385.12" y="-548.75" font-family="Helvetica,sans-Serif" font-size="14.00">DINHEIRO</text>
-<polygon fill="none" stroke="#9a3412" points="1526.38,-541 1526.38,-623 1676.88,-623 1676.88,-541 1526.38,-541"/>
-<polygon fill="#ffedd5" stroke="none" points="1527.38,-593 1527.38,-622 1675.88,-622 1675.88,-593 1527.38,-593"/>
+<polygon fill="none" stroke="#000000" points="1526.38,-541 1526.38,-623 1676.88,-623 1676.88,-541 1526.38,-541"/>
 <text xml:space="preserve" text-anchor="start" x="1570.5" y="-611.45" font-family="Helvetica,sans-Serif" font-size="9.00">«enumeration»</text>
 <text xml:space="preserve" text-anchor="start" x="1532.62" y="-597.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">SituacaoMensalidade</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-578.75" font-family="Helvetica,sans-Serif" font-size="14.00">EM_ABERTO</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-563.75" font-family="Helvetica,sans-Serif" font-size="14.00">PAGO</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-548.75" font-family="Helvetica,sans-Serif" font-size="14.00">ATRASADO</text>
-<polygon fill="none" stroke="#9a3412" points="1381.12,-468 1381.12,-535 1520.38,-535 1520.38,-468 1381.12,-468"/>
-<polygon fill="#ffedd5" stroke="none" points="1382.12,-505 1382.12,-534 1519.38,-534 1519.38,-505 1382.12,-505"/>
+<polygon fill="none" stroke="#000000" points="1381.12,-468 1381.12,-535 1520.38,-535 1520.38,-468 1381.12,-468"/>
 <text xml:space="preserve" text-anchor="start" x="1419.62" y="-523.45" font-family="Helvetica,sans-Serif" font-size="9.00">«enumeration»</text>
 <text xml:space="preserve" text-anchor="start" x="1385.12" y="-509.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">SituacaoAlunoPlano</text>
 <text xml:space="preserve" text-anchor="start" x="1385.12" y="-490.75" font-family="Helvetica,sans-Serif" font-size="14.00">ATIVO</text>
 <text xml:space="preserve" text-anchor="start" x="1385.12" y="-475.75" font-family="Helvetica,sans-Serif" font-size="14.00">ENCERRADO</text>
-<polygon fill="none" stroke="#9a3412" points="1526.38,-468 1526.38,-535 1676.88,-535 1676.88,-468 1526.38,-468"/>
-<polygon fill="#ffedd5" stroke="none" points="1527.38,-505 1527.38,-534 1675.88,-534 1675.88,-505 1527.38,-505"/>
+<polygon fill="none" stroke="#000000" points="1526.38,-468 1526.38,-535 1676.88,-535 1676.88,-468 1526.38,-468"/>
 <text xml:space="preserve" text-anchor="start" x="1570.5" y="-523.45" font-family="Helvetica,sans-Serif" font-size="9.00">«enumeration»</text>
 <text xml:space="preserve" text-anchor="start" x="1544.25" y="-509.7" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="14.00">SituacaoCadastro</text>
 <text xml:space="preserve" text-anchor="start" x="1530.38" y="-490.75" font-family="Helvetica,sans-Serif" font-size="14.00">ATIVO</text>

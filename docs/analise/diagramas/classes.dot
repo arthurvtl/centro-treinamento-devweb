@@ -2,95 +2,95 @@
 // Gerar: dot -Tsvg classes.dot -o classes.svg && dot -Tpng -Gdpi=200 classes.dot -o classes.png
 digraph Classes {
   graph [
-    label=<<b>Diagrama de Classes UML</b><br/><font point-size="12" color="#4b5563">Sistema de Gestão de Centro de Treinamento (CT)</font><br/> >,
+    label=<<b>Diagrama de Classes UML</b><br/><font point-size="12" color="#000000">Sistema de Gestão de Centro de Treinamento (CT)</font><br/> >,
     labelloc=t, fontname="Helvetica", fontsize=18,
     rankdir=TB, splines=ortho, nodesep=0.95, ranksep=0.55, pad=0.4, bgcolor="white"
   ];
   node  [shape=plain, fontname="Helvetica", fontsize=14];
-  edge  [fontname="Helvetica", fontsize=12, color="#334155", fontcolor="#111827", arrowhead=none];
+  edge  [fontname="Helvetica", fontsize=12, color="#000000", fontcolor="#000000", arrowhead=none];
 
   // ---------- Classes ----------
   Usuario [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#1e3a8a">
-      <tr><td bgcolor="#dbeafe"><b>Usuario</b></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>Usuario</b></td></tr>
       <tr><td align="left" balign="left">- id : int<br/>- nome : String<br/>- loginEmail : String<br/>- senhaHash : String<br/>- perfil : Perfil<br/>- situacao : SituacaoCadastro</td></tr>
-      <tr><td align="left" balign="left" bgcolor="#f8fafc">+ autenticar(email, senha) : bool<br/>+ temPermissao(acao) : bool</td></tr>
+      <tr><td align="left" balign="left">+ autenticar(email, senha) : bool<br/>+ temPermissao(acao) : bool</td></tr>
     </table>>];
 
   Aluno [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#1e3a8a">
-      <tr><td bgcolor="#dbeafe"><b>Aluno</b></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>Aluno</b></td></tr>
       <tr><td align="left" balign="left">- id : int<br/>- codigo : String {único, somente leitura}<br/>- nome : String<br/>- dataNascimento : Date<br/>- cpf : String {único}<br/>- telefone : String<br/>- email : String<br/>- endereco : String<br/>- dataMatricula : Date<br/>- condicaoSaude : String<br/>- contatoEmergencia : String<br/>- situacao : SituacaoCadastro</td></tr>
-      <tr><td align="left" balign="left" bgcolor="#f8fafc">+ isMenorDeIdade() : bool<br/>+ gerarCodigo() : String</td></tr>
+      <tr><td align="left" balign="left">+ isMenorDeIdade() : bool<br/>+ gerarCodigo() : String</td></tr>
     </table>>];
 
   ResponsavelLegal [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#1e3a8a">
-      <tr><td bgcolor="#dbeafe"><b>ResponsavelLegal</b></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>ResponsavelLegal</b></td></tr>
       <tr><td align="left" balign="left">- id : int<br/>- nome : String<br/>- cpf : String<br/>- telefone : String<br/>- email : String<br/>- parentesco : String</td></tr>
     </table>>];
 
   Professor [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#1e3a8a">
-      <tr><td bgcolor="#dbeafe"><b>Professor</b></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>Professor</b></td></tr>
       <tr><td align="left" balign="left">- id : int<br/>- nome : String<br/>- cpf : String {único}<br/>- telefone : String<br/>- email : String<br/>- situacao : SituacaoCadastro</td></tr>
-      <tr><td align="left" balign="left" bgcolor="#f8fafc">+ isHabilitado(m : Modalidade) : bool</td></tr>
+      <tr><td align="left" balign="left">+ isHabilitado(m : Modalidade) : bool</td></tr>
     </table>>];
 
   Modalidade [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#1e3a8a">
-      <tr><td bgcolor="#dbeafe"><b>Modalidade</b></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>Modalidade</b></td></tr>
       <tr><td align="left" balign="left">- id : int<br/>- nome : String {único}<br/>- descricao : String<br/>- categoria : CategoriaModalidade<br/>- capacidadePadrao : int</td></tr>
     </table>>];
 
   Turma [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#1e3a8a">
-      <tr><td bgcolor="#dbeafe"><b>Turma</b></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>Turma</b></td></tr>
       <tr><td align="left" balign="left">- id : int<br/>- nome : String<br/>- diasSemana : String<br/>- horaInicio : Time<br/>- horaTermino : Time<br/>- limiteVagas : int<br/>- situacao : SituacaoTurma<br/>- dataInicio : Date<br/>- dataTermino : Date</td></tr>
-      <tr><td align="left" balign="left" bgcolor="#f8fafc">+ vagasDisponiveis() : int<br/>+ aceitaMatricula() : bool<br/>+ encerrar() : void</td></tr>
+      <tr><td align="left" balign="left">+ vagasDisponiveis() : int<br/>+ aceitaMatricula() : bool<br/>+ encerrar() : void</td></tr>
     </table>>];
 
   Matricula [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#1e3a8a">
-      <tr><td bgcolor="#dbeafe"><b>Matricula</b></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>Matricula</b></td></tr>
       <tr><td align="left" balign="left">- id : int<br/>- dataMatricula : Date<br/>- situacao : SituacaoMatricula<br/>- dataEncerramento : Date<br/>- certificadoEmitido : bool</td></tr>
-      <tr><td align="left" balign="left" bgcolor="#f8fafc">+ percentualFrequencia() : decimal<br/>+ transferir(destino : Turma) : void</td></tr>
+      <tr><td align="left" balign="left">+ percentualFrequencia() : decimal<br/>+ transferir(destino : Turma) : void</td></tr>
     </table>>];
 
   Frequencia [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#1e3a8a">
-      <tr><td bgcolor="#dbeafe"><b>Frequencia</b></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>Frequencia</b></td></tr>
       <tr><td align="left" balign="left">- id : int<br/>- dataAula : Date<br/>- presenca : Presenca<br/>- observacao : String</td></tr>
     </table>>];
 
   Plano [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#1e3a8a">
-      <tr><td bgcolor="#dbeafe"><b>Plano</b></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>Plano</b></td></tr>
       <tr><td align="left" balign="left">- id : int<br/>- nome : String<br/>- valor : decimal<br/>- periodicidade : Periodicidade<br/>- beneficios : String<br/>- situacao : SituacaoCadastro</td></tr>
     </table>>];
 
   AlunoPlano [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#1e3a8a">
-      <tr><td bgcolor="#dbeafe"><b>AlunoPlano</b></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>AlunoPlano</b></td></tr>
       <tr><td align="left" balign="left">- id : int<br/>- dataInicio : Date<br/>- dataFim : Date<br/>- situacao : SituacaoAlunoPlano</td></tr>
-      <tr><td align="left" balign="left" bgcolor="#f8fafc">+ isAdimplente() : bool</td></tr>
+      <tr><td align="left" balign="left">+ isAdimplente() : bool</td></tr>
     </table>>];
 
   Mensalidade [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#1e3a8a">
-      <tr><td bgcolor="#dbeafe"><b>Mensalidade</b></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>Mensalidade</b></td></tr>
       <tr><td align="left" balign="left">- id : int<br/>- valor : decimal<br/>- vencimento : Date<br/>- dataPagamento : Date<br/>- formaPagamento : FormaPagamento<br/>- situacao : SituacaoMensalidade</td></tr>
-      <tr><td align="left" balign="left" bgcolor="#f8fafc">+ registrarPagamento(data, forma) : void<br/>+ isAtrasada() : bool</td></tr>
+      <tr><td align="left" balign="left">+ registrarPagamento(data, forma) : void<br/>+ isAtrasada() : bool</td></tr>
     </table>>];
 
   // ---------- Enumerações ----------
   Enums [label=<
     <table border="0" cellborder="0" cellspacing="6" cellpadding="0">
-      <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#9a3412"><tr><td bgcolor="#ffedd5"><font point-size="9">«enumeration»</font><br/><b>Perfil</b></td></tr><tr><td align="left" balign="left">PROPRIETARIO<br/>RECEPCIONISTA</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#9a3412"><tr><td bgcolor="#ffedd5"><font point-size="9">«enumeration»</font><br/><b>CategoriaModalidade</b></td></tr><tr><td align="left" balign="left">LUTA<br/>ESPORTE_COLETIVO<br/>INDIVIDUAL</td></tr></table></td></tr>
-      <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#9a3412"><tr><td bgcolor="#ffedd5"><font point-size="9">«enumeration»</font><br/><b>SituacaoTurma</b></td></tr><tr><td align="left" balign="left">ATIVA<br/>SUSPENSA<br/>ENCERRADA</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#9a3412"><tr><td bgcolor="#ffedd5"><font point-size="9">«enumeration»</font><br/><b>SituacaoMatricula</b></td></tr><tr><td align="left" balign="left">ATIVA<br/>CANCELADA<br/>TRANSFERIDA<br/>FINALIZADA</td></tr></table></td></tr>
-      <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#9a3412"><tr><td bgcolor="#ffedd5"><font point-size="9">«enumeration»</font><br/><b>Presenca</b></td></tr><tr><td align="left" balign="left">PRESENTE<br/>FALTA</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#9a3412"><tr><td bgcolor="#ffedd5"><font point-size="9">«enumeration»</font><br/><b>Periodicidade</b></td></tr><tr><td align="left" balign="left">MENSAL<br/>TRIMESTRAL<br/>SEMESTRAL</td></tr></table></td></tr>
-      <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#9a3412"><tr><td bgcolor="#ffedd5"><font point-size="9">«enumeration»</font><br/><b>FormaPagamento</b></td></tr><tr><td align="left" balign="left">PIX<br/>CARTAO<br/>DINHEIRO</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#9a3412"><tr><td bgcolor="#ffedd5"><font point-size="9">«enumeration»</font><br/><b>SituacaoMensalidade</b></td></tr><tr><td align="left" balign="left">EM_ABERTO<br/>PAGO<br/>ATRASADO</td></tr></table></td></tr>
-      <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#9a3412"><tr><td bgcolor="#ffedd5"><font point-size="9">«enumeration»</font><br/><b>SituacaoAlunoPlano</b></td></tr><tr><td align="left" balign="left">ATIVO<br/>ENCERRADO</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#9a3412"><tr><td bgcolor="#ffedd5"><font point-size="9">«enumeration»</font><br/><b>SituacaoCadastro</b></td></tr><tr><td align="left" balign="left">ATIVO<br/>INATIVO</td></tr></table></td></tr>
+      <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>Perfil</b></td></tr><tr><td align="left" balign="left">PROPRIETARIO<br/>RECEPCIONISTA</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>CategoriaModalidade</b></td></tr><tr><td align="left" balign="left">LUTA<br/>ESPORTE_COLETIVO<br/>INDIVIDUAL</td></tr></table></td></tr>
+      <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>SituacaoTurma</b></td></tr><tr><td align="left" balign="left">ATIVA<br/>SUSPENSA<br/>ENCERRADA</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>SituacaoMatricula</b></td></tr><tr><td align="left" balign="left">ATIVA<br/>CANCELADA<br/>TRANSFERIDA<br/>FINALIZADA</td></tr></table></td></tr>
+      <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>Presenca</b></td></tr><tr><td align="left" balign="left">PRESENTE<br/>FALTA</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>Periodicidade</b></td></tr><tr><td align="left" balign="left">MENSAL<br/>TRIMESTRAL<br/>SEMESTRAL</td></tr></table></td></tr>
+      <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>FormaPagamento</b></td></tr><tr><td align="left" balign="left">PIX<br/>CARTAO<br/>DINHEIRO</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>SituacaoMensalidade</b></td></tr><tr><td align="left" balign="left">EM_ABERTO<br/>PAGO<br/>ATRASADO</td></tr></table></td></tr>
+      <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>SituacaoAlunoPlano</b></td></tr><tr><td align="left" balign="left">ATIVO<br/>ENCERRADO</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>SituacaoCadastro</b></td></tr><tr><td align="left" balign="left">ATIVO<br/>INATIVO</td></tr></table></td></tr>
     </table>>];
 
   // ---------- Layout (linhas) ----------
