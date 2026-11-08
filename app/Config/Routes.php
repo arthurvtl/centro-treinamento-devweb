@@ -31,4 +31,25 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
         $routes->post('(:num)/reativar', 'Alunos::reativar/$1', ['as' => 'alunos_reativar']);
         $routes->post('(:num)/excluir', 'Alunos::excluir/$1', ['as' => 'alunos_excluir', 'filter' => 'perfil:proprietario']);
     });
+
+    // Modalidades e professores (HU02): somente o proprietário
+    $routes->group('modalidades', ['filter' => 'perfil:proprietario'], static function (RouteCollection $routes): void {
+        $routes->get('', 'Modalidades::index', ['as' => 'modalidades']);
+        $routes->get('novo', 'Modalidades::novo', ['as' => 'modalidades_novo']);
+        $routes->post('criar', 'Modalidades::criar', ['as' => 'modalidades_criar']);
+        $routes->get('(:num)/editar', 'Modalidades::editar/$1', ['as' => 'modalidades_editar']);
+        $routes->post('(:num)/atualizar', 'Modalidades::atualizar/$1', ['as' => 'modalidades_atualizar']);
+        $routes->post('(:num)/excluir', 'Modalidades::excluir/$1', ['as' => 'modalidades_excluir']);
+    });
+
+    $routes->group('professores', ['filter' => 'perfil:proprietario'], static function (RouteCollection $routes): void {
+        $routes->get('', 'Professores::index', ['as' => 'professores']);
+        $routes->get('novo', 'Professores::novo', ['as' => 'professores_novo']);
+        $routes->post('criar', 'Professores::criar', ['as' => 'professores_criar']);
+        $routes->get('(:num)/editar', 'Professores::editar/$1', ['as' => 'professores_editar']);
+        $routes->post('(:num)/atualizar', 'Professores::atualizar/$1', ['as' => 'professores_atualizar']);
+        $routes->post('(:num)/inativar', 'Professores::inativar/$1', ['as' => 'professores_inativar']);
+        $routes->post('(:num)/reativar', 'Professores::reativar/$1', ['as' => 'professores_reativar']);
+        $routes->post('(:num)/excluir', 'Professores::excluir/$1', ['as' => 'professores_excluir']);
+    });
 });
