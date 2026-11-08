@@ -28,6 +28,7 @@ class Validation extends BaseConfig
         \App\Validation\RegrasCpf::class,
         \App\Validation\RegrasData::class,
         \App\Validation\RegrasModalidade::class,
+        \App\Validation\RegrasTurma::class,
     ];
 
     /**
