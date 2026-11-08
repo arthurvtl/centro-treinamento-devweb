@@ -187,4 +187,20 @@ class AlunoModel extends Model
 
         return ($matriculas + $planos) > 0;
     }
+
+    /**
+     * Conta os alunos cadastrados, separando ativos e inativos (RF16).
+     *
+     * @return array{total: int, ativos: int, inativos: int}
+     */
+    public function contarPorSituacao(): array
+    {
+        $linhas = $this->db->table($this->table)->select('situacao, COUNT(*) AS quantidade')->groupBy('situacao')->get()->getResultArray();
+        $porSituacao = array_column($linhas, 'quantidade', 'situacao');
+
+        $ativos   = (int) ($porSituacao['ATIVO'] ?? 0);
+        $inativos = (int) ($porSituacao['INATIVO'] ?? 0);
+
+        return ['total' => $ativos + $inativos, 'ativos' => $ativos, 'inativos' => $inativos];
+    }
 }

@@ -137,4 +137,25 @@ class TurmaModel extends Model
     {
         return $this->db->table('matriculas')->where('turma_id', $turmaId)->countAllResults() > 0;
     }
+
+    /**
+     * Lista as turmas ATIVAS que ainda têm vaga, com a quantidade de vagas livres (RF18).
+     *
+     * Turmas suspensas e encerradas ficam de fora: não aceitam matrícula, então a vaga não é utilizável.
+     *
+     * @return list<array<string, mixed>> inclui `vagas_livres`
+     */
+    public function buscarComVagasDisponiveis(): array
+    {
+        $comVagas = [];
+
+        foreach ($this->buscarComOcupacao('ATIVA') as $turma) {
+            $turma['vagas_livres'] = (int) $turma['limite_vagas'] - (int) $turma['ocupadas'];
+            if ($turma['vagas_livres'] > 0) {
+                $comVagas[] = $turma;
+            }
+        }
+
+        return $comVagas;
+    }
 }
