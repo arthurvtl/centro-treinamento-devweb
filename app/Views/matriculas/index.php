@@ -11,10 +11,10 @@
 <?= $this->section('conteudo') ?>
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
     <h1 class="h3 mb-0">Matrículas</h1>
-    <a href="<?= url_to('matriculas_nova') ?>" class="btn btn-primary">Nova matrícula</a>
+    <a href="<?= esc(url_to('matriculas_nova'), 'html') ?>" class="btn btn-primary">Nova matrícula</a>
 </div>
 
-<form action="<?= url_to('matriculas') ?>" method="get" class="row g-2 mb-3" role="search">
+<form action="<?= esc(url_to('matriculas'), 'html') ?>" method="get" class="row g-2 mb-3" role="search">
     <div class="col-12 col-md-8">
         <label for="busca" class="visually-hidden">Buscar matrícula</label>
         <input type="search" class="form-control" id="busca" name="busca" value="<?= esc($busca) ?>" placeholder="Buscar por nome ou código do aluno">
@@ -22,12 +22,12 @@
     <div class="col-12 col-md-4 d-flex gap-2">
         <button type="submit" class="btn btn-outline-primary">Buscar</button>
         <?php if ($busca !== '') : ?>
-            <a href="<?= url_to('matriculas') ?>" class="btn btn-outline-secondary">Limpar</a>
+            <a href="<?= esc(url_to('matriculas'), 'html') ?>" class="btn btn-outline-secondary">Limpar</a>
         <?php endif; ?>
     </div>
 </form>
 
-<div class="table-responsive">
+<div class="table-responsive position-relative">
     <table class="table table-striped table-hover align-middle bg-white">
         <caption class="visually-hidden">Matrículas ativas</caption>
         <thead>
@@ -50,8 +50,9 @@
                     <td><?= esc($matricula['modalidade_nome']) ?></td>
                     <td><?= esc(formatar_data($matricula['data_matricula'])) ?></td>
                     <td class="text-end text-nowrap">
-                        <a href="<?= url_to('matriculas_trocar', $matricula['id']) ?>" class="btn btn-sm btn-outline-secondary">Trocar de turma</a>
-                        <form action="<?= url_to('matriculas_cancelar', $matricula['id']) ?>" method="post" class="d-inline"
+                        <a href="<?= esc(url_to('matriculas_ver', $matricula['id']), 'html') ?>" class="btn btn-sm btn-outline-primary">Ver</a>
+                        <a href="<?= esc(url_to('matriculas_trocar', $matricula['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Trocar de turma</a>
+                        <form action="<?= esc(url_to('matriculas_cancelar', $matricula['id']), 'html') ?>" method="post" class="d-inline"
                               onsubmit="return confirm('Cancelar esta matrícula?');">
                             <?= csrf_field() ?>
                             <button type="submit" class="btn btn-sm btn-outline-danger">Cancelar</button>

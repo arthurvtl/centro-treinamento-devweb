@@ -19,24 +19,24 @@ $estilos        = ['ATIVA' => 'text-bg-success', 'SUSPENSA' => 'text-bg-warning'
     </h1>
     <div class="d-flex flex-wrap gap-2">
         <?php if ($situacao === 'ATIVA') : ?>
-            <a href="<?= url_to('matriculas_nova') ?>?turma_id=<?= esc($turma['id'], 'url') ?>" class="btn btn-primary">Matricular aluno</a>
+            <a href="<?= esc(url_to('matriculas_nova'), 'html') ?>?turma_id=<?= esc($turma['id'], 'url') ?>" class="btn btn-primary">Matricular aluno</a>
         <?php endif; ?>
         <?php if ($ehProprietario && $situacao !== 'ENCERRADA') : ?>
-            <a href="<?= url_to('turmas_editar', $turma['id']) ?>" class="btn btn-outline-secondary">Editar</a>
-            <form action="<?= url_to($situacao === 'ATIVA' ? 'turmas_suspender' : 'turmas_reativar', $turma['id']) ?>" method="post">
+            <a href="<?= esc(url_to('turmas_editar', $turma['id']), 'html') ?>" class="btn btn-outline-secondary">Editar</a>
+            <form action="<?= esc(url_to($situacao === 'ATIVA' ? 'turmas_suspender' : 'turmas_reativar', $turma['id']), 'html') ?>" method="post">
                 <?= csrf_field() ?>
                 <button type="submit" class="btn btn-outline-warning"><?= $situacao === 'ATIVA' ? 'Suspender' : 'Reativar' ?></button>
             </form>
         <?php endif; ?>
         <?php if ($ehProprietario && $situacao !== 'ENCERRADA') : ?>
-            <form action="<?= url_to('turmas_encerrar', $turma['id']) ?>" method="post"
+            <form action="<?= esc(url_to('turmas_encerrar', $turma['id']), 'html') ?>" method="post"
                   onsubmit="return confirm('Encerrar a turma? As matrículas serão finalizadas e alunos sem outra turma ativa ficarão inativos.');">
                 <?= csrf_field() ?>
                 <button type="submit" class="btn btn-outline-dark">Encerrar turma</button>
             </form>
         <?php endif; ?>
         <?php if ($ehProprietario) : ?>
-            <form action="<?= url_to('turmas_excluir', $turma['id']) ?>" method="post" onsubmit="return confirm('Excluir esta turma?');">
+            <form action="<?= esc(url_to('turmas_excluir', $turma['id']), 'html') ?>" method="post" onsubmit="return confirm('Excluir esta turma?');">
                 <?= csrf_field() ?>
                 <button type="submit" class="btn btn-outline-danger">Excluir</button>
             </form>
@@ -68,7 +68,7 @@ $estilos        = ['ATIVA' => 'text-bg-success', 'SUSPENSA' => 'text-bg-warning'
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><?= esc($matricula['aluno_codigo']) ?> · <?= esc($matricula['aluno_nome']) ?></span>
                     <?php if ((int) $matricula['certificado_emitido'] === 1) : ?>
-                        <a href="<?= url_to('matriculas_certificado', $matricula['id']) ?>" class="btn btn-sm btn-outline-success">Certificado</a>
+                        <a href="<?= esc(url_to('matriculas_certificado', $matricula['id']), 'html') ?>" class="btn btn-sm btn-outline-success">Certificado</a>
                     <?php else : ?>
                         <span class="badge text-bg-secondary">Sem certificado (frequência abaixo de 75%)</span>
                     <?php endif; ?>
@@ -89,5 +89,5 @@ $estilos        = ['ATIVA' => 'text-bg-success', 'SUSPENSA' => 'text-bg-warning'
         <?php endforeach; ?>
     </ul>
 </section>
-<a href="<?= url_to('turmas') ?>" class="btn btn-link px-0 mt-3">Voltar para a lista</a>
+<a href="<?= esc(url_to('turmas'), 'html') ?>" class="btn btn-link px-0 mt-3">Voltar para a lista</a>
 <?= $this->endSection() ?>

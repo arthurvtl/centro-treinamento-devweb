@@ -16,7 +16,7 @@ $mostraSaude   = ! $edicao || $ehProprietario;
 <?= $this->section('conteudo') ?>
 <h1 class="h3 mb-3"><?= esc($titulo) ?></h1>
 
-<form action="<?= esc($acao, 'attr') ?>" method="post" novalidate>
+<form action="<?= esc($acao, 'html') ?>" method="post" novalidate>
     <?= csrf_field() ?>
 
     <fieldset class="card card-body mb-4">
@@ -110,7 +110,7 @@ $mostraSaude   = ! $edicao || $ehProprietario;
 
     <div class="d-flex gap-2">
         <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="<?= url_to('alunos') ?>" class="btn btn-outline-secondary">Cancelar</a>
+        <a href="<?= esc(url_to('alunos'), 'html') ?>" class="btn btn-outline-secondary">Cancelar</a>
     </div>
 </form>
 

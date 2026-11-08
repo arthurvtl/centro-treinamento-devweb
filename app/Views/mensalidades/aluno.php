@@ -8,9 +8,9 @@
  * @var list<array<string, mixed>> $mensalidades
  * @var list<array<string, mixed>> $planos        planos ativos para vincular
  */
-$situacoes = \App\Models\MensalidadeModel::SITUACOES;
+$situacoes = rotulos_de('situacoes_mensalidade');
 $estilos   = ['EM_ABERTO' => 'text-bg-info', 'PAGO' => 'text-bg-success', 'ATRASADO' => 'text-bg-danger'];
-$periodicidades = \App\Models\PlanoModel::PERIODICIDADES;
+$periodicidades = rotulos_de('periodicidades');
 // Recepcionista atende o aluno (vincula plano e dá baixa), mas só o proprietário gera cobranças (RN05).
 $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 ?>
@@ -21,7 +21,7 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
     <h1 class="h3 mb-0"><?= esc($aluno['nome']) ?>
         <span class="badge <?= $adimplente ? 'text-bg-success' : 'text-bg-danger' ?> fs-6"><?= $adimplente ? 'Adimplente' : 'Inadimplente' ?></span>
     </h1>
-    <a href="<?= url_to('alunos_ver', $aluno['id']) ?>" class="btn btn-outline-secondary">Ficha do aluno</a>
+    <a href="<?= esc(url_to('alunos_ver', $aluno['id']), 'html') ?>" class="btn btn-outline-secondary">Ficha do aluno</a>
 </div>
 
 <section class="card card-body mb-4" aria-labelledby="tituloPlano">
@@ -34,14 +34,14 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
             desde <?= esc(formatar_data($planoAtivo['data_inicio'])) ?></p>
     <?php endif; ?>
 
-    <form action="<?= url_to('mensalidades_vincular_plano', $aluno['id']) ?>" method="post" class="row g-2 align-items-end">
+    <form action="<?= esc(url_to('mensalidades_vincular_plano', $aluno['id']), 'html') ?>" method="post" class="row g-2 align-items-end">
         <?= csrf_field() ?>
         <div class="col-12 col-md-6">
             <label for="plano_id" class="form-label"><?= $planoAtivo === null ? 'Vincular plano' : 'Trocar de plano' ?></label>
             <select class="form-select" id="plano_id" name="plano_id" required>
                 <option value="">Selecione</option>
                 <?php foreach ($planos as $plano) : ?>
-                    <option value="<?= esc($plano['id'], 'attr') ?>"><?= esc($plano['nome']) ?> · <?= esc(formatar_moeda($plano['valor'])) ?></option>
+                    <option value="<?= esc($plano['id'], 'attr') ?>" <?= (int) old('plano_id') === (int) $plano['id'] ? 'selected' : '' ?>><?= esc($plano['nome']) ?> · <?= esc(formatar_moeda($plano['valor'])) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -52,7 +52,7 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 <?php if ($planoAtivo !== null && $ehProprietario) : ?>
     <section class="card card-body mb-4" aria-labelledby="tituloNova">
         <h2 class="h5" id="tituloNova">Gerar mensalidade</h2>
-        <form action="<?= url_to('mensalidades_criar', $aluno['id']) ?>" method="post" class="row g-2 align-items-end" novalidate>
+        <form action="<?= esc(url_to('mensalidades_criar', $aluno['id']), 'html') ?>" method="post" class="row g-2 align-items-end" novalidate>
             <?= csrf_field() ?>
             <div class="col-6 col-md-3">
                 <label for="vencimento" class="form-label">Vencimento</label>
@@ -69,7 +69,7 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 
 <section aria-labelledby="tituloHistorico">
     <h2 class="h5" id="tituloHistorico">Histórico de mensalidades e quitações</h2>
-    <div class="table-responsive">
+    <div class="table-responsive position-relative">
         <table class="table table-striped align-middle bg-white">
             <caption class="visually-hidden">Mensalidades do aluno</caption>
             <thead>
@@ -93,9 +93,14 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
                         <td><?= esc(formatar_moeda($mensalidade['valor'])) ?></td>
                         <td><span class="badge <?= esc($estilos[$mensalidade['situacao']] ?? 'text-bg-secondary', 'attr') ?>"><?= esc($situacoes[$mensalidade['situacao']] ?? $mensalidade['situacao']) ?></span></td>
                         <td><?= $mensalidade['situacao'] === 'PAGO'
-                            ? esc(formatar_data($mensalidade['data_pagamento']) . ' · ' . (\App\Models\MensalidadeModel::FORMAS_PAGAMENTO[$mensalidade['forma_pagamento']] ?? ''))
+                            ? esc(formatar_data($mensalidade['data_pagamento']) . ' · ' . (rotulos_de('formas_pagamento')[$mensalidade['forma_pagamento']] ?? ''))
                             : '—' ?></td>
-                        <td class="text-end"><?= $mensalidade['situacao'] === 'PAGO' ? '' : view('mensalidades/_quitacao', ['mensalidade' => $mensalidade]) ?></td>
+                        <td class="text-end">
+                        <?php if ($mensalidade['situacao'] !== 'PAGO') : ?>
+                            <?= view('mensalidades/_quitacao', ['mensalidade' => $mensalidade]) ?>
+                            <?= view('mensalidades/_acoes', ['mensalidade' => $mensalidade]) ?>
+                        <?php endif; ?>
+                    </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

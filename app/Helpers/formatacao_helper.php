@@ -58,3 +58,24 @@ if (! function_exists('formatar_moeda')) {
         return 'R$ ' . number_format((float) $valor, 2, ',', '.');
     }
 }
+
+if (! function_exists('rotulos_de')) {
+    /**
+     * Devolve os rótulos de um conjunto de valores (categorias, periodicidades, formas de pagamento...)
+     * para as Views mostrarem texto amigável sem conhecer os Models.
+     *
+     * @return array<string, string>
+     */
+    function rotulos_de(string $conjunto): array
+    {
+        $conjuntos = [
+            'categorias'            => \App\Models\ModalidadeModel::CATEGORIAS,
+            'periodicidades'        => \App\Models\PlanoModel::PERIODICIDADES,
+            'formas_pagamento'      => \App\Models\MensalidadeModel::FORMAS_PAGAMENTO,
+            'situacoes_mensalidade' => \App\Models\MensalidadeModel::SITUACOES,
+            'dias_semana'           => \App\Models\TurmaModel::DIAS_SEMANA,
+        ];
+
+        return $conjuntos[$conjunto] ?? [];
+    }
+}

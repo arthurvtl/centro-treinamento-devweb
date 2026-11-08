@@ -6,7 +6,7 @@
  * @var list<array<string, mixed>>                    $modalidades
  * @var list<array<string, mixed>>                    $turmasComVaga
  */
-$categorias     = \App\Models\ModalidadeModel::CATEGORIAS;
+$categorias     = rotulos_de('categorias');
 $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 ?>
 <?= $this->extend('layouts/main') ?>
@@ -15,7 +15,7 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
     <h1 class="h3 mb-0">Relatórios</h1>
     <?php if ($ehProprietario) : ?>
-        <a href="<?= url_to('relatorios_financeiro') ?>" class="btn btn-outline-success">Relatório financeiro</a>
+        <a href="<?= esc(url_to('relatorios_financeiro'), 'html') ?>" class="btn btn-outline-success">Relatório financeiro</a>
     <?php endif; ?>
 </div>
 
@@ -31,7 +31,7 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 <section class="mb-4" aria-labelledby="tituloModalidades">
     <h2 class="h5" id="tituloModalidades">Alunos por modalidade</h2>
     <p class="text-muted small mb-2">Considera alunos com matrícula ativa; cada aluno conta uma vez por modalidade.</p>
-    <div class="table-responsive">
+    <div class="table-responsive position-relative">
         <table class="table table-striped bg-white align-middle">
             <caption class="visually-hidden">Alunos por modalidade</caption>
             <thead><tr><th scope="col">Modalidade</th><th scope="col">Categoria</th><th scope="col">Alunos</th></tr></thead>
@@ -54,7 +54,7 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 <section class="mb-4" aria-labelledby="tituloVagas">
     <h2 class="h5" id="tituloVagas">Turmas com vagas disponíveis</h2>
     <p class="text-muted small mb-2">Só turmas ativas: suspensas e encerradas não aceitam matrícula.</p>
-    <div class="table-responsive">
+    <div class="table-responsive position-relative">
         <table class="table table-striped bg-white align-middle">
             <caption class="visually-hidden">Turmas com vagas</caption>
             <thead>
@@ -66,7 +66,7 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
                 <?php endif; ?>
                 <?php foreach ($turmasComVaga as $turma) : ?>
                     <tr>
-                        <td><a href="<?= url_to('turmas_ver', $turma['id']) ?>"><?= esc($turma['nome']) ?></a></td>
+                        <td><a href="<?= esc(url_to('turmas_ver', $turma['id']), 'html') ?>"><?= esc($turma['nome']) ?></a></td>
                         <td><?= esc($turma['modalidade_nome']) ?></td>
                         <td><?= esc($turma['professor_nome']) ?></td>
                         <td><?= esc((string) $turma['ocupadas']) ?>/<?= esc((string) $turma['limite_vagas']) ?></td>

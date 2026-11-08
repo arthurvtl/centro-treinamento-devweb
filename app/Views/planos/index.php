@@ -4,17 +4,17 @@
  *
  * @var list<array<string, mixed>> $planos
  */
-$periodicidades = \App\Models\PlanoModel::PERIODICIDADES;
+$periodicidades = rotulos_de('periodicidades');
 ?>
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
     <h1 class="h3 mb-0">Planos</h1>
-    <a href="<?= url_to('planos_novo') ?>" class="btn btn-primary">Novo plano</a>
+    <a href="<?= esc(url_to('planos_novo'), 'html') ?>" class="btn btn-primary">Novo plano</a>
 </div>
 
-<div class="table-responsive">
+<div class="table-responsive position-relative">
     <table class="table table-striped table-hover align-middle bg-white">
         <caption class="visually-hidden">Planos de pagamento</caption>
         <thead>
@@ -40,12 +40,13 @@ $periodicidades = \App\Models\PlanoModel::PERIODICIDADES;
                     <td><?= esc($plano['beneficios'] ?: '—') ?></td>
                     <td><span class="badge <?= $ativo ? 'text-bg-success' : 'text-bg-secondary' ?>"><?= $ativo ? 'Ativo' : 'Inativo' ?></span></td>
                     <td class="text-end text-nowrap">
-                        <a href="<?= url_to('planos_editar', $plano['id']) ?>" class="btn btn-sm btn-outline-secondary">Editar</a>
-                        <form action="<?= url_to($ativo ? 'planos_inativar' : 'planos_reativar', $plano['id']) ?>" method="post" class="d-inline">
+                        <a href="<?= esc(url_to('planos_ver', $plano['id']), 'html') ?>" class="btn btn-sm btn-outline-primary">Ver</a>
+                        <a href="<?= esc(url_to('planos_editar', $plano['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        <form action="<?= esc(url_to($ativo ? 'planos_inativar' : 'planos_reativar', $plano['id']), 'html') ?>" method="post" class="d-inline">
                             <?= csrf_field() ?>
                             <button type="submit" class="btn btn-sm btn-outline-warning"><?= $ativo ? 'Inativar' : 'Reativar' ?></button>
                         </form>
-                        <form action="<?= url_to('planos_excluir', $plano['id']) ?>" method="post" class="d-inline"
+                        <form action="<?= esc(url_to('planos_excluir', $plano['id']), 'html') ?>" method="post" class="d-inline"
                               onsubmit="return confirm('Excluir este plano?');">
                             <?= csrf_field() ?>
                             <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>

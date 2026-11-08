@@ -6,7 +6,7 @@
         <section class="card shadow-sm" aria-labelledby="tituloLogin">
             <div class="card-body">
                 <h1 class="h4 mb-3" id="tituloLogin">Entrar no sistema</h1>
-                <form action="<?= site_url('login') ?>" method="post" novalidate>
+                <form action="<?= esc(site_url('login'), 'html') ?>" method="post" novalidate>
                     <?= csrf_field() ?>
                     <div class="mb-3">
                         <label for="login_email" class="form-label">E-mail</label>

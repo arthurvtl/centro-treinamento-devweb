@@ -14,7 +14,7 @@ $turmaAtual = (int) old('turma_id', $turmaPreferida);
 <?= $this->section('conteudo') ?>
 <h1 class="h3 mb-3"><?= esc($titulo) ?></h1>
 
-<form action="<?= url_to('matriculas_criar') ?>" method="post" novalidate>
+<form action="<?= esc(url_to('matriculas_criar'), 'html') ?>" method="post" novalidate>
     <?= csrf_field() ?>
     <div class="card card-body mb-3">
         <div class="row g-3">
@@ -45,7 +45,7 @@ $turmaAtual = (int) old('turma_id', $turmaPreferida);
     </div>
     <div class="d-flex gap-2">
         <button type="submit" class="btn btn-primary">Matricular</button>
-        <a href="<?= url_to('matriculas') ?>" class="btn btn-outline-secondary">Cancelar</a>
+        <a href="<?= esc(url_to('matriculas'), 'html') ?>" class="btn btn-outline-secondary">Cancelar</a>
     </div>
 </form>
 <?= $this->endSection() ?>

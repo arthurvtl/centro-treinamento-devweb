@@ -5,7 +5,7 @@
  * @var array<string, mixed> $modalidade valores atuais
  * @var string               $acao       URL de destino do POST
  */
-$categorias       = \App\Models\ModalidadeModel::CATEGORIAS;
+$categorias       = rotulos_de('categorias');
 $categoriaAtual   = old('categoria', $modalidade['categoria'] ?? '');
 ?>
 <?= $this->extend('layouts/main') ?>
@@ -13,7 +13,7 @@ $categoriaAtual   = old('categoria', $modalidade['categoria'] ?? '');
 <?= $this->section('conteudo') ?>
 <h1 class="h3 mb-3"><?= esc($titulo) ?></h1>
 
-<form action="<?= esc($acao, 'attr') ?>" method="post" novalidate>
+<form action="<?= esc($acao, 'html') ?>" method="post" novalidate>
     <?= csrf_field() ?>
     <div class="card card-body mb-3">
         <div class="row g-3">
@@ -46,7 +46,7 @@ $categoriaAtual   = old('categoria', $modalidade['categoria'] ?? '');
     </div>
     <div class="d-flex gap-2">
         <button type="submit" class="btn btn-primary">Salvar</button>
-        <a href="<?= url_to('modalidades') ?>" class="btn btn-outline-secondary">Cancelar</a>
+        <a href="<?= esc(url_to('modalidades'), 'html') ?>" class="btn btn-outline-secondary">Cancelar</a>
     </div>
 </form>
 <?= $this->endSection() ?>

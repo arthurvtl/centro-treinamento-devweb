@@ -13,7 +13,7 @@
 <h1 class="h3 mb-1"><?= esc($titulo) ?></h1>
 <p class="text-muted"><?= esc($turma['nome']) ?> · considera as aulas já lançadas para cada aluno.</p>
 
-<div class="table-responsive">
+<div class="table-responsive position-relative">
     <table class="table table-striped align-middle bg-white">
         <caption class="visually-hidden">Presença dos alunos da turma</caption>
         <thead>
@@ -47,5 +47,5 @@
         </tbody>
     </table>
 </div>
-<a href="<?= url_to('frequencias') ?>?turma_id=<?= esc($turma['id'], 'url') ?>" class="btn btn-link px-0">Voltar para a chamada</a>
+<a href="<?= esc(url_to('frequencias'), 'html') ?>?turma_id=<?= esc($turma['id'], 'url') ?>" class="btn btn-link px-0">Voltar para a chamada</a>
 <?= $this->endSection() ?>

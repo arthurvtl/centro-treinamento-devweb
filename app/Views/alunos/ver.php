@@ -17,14 +17,14 @@ $ativo          = $aluno['situacao'] === 'ATIVO';
         <span class="badge <?= $ativo ? 'text-bg-success' : 'text-bg-secondary' ?> fs-6"><?= $ativo ? 'Ativo' : 'Inativo' ?></span>
     </h1>
     <div class="d-flex flex-wrap gap-2">
-        <a href="<?= url_to('alunos_editar', $aluno['id']) ?>" class="btn btn-outline-primary">Editar</a>
-        <a href="<?= url_to('mensalidades_aluno', $aluno['id']) ?>" class="btn btn-outline-success">Financeiro</a>
-        <form action="<?= url_to($ativo ? 'alunos_inativar' : 'alunos_reativar', $aluno['id']) ?>" method="post">
+        <a href="<?= esc(url_to('alunos_editar', $aluno['id']), 'html') ?>" class="btn btn-outline-primary">Editar</a>
+        <a href="<?= esc(url_to('mensalidades_aluno', $aluno['id']), 'html') ?>" class="btn btn-outline-success">Financeiro</a>
+        <form action="<?= esc(url_to($ativo ? 'alunos_inativar' : 'alunos_reativar', $aluno['id']), 'html') ?>" method="post">
             <?= csrf_field() ?>
             <button type="submit" class="btn btn-outline-warning"><?= $ativo ? 'Inativar' : 'Reativar' ?></button>
         </form>
         <?php if ($ehProprietario) : ?>
-            <form action="<?= url_to('alunos_excluir', $aluno['id']) ?>" method="post"
+            <form action="<?= esc(url_to('alunos_excluir', $aluno['id']), 'html') ?>" method="post"
                   onsubmit="return confirm('Excluir este aluno definitivamente?');">
                 <?= csrf_field() ?>
                 <button type="submit" class="btn btn-outline-danger">Excluir</button>
@@ -62,5 +62,5 @@ $ativo          = $aluno['situacao'] === 'ATIVO';
     </section>
 <?php endif; ?>
 
-<a href="<?= url_to('alunos') ?>" class="btn btn-link px-0">Voltar para a lista</a>
+<a href="<?= esc(url_to('alunos'), 'html') ?>" class="btn btn-link px-0">Voltar para a lista</a>
 <?= $this->endSection() ?>

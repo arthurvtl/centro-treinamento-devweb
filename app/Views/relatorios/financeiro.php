@@ -5,7 +5,7 @@
  * @var string $mes    período no formato AAAA-MM
  * @var array{previsto: float, recebido: float, em_aberto: float, atrasado: float, quantidade: int, por_forma: array<string, float>} $resumo
  */
-$formas = \App\Models\MensalidadeModel::FORMAS_PAGAMENTO;
+$formas = rotulos_de('formas_pagamento');
 [$ano, $numeroMes] = explode('-', $mes);
 ?>
 <?= $this->extend('layouts/main') ?>
@@ -13,10 +13,10 @@ $formas = \App\Models\MensalidadeModel::FORMAS_PAGAMENTO;
 <?= $this->section('conteudo') ?>
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
     <h1 class="h3 mb-0">Relatório financeiro</h1>
-    <a href="<?= url_to('relatorios') ?>" class="btn btn-outline-secondary">Outros relatórios</a>
+    <a href="<?= esc(url_to('relatorios'), 'html') ?>" class="btn btn-outline-secondary">Outros relatórios</a>
 </div>
 
-<form action="<?= url_to('relatorios_financeiro') ?>" method="get" class="row g-2 mb-4">
+<form action="<?= esc(url_to('relatorios_financeiro'), 'html') ?>" method="get" class="row g-2 mb-4">
     <div class="col-12 col-md-4">
         <label for="mes" class="form-label">Mês de referência</label>
         <input type="month" class="form-control" id="mes" name="mes" value="<?= esc($mes, 'attr') ?>" required>
@@ -35,7 +35,7 @@ $formas = \App\Models\MensalidadeModel::FORMAS_PAGAMENTO;
 
 <section aria-labelledby="tituloFormas">
     <h2 class="h5" id="tituloFormas">Recebido por forma de pagamento</h2>
-    <div class="table-responsive">
+    <div class="table-responsive position-relative">
         <table class="table table-striped bg-white align-middle">
             <caption class="visually-hidden">Recebimentos por forma de pagamento</caption>
             <thead><tr><th scope="col">Forma</th><th scope="col">Total recebido</th></tr></thead>

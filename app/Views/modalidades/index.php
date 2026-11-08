@@ -4,17 +4,17 @@
  *
  * @var list<array<string, mixed>> $modalidades
  */
-$categorias = \App\Models\ModalidadeModel::CATEGORIAS;
+$categorias = rotulos_de('categorias');
 ?>
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
     <h1 class="h3 mb-0">Modalidades</h1>
-    <a href="<?= url_to('modalidades_novo') ?>" class="btn btn-primary">Nova modalidade</a>
+    <a href="<?= esc(url_to('modalidades_novo'), 'html') ?>" class="btn btn-primary">Nova modalidade</a>
 </div>
 
-<div class="table-responsive">
+<div class="table-responsive position-relative">
     <table class="table table-striped table-hover align-middle bg-white">
         <caption class="visually-hidden">Modalidades cadastradas</caption>
         <thead>
@@ -37,8 +37,9 @@ $categorias = \App\Models\ModalidadeModel::CATEGORIAS;
                     <td><?= esc((string) $modalidade['capacidade_padrao']) ?> alunos</td>
                     <td><?= esc($modalidade['descricao'] ?: '—') ?></td>
                     <td class="text-end text-nowrap">
-                        <a href="<?= url_to('modalidades_editar', $modalidade['id']) ?>" class="btn btn-sm btn-outline-secondary">Editar</a>
-                        <form action="<?= url_to('modalidades_excluir', $modalidade['id']) ?>" method="post" class="d-inline"
+                        <a href="<?= esc(url_to('modalidades_ver', $modalidade['id']), 'html') ?>" class="btn btn-sm btn-outline-primary">Ver</a>
+                        <a href="<?= esc(url_to('modalidades_editar', $modalidade['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        <form action="<?= esc(url_to('modalidades_excluir', $modalidade['id']), 'html') ?>" method="post" class="d-inline"
                               onsubmit="return confirm('Excluir esta modalidade?');">
                             <?= csrf_field() ?>
                             <button type="submit" class="btn btn-sm btn-outline-danger">Excluir</button>
