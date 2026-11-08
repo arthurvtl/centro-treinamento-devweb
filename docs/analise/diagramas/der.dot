@@ -4,152 +4,152 @@
 // Todas as tabelas possuem também created_at e updated_at (DATETIME), omitidos no desenho.
 digraph DER {
   graph [
-    label=<<b>Diagrama Entidade-Relacionamento (DER)</b><br/><font point-size="12" color="#4b5563">Modelo físico — MySQL / CodeIgniter 4 · PK = chave primária · FK = chave estrangeira · UQ = único</font><br/> >,
+    label=<<b>Diagrama Entidade-Relacionamento (DER)</b><br/><font point-size="12" color="#000000">Modelo físico — MySQL / CodeIgniter 4 · PK = chave primária · FK = chave estrangeira · UQ = único</font><br/> >,
     labelloc=t, fontname="Helvetica", fontsize=18,
     rankdir=LR, splines=ortho, nodesep=0.35, ranksep=0.9, pad=0.4, bgcolor="white"
   ];
   node [shape=plain, fontname="Helvetica", fontsize=14];
-  edge [color="#334155", dir=both, penwidth=1.2, arrowsize=0.9];
+  edge [color="#000000", dir=both, penwidth=1.2, arrowsize=0.9];
 
   usuarios [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#0f766e">
-      <tr><td colspan="3" bgcolor="#ccfbf1"><b>usuarios</b></td></tr>
-      <tr><td align="left"><font color="#b45309"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#6b7280">INT UNSIGNED AI</font></td></tr>
-      <tr><td></td><td align="left">nome</td><td align="left"><font color="#6b7280">VARCHAR(120)</font></td></tr>
-      <tr><td align="left"><font color="#7c3aed">UQ</font></td><td align="left">login_email</td><td align="left"><font color="#6b7280">VARCHAR(150)</font></td></tr>
-      <tr><td></td><td align="left">senha_hash</td><td align="left"><font color="#6b7280">VARCHAR(255)</font></td></tr>
-      <tr><td></td><td align="left">perfil</td><td align="left"><font color="#6b7280">ENUM</font></td></tr>
-      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#6b7280">ENUM</font></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000">
+      <tr><td colspan="3"><b>usuarios</b></td></tr>
+      <tr><td align="left"><font color="#000000"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#000000">INT UNSIGNED AI</font></td></tr>
+      <tr><td></td><td align="left">nome</td><td align="left"><font color="#000000">VARCHAR(120)</font></td></tr>
+      <tr><td align="left"><font color="#000000">UQ</font></td><td align="left">login_email</td><td align="left"><font color="#000000">VARCHAR(150)</font></td></tr>
+      <tr><td></td><td align="left">senha_hash</td><td align="left"><font color="#000000">VARCHAR(255)</font></td></tr>
+      <tr><td></td><td align="left">perfil</td><td align="left"><font color="#000000">ENUM</font></td></tr>
+      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#000000">ENUM</font></td></tr>
     </table>>];
 
   modalidades [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#0f766e">
-      <tr><td colspan="3" bgcolor="#ccfbf1"><b>modalidades</b></td></tr>
-      <tr><td align="left"><font color="#b45309"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#6b7280">INT UNSIGNED AI</font></td></tr>
-      <tr><td align="left"><font color="#7c3aed">UQ</font></td><td align="left">nome</td><td align="left"><font color="#6b7280">VARCHAR(80)</font></td></tr>
-      <tr><td></td><td align="left">descricao</td><td align="left"><font color="#6b7280">TEXT NULL</font></td></tr>
-      <tr><td></td><td align="left">categoria</td><td align="left"><font color="#6b7280">ENUM</font></td></tr>
-      <tr><td></td><td align="left">capacidade_padrao</td><td align="left"><font color="#6b7280">TINYINT UNSIGNED</font></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000">
+      <tr><td colspan="3"><b>modalidades</b></td></tr>
+      <tr><td align="left"><font color="#000000"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#000000">INT UNSIGNED AI</font></td></tr>
+      <tr><td align="left"><font color="#000000">UQ</font></td><td align="left">nome</td><td align="left"><font color="#000000">VARCHAR(80)</font></td></tr>
+      <tr><td></td><td align="left">descricao</td><td align="left"><font color="#000000">TEXT NULL</font></td></tr>
+      <tr><td></td><td align="left">categoria</td><td align="left"><font color="#000000">ENUM</font></td></tr>
+      <tr><td></td><td align="left">capacidade_padrao</td><td align="left"><font color="#000000">TINYINT UNSIGNED</font></td></tr>
     </table>>];
 
   professores [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#0f766e">
-      <tr><td colspan="3" bgcolor="#ccfbf1"><b>professores</b></td></tr>
-      <tr><td align="left"><font color="#b45309"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#6b7280">INT UNSIGNED AI</font></td></tr>
-      <tr><td></td><td align="left">nome</td><td align="left"><font color="#6b7280">VARCHAR(120)</font></td></tr>
-      <tr><td align="left"><font color="#7c3aed">UQ</font></td><td align="left">cpf</td><td align="left"><font color="#6b7280">CHAR(11)</font></td></tr>
-      <tr><td></td><td align="left">telefone</td><td align="left"><font color="#6b7280">VARCHAR(20)</font></td></tr>
-      <tr><td></td><td align="left">email</td><td align="left"><font color="#6b7280">VARCHAR(150)</font></td></tr>
-      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#6b7280">ENUM</font></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000">
+      <tr><td colspan="3"><b>professores</b></td></tr>
+      <tr><td align="left"><font color="#000000"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#000000">INT UNSIGNED AI</font></td></tr>
+      <tr><td></td><td align="left">nome</td><td align="left"><font color="#000000">VARCHAR(120)</font></td></tr>
+      <tr><td align="left"><font color="#000000">UQ</font></td><td align="left">cpf</td><td align="left"><font color="#000000">CHAR(11)</font></td></tr>
+      <tr><td></td><td align="left">telefone</td><td align="left"><font color="#000000">VARCHAR(20)</font></td></tr>
+      <tr><td></td><td align="left">email</td><td align="left"><font color="#000000">VARCHAR(150)</font></td></tr>
+      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#000000">ENUM</font></td></tr>
     </table>>];
 
   professor_modalidade [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#0f766e">
-      <tr><td colspan="3" bgcolor="#e2e8f0"><b>professor_modalidade</b></td></tr>
-      <tr><td align="left"><font color="#b45309"><b>PK FK</b></font></td><td align="left"><b>professor_id</b></td><td align="left"><font color="#6b7280">INT UNSIGNED</font></td></tr>
-      <tr><td align="left"><font color="#b45309"><b>PK FK</b></font></td><td align="left"><b>modalidade_id</b></td><td align="left"><font color="#6b7280">INT UNSIGNED</font></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000">
+      <tr><td colspan="3"><b>professor_modalidade</b></td></tr>
+      <tr><td align="left"><font color="#000000"><b>PK FK</b></font></td><td align="left"><b>professor_id</b></td><td align="left"><font color="#000000">INT UNSIGNED</font></td></tr>
+      <tr><td align="left"><font color="#000000"><b>PK FK</b></font></td><td align="left"><b>modalidade_id</b></td><td align="left"><font color="#000000">INT UNSIGNED</font></td></tr>
     </table>>];
 
   turmas [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#0f766e">
-      <tr><td colspan="3" bgcolor="#ccfbf1"><b>turmas</b></td></tr>
-      <tr><td align="left"><font color="#b45309"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#6b7280">INT UNSIGNED AI</font></td></tr>
-      <tr><td align="left"><font color="#2563eb">FK</font></td><td align="left">modalidade_id</td><td align="left"><font color="#6b7280">INT UNSIGNED</font></td></tr>
-      <tr><td align="left"><font color="#2563eb">FK</font></td><td align="left">professor_id</td><td align="left"><font color="#6b7280">INT UNSIGNED</font></td></tr>
-      <tr><td></td><td align="left">nome</td><td align="left"><font color="#6b7280">VARCHAR(80)</font></td></tr>
-      <tr><td></td><td align="left">dias_semana</td><td align="left"><font color="#6b7280">VARCHAR(30)</font></td></tr>
-      <tr><td></td><td align="left">hora_inicio</td><td align="left"><font color="#6b7280">TIME</font></td></tr>
-      <tr><td></td><td align="left">hora_termino</td><td align="left"><font color="#6b7280">TIME</font></td></tr>
-      <tr><td></td><td align="left">limite_vagas</td><td align="left"><font color="#6b7280">TINYINT UNSIGNED</font></td></tr>
-      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#6b7280">ENUM</font></td></tr>
-      <tr><td></td><td align="left">data_inicio</td><td align="left"><font color="#6b7280">DATE</font></td></tr>
-      <tr><td></td><td align="left">data_termino</td><td align="left"><font color="#6b7280">DATE NULL</font></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000">
+      <tr><td colspan="3"><b>turmas</b></td></tr>
+      <tr><td align="left"><font color="#000000"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#000000">INT UNSIGNED AI</font></td></tr>
+      <tr><td align="left"><font color="#000000">FK</font></td><td align="left">modalidade_id</td><td align="left"><font color="#000000">INT UNSIGNED</font></td></tr>
+      <tr><td align="left"><font color="#000000">FK</font></td><td align="left">professor_id</td><td align="left"><font color="#000000">INT UNSIGNED</font></td></tr>
+      <tr><td></td><td align="left">nome</td><td align="left"><font color="#000000">VARCHAR(80)</font></td></tr>
+      <tr><td></td><td align="left">dias_semana</td><td align="left"><font color="#000000">VARCHAR(30)</font></td></tr>
+      <tr><td></td><td align="left">hora_inicio</td><td align="left"><font color="#000000">TIME</font></td></tr>
+      <tr><td></td><td align="left">hora_termino</td><td align="left"><font color="#000000">TIME</font></td></tr>
+      <tr><td></td><td align="left">limite_vagas</td><td align="left"><font color="#000000">TINYINT UNSIGNED</font></td></tr>
+      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#000000">ENUM</font></td></tr>
+      <tr><td></td><td align="left">data_inicio</td><td align="left"><font color="#000000">DATE</font></td></tr>
+      <tr><td></td><td align="left">data_termino</td><td align="left"><font color="#000000">DATE NULL</font></td></tr>
     </table>>];
 
   alunos [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#0f766e">
-      <tr><td colspan="3" bgcolor="#ccfbf1"><b>alunos</b></td></tr>
-      <tr><td align="left"><font color="#b45309"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#6b7280">INT UNSIGNED AI</font></td></tr>
-      <tr><td align="left"><font color="#7c3aed">UQ</font></td><td align="left">codigo</td><td align="left"><font color="#6b7280">CHAR(8)</font></td></tr>
-      <tr><td></td><td align="left">nome</td><td align="left"><font color="#6b7280">VARCHAR(120)</font></td></tr>
-      <tr><td></td><td align="left">data_nascimento</td><td align="left"><font color="#6b7280">DATE</font></td></tr>
-      <tr><td align="left"><font color="#7c3aed">UQ</font></td><td align="left">cpf</td><td align="left"><font color="#6b7280">CHAR(11)</font></td></tr>
-      <tr><td></td><td align="left">telefone</td><td align="left"><font color="#6b7280">VARCHAR(20)</font></td></tr>
-      <tr><td></td><td align="left">email</td><td align="left"><font color="#6b7280">VARCHAR(150) NULL</font></td></tr>
-      <tr><td></td><td align="left">endereco</td><td align="left"><font color="#6b7280">VARCHAR(255)</font></td></tr>
-      <tr><td></td><td align="left">data_matricula</td><td align="left"><font color="#6b7280">DATE</font></td></tr>
-      <tr><td></td><td align="left">condicao_saude</td><td align="left"><font color="#6b7280">TEXT NULL</font></td></tr>
-      <tr><td></td><td align="left">contato_emergencia</td><td align="left"><font color="#6b7280">VARCHAR(120)</font></td></tr>
-      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#6b7280">ENUM</font></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000">
+      <tr><td colspan="3"><b>alunos</b></td></tr>
+      <tr><td align="left"><font color="#000000"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#000000">INT UNSIGNED AI</font></td></tr>
+      <tr><td align="left"><font color="#000000">UQ</font></td><td align="left">codigo</td><td align="left"><font color="#000000">CHAR(8)</font></td></tr>
+      <tr><td></td><td align="left">nome</td><td align="left"><font color="#000000">VARCHAR(120)</font></td></tr>
+      <tr><td></td><td align="left">data_nascimento</td><td align="left"><font color="#000000">DATE</font></td></tr>
+      <tr><td align="left"><font color="#000000">UQ</font></td><td align="left">cpf</td><td align="left"><font color="#000000">CHAR(11)</font></td></tr>
+      <tr><td></td><td align="left">telefone</td><td align="left"><font color="#000000">VARCHAR(20)</font></td></tr>
+      <tr><td></td><td align="left">email</td><td align="left"><font color="#000000">VARCHAR(150) NULL</font></td></tr>
+      <tr><td></td><td align="left">endereco</td><td align="left"><font color="#000000">VARCHAR(255)</font></td></tr>
+      <tr><td></td><td align="left">data_matricula</td><td align="left"><font color="#000000">DATE</font></td></tr>
+      <tr><td></td><td align="left">condicao_saude</td><td align="left"><font color="#000000">TEXT NULL</font></td></tr>
+      <tr><td></td><td align="left">contato_emergencia</td><td align="left"><font color="#000000">VARCHAR(120)</font></td></tr>
+      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#000000">ENUM</font></td></tr>
     </table>>];
 
   responsaveis_legais [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#0f766e">
-      <tr><td colspan="3" bgcolor="#ccfbf1"><b>responsaveis_legais</b></td></tr>
-      <tr><td align="left"><font color="#b45309"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#6b7280">INT UNSIGNED AI</font></td></tr>
-      <tr><td align="left"><font color="#2563eb">FK UQ</font></td><td align="left">aluno_id</td><td align="left"><font color="#6b7280">INT UNSIGNED</font></td></tr>
-      <tr><td></td><td align="left">nome</td><td align="left"><font color="#6b7280">VARCHAR(120)</font></td></tr>
-      <tr><td></td><td align="left">cpf</td><td align="left"><font color="#6b7280">CHAR(11)</font></td></tr>
-      <tr><td></td><td align="left">telefone</td><td align="left"><font color="#6b7280">VARCHAR(20)</font></td></tr>
-      <tr><td></td><td align="left">email</td><td align="left"><font color="#6b7280">VARCHAR(150) NULL</font></td></tr>
-      <tr><td></td><td align="left">parentesco</td><td align="left"><font color="#6b7280">VARCHAR(30)</font></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000">
+      <tr><td colspan="3"><b>responsaveis_legais</b></td></tr>
+      <tr><td align="left"><font color="#000000"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#000000">INT UNSIGNED AI</font></td></tr>
+      <tr><td align="left"><font color="#000000">FK UQ</font></td><td align="left">aluno_id</td><td align="left"><font color="#000000">INT UNSIGNED</font></td></tr>
+      <tr><td></td><td align="left">nome</td><td align="left"><font color="#000000">VARCHAR(120)</font></td></tr>
+      <tr><td></td><td align="left">cpf</td><td align="left"><font color="#000000">CHAR(11)</font></td></tr>
+      <tr><td></td><td align="left">telefone</td><td align="left"><font color="#000000">VARCHAR(20)</font></td></tr>
+      <tr><td></td><td align="left">email</td><td align="left"><font color="#000000">VARCHAR(150) NULL</font></td></tr>
+      <tr><td></td><td align="left">parentesco</td><td align="left"><font color="#000000">VARCHAR(30)</font></td></tr>
     </table>>];
 
   matriculas [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#0f766e">
-      <tr><td colspan="3" bgcolor="#ccfbf1"><b>matriculas</b></td></tr>
-      <tr><td align="left"><font color="#b45309"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#6b7280">INT UNSIGNED AI</font></td></tr>
-      <tr><td align="left"><font color="#2563eb">FK</font></td><td align="left">aluno_id</td><td align="left"><font color="#6b7280">INT UNSIGNED</font></td></tr>
-      <tr><td align="left"><font color="#2563eb">FK</font></td><td align="left">turma_id</td><td align="left"><font color="#6b7280">INT UNSIGNED</font></td></tr>
-      <tr><td></td><td align="left">data_matricula</td><td align="left"><font color="#6b7280">DATE</font></td></tr>
-      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#6b7280">ENUM</font></td></tr>
-      <tr><td></td><td align="left">data_encerramento</td><td align="left"><font color="#6b7280">DATE NULL</font></td></tr>
-      <tr><td></td><td align="left">certificado_emitido</td><td align="left"><font color="#6b7280">TINYINT(1)</font></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000">
+      <tr><td colspan="3"><b>matriculas</b></td></tr>
+      <tr><td align="left"><font color="#000000"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#000000">INT UNSIGNED AI</font></td></tr>
+      <tr><td align="left"><font color="#000000">FK</font></td><td align="left">aluno_id</td><td align="left"><font color="#000000">INT UNSIGNED</font></td></tr>
+      <tr><td align="left"><font color="#000000">FK</font></td><td align="left">turma_id</td><td align="left"><font color="#000000">INT UNSIGNED</font></td></tr>
+      <tr><td></td><td align="left">data_matricula</td><td align="left"><font color="#000000">DATE</font></td></tr>
+      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#000000">ENUM</font></td></tr>
+      <tr><td></td><td align="left">data_encerramento</td><td align="left"><font color="#000000">DATE NULL</font></td></tr>
+      <tr><td></td><td align="left">certificado_emitido</td><td align="left"><font color="#000000">TINYINT(1)</font></td></tr>
     </table>>];
 
   frequencias [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#0f766e">
-      <tr><td colspan="3" bgcolor="#ccfbf1"><b>frequencias</b></td></tr>
-      <tr><td align="left"><font color="#b45309"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#6b7280">INT UNSIGNED AI</font></td></tr>
-      <tr><td align="left"><font color="#2563eb">FK</font></td><td align="left">matricula_id</td><td align="left"><font color="#6b7280">INT UNSIGNED</font></td></tr>
-      <tr><td></td><td align="left">data_aula</td><td align="left"><font color="#6b7280">DATE</font></td></tr>
-      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#6b7280">ENUM</font></td></tr>
-      <tr><td></td><td align="left">observacao</td><td align="left"><font color="#6b7280">VARCHAR(255) NULL</font></td></tr>
-      <tr><td colspan="3" align="left"><font point-size="9" color="#7c3aed">UQ (matricula_id, data_aula)</font></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000">
+      <tr><td colspan="3"><b>frequencias</b></td></tr>
+      <tr><td align="left"><font color="#000000"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#000000">INT UNSIGNED AI</font></td></tr>
+      <tr><td align="left"><font color="#000000">FK</font></td><td align="left">matricula_id</td><td align="left"><font color="#000000">INT UNSIGNED</font></td></tr>
+      <tr><td></td><td align="left">data_aula</td><td align="left"><font color="#000000">DATE</font></td></tr>
+      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#000000">ENUM</font></td></tr>
+      <tr><td></td><td align="left">observacao</td><td align="left"><font color="#000000">VARCHAR(255) NULL</font></td></tr>
+      <tr><td colspan="3" align="left"><font point-size="9" color="#000000">UQ (matricula_id, data_aula)</font></td></tr>
     </table>>];
 
   planos [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#0f766e">
-      <tr><td colspan="3" bgcolor="#ccfbf1"><b>planos</b></td></tr>
-      <tr><td align="left"><font color="#b45309"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#6b7280">INT UNSIGNED AI</font></td></tr>
-      <tr><td></td><td align="left">nome</td><td align="left"><font color="#6b7280">VARCHAR(80)</font></td></tr>
-      <tr><td></td><td align="left">valor</td><td align="left"><font color="#6b7280">DECIMAL(10,2)</font></td></tr>
-      <tr><td></td><td align="left">periodicidade</td><td align="left"><font color="#6b7280">ENUM</font></td></tr>
-      <tr><td></td><td align="left">beneficios</td><td align="left"><font color="#6b7280">TEXT NULL</font></td></tr>
-      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#6b7280">ENUM</font></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000">
+      <tr><td colspan="3"><b>planos</b></td></tr>
+      <tr><td align="left"><font color="#000000"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#000000">INT UNSIGNED AI</font></td></tr>
+      <tr><td></td><td align="left">nome</td><td align="left"><font color="#000000">VARCHAR(80)</font></td></tr>
+      <tr><td></td><td align="left">valor</td><td align="left"><font color="#000000">DECIMAL(10,2)</font></td></tr>
+      <tr><td></td><td align="left">periodicidade</td><td align="left"><font color="#000000">ENUM</font></td></tr>
+      <tr><td></td><td align="left">beneficios</td><td align="left"><font color="#000000">TEXT NULL</font></td></tr>
+      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#000000">ENUM</font></td></tr>
     </table>>];
 
   aluno_planos [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#0f766e">
-      <tr><td colspan="3" bgcolor="#ccfbf1"><b>aluno_planos</b></td></tr>
-      <tr><td align="left"><font color="#b45309"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#6b7280">INT UNSIGNED AI</font></td></tr>
-      <tr><td align="left"><font color="#2563eb">FK</font></td><td align="left">aluno_id</td><td align="left"><font color="#6b7280">INT UNSIGNED</font></td></tr>
-      <tr><td align="left"><font color="#2563eb">FK</font></td><td align="left">plano_id</td><td align="left"><font color="#6b7280">INT UNSIGNED</font></td></tr>
-      <tr><td></td><td align="left">data_inicio</td><td align="left"><font color="#6b7280">DATE</font></td></tr>
-      <tr><td></td><td align="left">data_fim</td><td align="left"><font color="#6b7280">DATE NULL</font></td></tr>
-      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#6b7280">ENUM</font></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000">
+      <tr><td colspan="3"><b>aluno_planos</b></td></tr>
+      <tr><td align="left"><font color="#000000"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#000000">INT UNSIGNED AI</font></td></tr>
+      <tr><td align="left"><font color="#000000">FK</font></td><td align="left">aluno_id</td><td align="left"><font color="#000000">INT UNSIGNED</font></td></tr>
+      <tr><td align="left"><font color="#000000">FK</font></td><td align="left">plano_id</td><td align="left"><font color="#000000">INT UNSIGNED</font></td></tr>
+      <tr><td></td><td align="left">data_inicio</td><td align="left"><font color="#000000">DATE</font></td></tr>
+      <tr><td></td><td align="left">data_fim</td><td align="left"><font color="#000000">DATE NULL</font></td></tr>
+      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#000000">ENUM</font></td></tr>
     </table>>];
 
   mensalidades [label=<
-    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#0f766e">
-      <tr><td colspan="3" bgcolor="#ccfbf1"><b>mensalidades</b></td></tr>
-      <tr><td align="left"><font color="#b45309"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#6b7280">INT UNSIGNED AI</font></td></tr>
-      <tr><td align="left"><font color="#2563eb">FK</font></td><td align="left">aluno_plano_id</td><td align="left"><font color="#6b7280">INT UNSIGNED</font></td></tr>
-      <tr><td></td><td align="left">valor</td><td align="left"><font color="#6b7280">DECIMAL(10,2)</font></td></tr>
-      <tr><td></td><td align="left">vencimento</td><td align="left"><font color="#6b7280">DATE</font></td></tr>
-      <tr><td></td><td align="left">data_pagamento</td><td align="left"><font color="#6b7280">DATE NULL</font></td></tr>
-      <tr><td></td><td align="left">forma_pagamento</td><td align="left"><font color="#6b7280">ENUM NULL</font></td></tr>
-      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#6b7280">ENUM</font></td></tr>
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000">
+      <tr><td colspan="3"><b>mensalidades</b></td></tr>
+      <tr><td align="left"><font color="#000000"><b>PK</b></font></td><td align="left"><b>id</b></td><td align="left"><font color="#000000">INT UNSIGNED AI</font></td></tr>
+      <tr><td align="left"><font color="#000000">FK</font></td><td align="left">aluno_plano_id</td><td align="left"><font color="#000000">INT UNSIGNED</font></td></tr>
+      <tr><td></td><td align="left">valor</td><td align="left"><font color="#000000">DECIMAL(10,2)</font></td></tr>
+      <tr><td></td><td align="left">vencimento</td><td align="left"><font color="#000000">DATE</font></td></tr>
+      <tr><td></td><td align="left">data_pagamento</td><td align="left"><font color="#000000">DATE NULL</font></td></tr>
+      <tr><td></td><td align="left">forma_pagamento</td><td align="left"><font color="#000000">ENUM NULL</font></td></tr>
+      <tr><td></td><td align="left">situacao</td><td align="left"><font color="#000000">ENUM</font></td></tr>
     </table>>];
 
   // ---------- Colunas do layout ----------
