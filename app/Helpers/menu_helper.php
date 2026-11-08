@@ -18,6 +18,7 @@ if (! function_exists('itens_menu')) {
             ['rota' => 'turmas',      'rotulo' => 'Turmas'],
             ['rota' => 'matriculas',  'rotulo' => 'Matrículas'],
             ['rota' => 'frequencias', 'rotulo' => 'Frequência'],
+            ['rota' => 'relatorios',  'rotulo' => 'Relatórios'],
         ];
 
         if ($perfil === 'proprietario') {
@@ -25,7 +26,6 @@ if (! function_exists('itens_menu')) {
             $itens[] = ['rota' => 'modalidades',        'rotulo' => 'Modalidades'];
             $itens[] = ['rota' => 'planos',             'rotulo' => 'Planos'];
             $itens[] = ['rota' => 'mensalidades',       'rotulo' => 'Mensalidades'];
-            $itens[] = ['rota' => 'relatorios',         'rotulo' => 'Relatórios'];
         }
 
         return $itens;
