@@ -1,0 +1,71 @@
+<?php
+/**
+ * Layout base: navbar por perfil (RF21), mensagens de retorno e Bootstrap 5.
+ */
+$perfil    = session()->get('usuario_perfil');
+$ehDono    = $perfil === 'proprietario';
+$logado    = session()->get('usuario_id') !== null;
+$erros     = session()->getFlashdata('erros') ?? [];
+?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?= esc($titulo ?? 'Sistema CT') ?> · Sistema CT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="<?= site_url('painel') ?>">Sistema CT</a>
+            <?php if ($logado) : ?>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+                        aria-controls="menuPrincipal" aria-expanded="false" aria-label="Alternar menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="menuPrincipal">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <?php foreach (itens_menu($perfil) as $item) : ?>
+                            <li class="nav-item"><a class="nav-link" href="<?= site_url($item['rota']) ?>"><?= esc($item['rotulo']) ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <span class="navbar-text me-3">
+                        <?= esc(session()->get('usuario_nome')) ?> (<?= esc($ehDono ? 'Proprietário' : 'Recepcionista') ?>)
+                    </span>
+                    <form action="<?= site_url('sair') ?>" method="post" class="d-inline">
+                        <?= csrf_field() ?>
+                        <button type="submit" class="btn btn-outline-light btn-sm">Sair</button>
+                    </form>
+                </div>
+            <?php endif; ?>
+        </div>
+    </nav>
+</header>
+
+<main class="container py-4">
+    <?php if (session()->getFlashdata('sucesso')) : ?>
+        <div class="alert alert-success" role="alert"><?= esc(session()->getFlashdata('sucesso')) ?></div>
+    <?php endif; ?>
+    <?php if (session()->getFlashdata('erro')) : ?>
+        <div class="alert alert-danger" role="alert"><?= esc(session()->getFlashdata('erro')) ?></div>
+    <?php endif; ?>
+    <?php if ($erros !== []) : ?>
+        <div class="alert alert-danger" role="alert">
+            <p class="mb-1 fw-semibold">Corrija os campos abaixo:</p>
+            <ul class="mb-0">
+                <?php foreach ($erros as $mensagem) : ?>
+                    <li><?= esc($mensagem) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+
+    <?= $this->renderSection('conteudo') ?>
+</main>
+
+<footer class="container pb-4 text-muted small">Sistema CT · Desenvolvimento Web · IFES</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
