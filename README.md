@@ -136,11 +136,53 @@ app/
 └── Views/            Bootstrap 5, HTML semântico e esc() em toda saída dinâmica
 ```
 
+## Backup e restauração
+
+O backup periódico dos dados é o requisito RNF03. Dois comandos do spark cuidam disso.
+
+### Gerar o backup
+
+```bash
+php spark backup:banco              # mantém os últimos 14 backups
+php spark backup:banco --manter 30  # mantém os últimos 30
+```
+
+- O arquivo é gravado em `writable/backups/` com o nome `ct_devweb_AAAAMMDD_HHMM.sql.gz` (banco compactado, com tabelas, dados, rotinas e gatilhos).
+- Os backups mais antigos que o limite informado são apagados automaticamente.
+- Pasta e arquivos ficam com permissão só do dono, e `writable/backups/` está no `.gitignore`: o backup contém dados pessoais e a condição de saúde dos alunos (LGPD) e **nunca deve ser versionado**.
+- Exige os clientes `mysqldump` e `mysql` instalados e no `PATH`. Se estiverem em outro lugar, informe no `.env`: `backup.mysqldump = '/caminho/mysqldump'` e `backup.mysql = '/caminho/mysql'`.
+- As credenciais vêm do `.env` (as mesmas do sistema) e seguem para o `mysqldump` por um arquivo temporário protegido, sem aparecer na linha de comando.
+
+### Frequência recomendada: diária
+
+Agende o comando para rodar todo dia, de madrugada, no cron do servidor (`crontab -e`):
+
+```cron
+0 2 * * * cd /caminho/do/projeto && php spark backup:banco >> writable/logs/backup.log 2>&1
+```
+
+No Windows, crie uma tarefa no Agendador de Tarefas que execute `php spark backup:banco` na pasta do projeto. Com 14 backups diários, o centro tem duas semanas de histórico (acima dos 7 dias previstos no nível de serviço do documento de análise).
+
+### Copiar para fora do servidor
+
+Backup que fica só no mesmo servidor se perde junto com ele. Copie os arquivos de `writable/backups/` para outro lugar, por canal protegido (por exemplo `rsync`/`scp` para outra máquina, ou um armazenamento em nuvem com acesso restrito), de preferência logo depois do agendamento diário. Trate a cópia com o mesmo cuidado dos dados originais.
+
+### Restaurar
+
+```bash
+php spark backup:restaurar ct_devweb_20261108_0200.sql.gz
+```
+
+- Aceita o nome de um arquivo da pasta `writable/backups/` ou o caminho completo. Sem argumento válido, o comando lista os backups disponíveis.
+- A restauração **substitui** as tabelas atuais pelas do arquivo. Por segurança, o comando pede para digitar o nome do banco antes de continuar; qualquer outro texto cancela sem alterar nada.
+- Teste a restauração pelo menos uma vez por mês, em um banco de teste, para ter certeza de que os backups realmente funcionam.
+
 ## Segurança
 
 - Proteção CSRF ativa em todas as requisições (`csrf_field()` em todo formulário).
 - Alterações e exclusões somente por POST; leitura por GET.
 - Senhas com `password_hash`; credenciais do banco apenas no `.env`.
+- Backups compactados em `writable/backups/` (fora do versionamento), com permissão só do dono.
 - Saída escapada com `esc()`; condição de saúde (dado sensível, LGPD) visível só ao proprietário.
 
 ## Fora do escopo desta versão
