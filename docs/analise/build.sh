@@ -64,4 +64,22 @@ EOF
 pandoc "$TMP/docx.md" -f markdown -t docx --reference-doc=referencia.docx \
   --resource-path=. -M lang=pt-BR -o "$DOCX"
 
+# ABNT: texto das tabelas em fonte menor (10 pt, espaçamento simples). O pandoc usa o mesmo
+# estilo "Compact" em listas e células; aqui só as células passam para o estilo "TabelaTexto".
+python3 - "$DOCX" <<'EOF'
+import re, sys, zipfile, shutil
+caminho = sys.argv[1]
+with zipfile.ZipFile(caminho) as z:
+    partes = {n: z.read(n) for n in z.namelist()}
+doc = partes["word/document.xml"].decode("utf-8")
+doc = re.sub(r"<w:tc>.*?</w:tc>",
+             lambda m: re.sub(r'w:pStyle w:val="(Compact|BodyText|FirstParagraph)"', 'w:pStyle w:val="TabelaTexto"', m.group(0)),
+             doc, flags=re.S)
+partes["word/document.xml"] = doc.encode("utf-8")
+with zipfile.ZipFile(caminho + ".tmp", "w", zipfile.ZIP_DEFLATED) as z:
+    for nome, dados in partes.items():
+        z.writestr(nome, dados)
+shutil.move(caminho + ".tmp", caminho)
+EOF
+
 echo "ok → $PDF e $DOCX"
