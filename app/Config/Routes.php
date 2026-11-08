@@ -52,4 +52,29 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
         $routes->post('(:num)/reativar', 'Professores::reativar/$1', ['as' => 'professores_reativar']);
         $routes->post('(:num)/excluir', 'Professores::excluir/$1', ['as' => 'professores_excluir']);
     });
+
+    // Turmas (HU03): consulta para os dois perfis; alterações só do proprietário (RN05)
+    $routes->group('turmas', static function (RouteCollection $routes): void {
+        $routes->get('', 'Turmas::index', ['as' => 'turmas']);
+        $routes->get('(:num)', 'Turmas::ver/$1', ['as' => 'turmas_ver']);
+        $routes->group('', ['filter' => 'perfil:proprietario'], static function (RouteCollection $routes): void {
+            $routes->get('novo', 'Turmas::novo', ['as' => 'turmas_novo']);
+            $routes->post('criar', 'Turmas::criar', ['as' => 'turmas_criar']);
+            $routes->get('(:num)/editar', 'Turmas::editar/$1', ['as' => 'turmas_editar']);
+            $routes->post('(:num)/atualizar', 'Turmas::atualizar/$1', ['as' => 'turmas_atualizar']);
+            $routes->post('(:num)/suspender', 'Turmas::suspender/$1', ['as' => 'turmas_suspender']);
+            $routes->post('(:num)/reativar', 'Turmas::reativar/$1', ['as' => 'turmas_reativar']);
+            $routes->post('(:num)/excluir', 'Turmas::excluir/$1', ['as' => 'turmas_excluir']);
+        });
+    });
+
+    // Matrículas (HU03): recepcionista e proprietário
+    $routes->group('matriculas', static function (RouteCollection $routes): void {
+        $routes->get('', 'Matriculas::index', ['as' => 'matriculas']);
+        $routes->get('nova', 'Matriculas::nova', ['as' => 'matriculas_nova']);
+        $routes->post('criar', 'Matriculas::criar', ['as' => 'matriculas_criar']);
+        $routes->get('(:num)/trocar', 'Matriculas::trocar/$1', ['as' => 'matriculas_trocar']);
+        $routes->post('(:num)/efetivar-troca', 'Matriculas::efetivarTroca/$1', ['as' => 'matriculas_efetivar_troca']);
+        $routes->post('(:num)/cancelar', 'Matriculas::cancelar/$1', ['as' => 'matriculas_cancelar']);
+    });
 });
