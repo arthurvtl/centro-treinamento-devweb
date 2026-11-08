@@ -35,7 +35,7 @@ Projeto da disciplina de Desenvolvimento Web (IFES). A análise de negócio comp
 git clone https://github.com/arthurvtl/centro-treinamento-devweb.git
 cd centro-treinamento-devweb
 composer install
-cp env .env
+cp env.example .env
 ```
 
 Edite o arquivo `.env` e ajuste as credenciais do banco. Elas ficam **somente** no `.env`, que não é versionado:
