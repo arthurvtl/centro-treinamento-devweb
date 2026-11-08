@@ -76,4 +76,24 @@ class PlanoModel extends Model
     {
         return $this->db->table('aluno_planos')->where('plano_id', $planoId)->countAllResults() > 0;
     }
+
+    /**
+     * Lista todos os planos em ordem alfabética (tela de gestão).
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function buscarTodosOrdenados(): array
+    {
+        return $this->orderBy('nome')->findAll();
+    }
+
+    /**
+     * Lista só os planos ativos, que podem ser vinculados a alunos (RF13).
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function buscarAtivosOrdenados(): array
+    {
+        return $this->where('situacao', 'ATIVO')->orderBy('nome')->findAll();
+    }
 }

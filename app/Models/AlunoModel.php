@@ -97,11 +97,11 @@ class AlunoModel extends Model
      */
     protected function atribuirCodigo(array $evento): array
     {
-        $ultimo = $this->db->table($this->table)
-            ->select('MAX(CAST(SUBSTRING(codigo, 3) AS UNSIGNED)) AS ultimo', false)
-            ->get()->getRowArray();
+        // Os códigos têm tamanho fixo (AL + 6 dígitos): o maior em ordem alfabética é o mais recente.
+        $ultimo = $this->db->table($this->table)->selectMax('codigo')->get()->getRowArray()['codigo'] ?? null;
+        $numero = $ultimo === null ? 0 : (int) substr($ultimo, 2);
 
-        $evento['data']['codigo'] = 'AL' . str_pad((string) (((int) $ultimo['ultimo']) + 1), 6, '0', STR_PAD_LEFT);
+        $evento['data']['codigo'] = 'AL' . str_pad((string) ($numero + 1), 6, '0', STR_PAD_LEFT);
 
         return $evento;
     }
@@ -202,5 +202,27 @@ class AlunoModel extends Model
         $inativos = (int) ($porSituacao['INATIVO'] ?? 0);
 
         return ['total' => $ativos + $inativos, 'ativos' => $ativos, 'inativos' => $inativos];
+    }
+
+    /**
+     * Lista os alunos ativos (id, código e nome) para preencher listas de seleção, em ordem alfabética.
+     *
+     * Traz só o necessário para a lista: nada de dado sensível como a condição de saúde (RNF06).
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function buscarAtivosParaSelecao(): array
+    {
+        return $this->select('id, codigo, nome')->where('situacao', 'ATIVO')->orderBy('nome')->findAll();
+    }
+
+    /**
+     * Busca o resumo de um aluno (id, código e nome), sem dados sensíveis, para cabeçalhos de telas.
+     *
+     * @return array<string, mixed>|null
+     */
+    public function buscarResumo(int $alunoId): ?array
+    {
+        return $this->select('id, codigo, nome')->find($alunoId);
     }
 }

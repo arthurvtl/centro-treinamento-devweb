@@ -62,7 +62,7 @@ class Mensalidades extends BaseController
      */
     public function aluno(int $alunoId)
     {
-        $aluno = (new AlunoModel())->select('id, codigo, nome, situacao')->find($alunoId);
+        $aluno = (new AlunoModel())->buscarResumo($alunoId);
 
         if ($aluno === null) {
             throw PageNotFoundException::forPageNotFound('Aluno não encontrado.');
@@ -74,7 +74,7 @@ class Mensalidades extends BaseController
             'planoAtivo'   => (new AlunoPlanoModel())->buscarAtivoDoAluno($alunoId),
             'adimplente'   => $this->pagamentoService->alunoEstaAdimplente($alunoId),
             'mensalidades' => $this->mensalidadeModel->buscarDoAluno($alunoId),
-            'planos'       => (new PlanoModel())->where('situacao', 'ATIVO')->orderBy('nome')->findAll(),
+            'planos'       => (new PlanoModel())->buscarAtivosOrdenados(),
         ]);
     }
 

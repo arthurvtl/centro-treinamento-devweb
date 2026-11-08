@@ -122,4 +122,14 @@ class ProfessorModel extends Model
     {
         return $this->db->table('turmas')->where('professor_id', $professorId)->countAllResults() > 0;
     }
+
+    /**
+     * Lista os professores ativos em ordem alfabética, para escolher o responsável da turma.
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function buscarAtivosOrdenados(): array
+    {
+        return $this->where('situacao', 'ATIVO')->orderBy('nome')->findAll();
+    }
 }

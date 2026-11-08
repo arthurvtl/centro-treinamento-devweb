@@ -44,7 +44,7 @@ class Matriculas extends BaseController
     {
         return view('matriculas/formulario', [
             'titulo'          => 'Nova matrícula',
-            'alunos'          => (new AlunoModel())->select('id, codigo, nome')->where('situacao', 'ATIVO')->orderBy('nome')->findAll(),
+            'alunos'          => (new AlunoModel())->buscarAtivosParaSelecao(),
             'turmas'          => (new TurmaModel())->buscarComOcupacao('ATIVA'),
             'turmaPreferida'  => (int) $this->request->getGet('turma_id'),
         ]);
@@ -77,7 +77,7 @@ class Matriculas extends BaseController
         return view('matriculas/trocar', [
             'titulo'    => 'Trocar de turma',
             'matricula' => $matricula,
-            'aluno'     => (new AlunoModel())->select('id, codigo, nome')->find($matricula['aluno_id']),
+            'aluno'     => (new AlunoModel())->buscarResumo((int) $matricula['aluno_id']),
             'turmas'    => array_filter(
                 (new TurmaModel())->buscarComOcupacao('ATIVA'),
                 static fn (array $turma): bool => (int) $turma['id'] !== (int) $matricula['turma_id'],

@@ -24,7 +24,7 @@ class Planos extends BaseController
     {
         return view('planos/index', [
             'titulo' => 'Planos',
-            'planos' => $this->planoModel->orderBy('nome')->findAll(),
+            'planos' => $this->planoModel->buscarTodosOrdenados(),
         ]);
     }
 
