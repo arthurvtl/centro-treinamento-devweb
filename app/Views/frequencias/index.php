@@ -76,20 +76,20 @@ $turmaAtual = $turma['id'] ?? 0;
                                 <td><?= esc($aluno['aluno_codigo']) ?> · <?= esc($aluno['aluno_nome']) ?></td>
                                 <td class="text-nowrap">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="situacao[<?= $matriculaId ?>]"
-                                               id="presente_<?= $matriculaId ?>" value="PRESENTE" <?= $situacaoAtual === 'PRESENTE' ? 'checked' : '' ?>>
-                                        <label class="form-check-label" for="presente_<?= $matriculaId ?>">Presente</label>
+                                        <input class="form-check-input" type="radio" name="situacao[<?= esc($matriculaId, 'attr') ?>]"
+                                               id="presente_<?= esc($matriculaId, 'attr') ?>" value="PRESENTE" <?= $situacaoAtual === 'PRESENTE' ? 'checked' : '' ?>>
+                                        <label class="form-check-label" for="presente_<?= esc($matriculaId, 'attr') ?>">Presente</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="situacao[<?= $matriculaId ?>]"
-                                               id="falta_<?= $matriculaId ?>" value="FALTA" <?= $situacaoAtual === 'FALTA' ? 'checked' : '' ?>>
-                                        <label class="form-check-label" for="falta_<?= $matriculaId ?>">Falta</label>
+                                        <input class="form-check-input" type="radio" name="situacao[<?= esc($matriculaId, 'attr') ?>]"
+                                               id="falta_<?= esc($matriculaId, 'attr') ?>" value="FALTA" <?= $situacaoAtual === 'FALTA' ? 'checked' : '' ?>>
+                                        <label class="form-check-label" for="falta_<?= esc($matriculaId, 'attr') ?>">Falta</label>
                                     </div>
                                 </td>
                                 <td>
-                                    <label class="visually-hidden" for="obs_<?= $matriculaId ?>">Observação de <?= esc($aluno['aluno_nome']) ?></label>
-                                    <input type="text" class="form-control form-control-sm" id="obs_<?= $matriculaId ?>"
-                                           name="observacao[<?= $matriculaId ?>]" maxlength="255"
+                                    <label class="visually-hidden" for="obs_<?= esc($matriculaId, 'attr') ?>">Observação de <?= esc($aluno['aluno_nome']) ?></label>
+                                    <input type="text" class="form-control form-control-sm" id="obs_<?= esc($matriculaId, 'attr') ?>"
+                                           name="observacao[<?= esc($matriculaId, 'attr') ?>]" maxlength="255"
                                            value="<?= esc($anterior['observacao'] ?? '', 'attr') ?>">
                                 </td>
                             </tr>
