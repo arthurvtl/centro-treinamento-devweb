@@ -10,7 +10,7 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<h1 class="h3 mb-3"><?= esc($titulo) ?></h1>
+<header class="ct-page-header"><h1 class="h3 mb-0"><?= esc($titulo) ?></h1></header>
 <p>Aluno: <strong><?= esc($aluno['codigo']) ?> · <?= esc($aluno['nome']) ?></strong></p>
 
 <form action="<?= esc(url_to('matriculas_efetivar_troca', $matricula['id']), 'html') ?>" method="post" novalidate>
@@ -27,7 +27,7 @@
             <?php endforeach; ?>
         </select>
     </div>
-    <div class="d-flex gap-2">
+    <div class="ct-form-acoes">
         <button type="submit" class="btn btn-primary">Trocar de turma</button>
         <a href="<?= esc(url_to('matriculas'), 'html') ?>" class="btn btn-outline-secondary">Cancelar</a>
     </div>

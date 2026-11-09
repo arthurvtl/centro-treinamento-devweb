@@ -12,7 +12,7 @@ $turmaAtual = (int) old('turma_id', $turmaPreferida);
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<h1 class="h3 mb-3"><?= esc($titulo) ?></h1>
+<header class="ct-page-header"><h1 class="h3 mb-0"><?= esc($titulo) ?></h1></header>
 
 <form action="<?= esc(url_to('matriculas_criar'), 'html') ?>" method="post" novalidate>
     <?= csrf_field() ?>
@@ -43,7 +43,7 @@ $turmaAtual = (int) old('turma_id', $turmaPreferida);
             </div>
         </div>
     </div>
-    <div class="d-flex gap-2">
+    <div class="ct-form-acoes">
         <button type="submit" class="btn btn-primary">Matricular</button>
         <a href="<?= esc(url_to('matriculas'), 'html') ?>" class="btn btn-outline-secondary">Cancelar</a>
     </div>

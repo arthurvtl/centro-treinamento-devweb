@@ -10,11 +10,16 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<h1 class="h3 mb-1"><?= esc($titulo) ?></h1>
-<p class="text-muted"><?= esc($turma['nome']) ?> · considera as aulas já lançadas para cada aluno.</p>
+<header class="ct-page-header">
+    <div>
+        <h1 class="h3 mb-0"><?= esc($titulo) ?></h1>
+        <p class="text-secondary small mb-0"><?= esc($turma['nome']) ?> · considera as aulas já lançadas para cada aluno.</p>
+    </div>
+</header>
 
+<div class="ct-card mb-3">
 <div class="table-responsive position-relative">
-    <table class="table table-striped align-middle bg-white">
+    <table class="table table-striped table-hover align-middle">
         <caption class="visually-hidden">Presença dos alunos da turma</caption>
         <thead>
             <tr>
@@ -26,11 +31,11 @@
         </thead>
         <tbody>
             <?php if ($resumos === []) : ?>
-                <tr><td colspan="4" class="text-center text-muted">Nenhum aluno matriculado.</td></tr>
+                <tr><td colspan="4" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum aluno matriculado.</p></div></td></tr>
             <?php endif; ?>
             <?php foreach ($resumos as $resumo) : ?>
                 <?php $abaixo = $resumo['percentual'] !== null && $resumo['percentual'] < $minimo; ?>
-                <tr class="<?= $abaixo ? 'table-danger' : '' ?>">
+                <tr class="<?= $abaixo ? 'ct-linha-alerta' : '' ?>">
                     <td><?= esc($resumo['aluno_codigo']) ?> · <?= esc($resumo['aluno_nome']) ?></td>
                     <td><?= esc((string) $resumo['presencas']) ?></td>
                     <td><?= esc((string) $resumo['aulas']) ?></td>
@@ -39,13 +44,14 @@
                             <span class="text-muted">Sem lançamentos</span>
                         <?php else : ?>
                             <?= esc(number_format((float) $resumo['percentual'], 1, ',', '.')) ?>%
-                            <?php if ($abaixo) : ?><span class="badge text-bg-danger">Abaixo de <?= esc((string) $minimo) ?>%</span><?php endif; ?>
+                            <?php if ($abaixo) : ?><span class="ct-status ct-status--alerta">Abaixo de <?= esc((string) $minimo) ?>%</span><?php endif; ?>
                         <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+</div>
 </div>
 <a href="<?= esc(url_to('frequencias'), 'html') ?>?turma_id=<?= esc($turma['id'], 'url') ?>" class="btn btn-link px-0">Voltar para a chamada</a>
 <?= $this->endSection() ?>

@@ -11,10 +11,10 @@ $categorias = rotulos_de('categorias');
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<header class="ct-page-header">
     <h1 class="h3 mb-0"><?= esc($modalidade['nome']) ?></h1>
     <a href="<?= esc(url_to('modalidades_editar', $modalidade['id']), 'html') ?>" class="btn btn-outline-primary">Editar</a>
-</div>
+</header>
 
 <section class="card card-body mb-4" aria-labelledby="tituloDados">
     <h2 class="h5" id="tituloDados">Dados da modalidade</h2>
@@ -39,8 +39,9 @@ $categorias = rotulos_de('categorias');
 
 <section class="mb-4" aria-labelledby="tituloTurmas">
     <h2 class="h5" id="tituloTurmas">Turmas</h2>
-    <div class="table-responsive position-relative">
-        <table class="table table-striped align-middle bg-white">
+    <div class="ct-card mb-3">
+<div class="table-responsive position-relative">
+        <table class="table table-striped table-hover align-middle">
             <caption class="visually-hidden">Turmas da modalidade</caption>
             <thead>
                 <tr>
@@ -52,7 +53,7 @@ $categorias = rotulos_de('categorias');
             </thead>
             <tbody>
                 <?php if ($turmas === []) : ?>
-                    <tr><td colspan="4" class="text-center text-muted">Nenhuma turma.</td></tr>
+                    <tr><td colspan="4" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma turma.</p></div></td></tr>
                 <?php endif; ?>
                 <?php foreach ($turmas as $turma) : ?>
                     <tr>
@@ -65,6 +66,7 @@ $categorias = rotulos_de('categorias');
             </tbody>
         </table>
     </div>
+</div>
 </section>
 <a href="<?= esc(url_to('modalidades'), 'html') ?>" class="btn btn-link px-0">Voltar para a lista</a>
 <?= $this->endSection() ?>

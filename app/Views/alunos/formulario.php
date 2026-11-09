@@ -14,7 +14,7 @@ $mostraSaude   = ! $edicao || $ehProprietario;
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<h1 class="h3 mb-3"><?= esc($titulo) ?></h1>
+<header class="ct-page-header"><h1 class="h3 mb-0"><?= esc($titulo) ?></h1></header>
 
 <form action="<?= esc($acao, 'html') ?>" method="post" novalidate>
     <?= csrf_field() ?>
@@ -47,7 +47,7 @@ $mostraSaude   = ! $edicao || $ehProprietario;
                        value="<?= esc(old('telefone', isset($aluno['telefone']) ? formatar_telefone($aluno['telefone']) : '')) ?>">
             </div>
             <div class="col-12 col-md-4">
-                <label for="email" class="form-label">E-mail <span class="text-muted">(opcional)</span></label>
+                <label for="email" class="form-label">E-mail <span class="opcional">(opcional)</span></label>
                 <input type="email" class="form-control" id="email" name="email" maxlength="150"
                        value="<?= esc(old('email', $aluno['email'] ?? '')) ?>">
             </div>
@@ -68,7 +68,7 @@ $mostraSaude   = ! $edicao || $ehProprietario;
             </div>
             <?php if ($mostraSaude) : ?>
                 <div class="col-12">
-                    <label for="condicao_saude" class="form-label">Condição de saúde <span class="text-muted">(opcional)</span></label>
+                    <label for="condicao_saude" class="form-label">Condição de saúde <span class="opcional">(opcional)</span></label>
                     <textarea class="form-control" id="condicao_saude" name="condicao_saude" rows="2" maxlength="1000"
                               aria-describedby="ajudaSaude"><?= esc(old('condicao_saude', $aluno['condicao_saude'] ?? '')) ?></textarea>
                     <div id="ajudaSaude" class="form-text">Dado sensível (LGPD): somente o proprietário consegue consultar depois.</div>
@@ -78,7 +78,7 @@ $mostraSaude   = ! $edicao || $ehProprietario;
     </fieldset>
 
     <fieldset class="card card-body mb-4" id="blocoResponsavel">
-        <legend class="h5">Responsável legal <span class="text-muted fs-6">(obrigatório para menores de 18 anos)</span></legend>
+        <legend class="h5">Responsável legal <span class="opcional">(obrigatório para menores de 18 anos)</span></legend>
         <div class="row g-3">
             <div class="col-12 col-md-8">
                 <label for="responsavel_nome" class="form-label">Nome do responsável</label>
@@ -101,14 +101,14 @@ $mostraSaude   = ! $edicao || $ehProprietario;
                        value="<?= esc(old('responsavel_telefone', isset($responsavel['telefone']) ? formatar_telefone($responsavel['telefone']) : '')) ?>">
             </div>
             <div class="col-12 col-md-4">
-                <label for="responsavel_email" class="form-label">E-mail do responsável <span class="text-muted">(opcional)</span></label>
+                <label for="responsavel_email" class="form-label">E-mail do responsável <span class="opcional">(opcional)</span></label>
                 <input type="email" class="form-control" id="responsavel_email" name="responsavel_email" maxlength="150"
                        value="<?= esc(old('responsavel_email', $responsavel['email'] ?? '')) ?>">
             </div>
         </div>
     </fieldset>
 
-    <div class="d-flex gap-2">
+    <div class="ct-form-acoes">
         <button type="submit" class="btn btn-primary">Salvar</button>
         <a href="<?= esc(url_to('alunos'), 'html') ?>" class="btn btn-outline-secondary">Cancelar</a>
     </div>

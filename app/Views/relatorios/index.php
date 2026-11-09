@@ -12,12 +12,12 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<header class="ct-page-header">
     <h1 class="h3 mb-0">Relatórios</h1>
     <?php if ($ehProprietario) : ?>
-        <a href="<?= esc(url_to('relatorios_financeiro'), 'html') ?>" class="btn btn-outline-success">Relatório financeiro</a>
+        <a href="<?= esc(url_to('relatorios_financeiro'), 'html') ?>" class="btn btn-outline-secondary">Relatório financeiro</a>
     <?php endif; ?>
-</div>
+</header>
 
 <section class="mb-4" aria-labelledby="tituloTotais">
     <h2 class="h5" id="tituloTotais">Total de alunos</h2>
@@ -31,13 +31,14 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 <section class="mb-4" aria-labelledby="tituloModalidades">
     <h2 class="h5" id="tituloModalidades">Alunos por modalidade</h2>
     <p class="text-muted small mb-2">Considera alunos com matrícula ativa; cada aluno conta uma vez por modalidade.</p>
-    <div class="table-responsive position-relative">
-        <table class="table table-striped bg-white align-middle">
+    <div class="ct-card mb-3">
+<div class="table-responsive position-relative">
+        <table class="table table-striped table-hover align-middle">
             <caption class="visually-hidden">Alunos por modalidade</caption>
             <thead><tr><th scope="col">Modalidade</th><th scope="col">Categoria</th><th scope="col">Alunos</th></tr></thead>
             <tbody>
                 <?php if ($modalidades === []) : ?>
-                    <tr><td colspan="3" class="text-center text-muted">Nenhuma modalidade cadastrada.</td></tr>
+                    <tr><td colspan="3" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma modalidade cadastrada.</p></div></td></tr>
                 <?php endif; ?>
                 <?php foreach ($modalidades as $modalidade) : ?>
                     <tr>
@@ -49,20 +50,22 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
             </tbody>
         </table>
     </div>
+</div>
 </section>
 
 <section class="mb-4" aria-labelledby="tituloVagas">
     <h2 class="h5" id="tituloVagas">Turmas com vagas disponíveis</h2>
     <p class="text-muted small mb-2">Só turmas ativas: suspensas e encerradas não aceitam matrícula.</p>
-    <div class="table-responsive position-relative">
-        <table class="table table-striped bg-white align-middle">
+    <div class="ct-card mb-3">
+<div class="table-responsive position-relative">
+        <table class="table table-striped table-hover align-middle">
             <caption class="visually-hidden">Turmas com vagas</caption>
             <thead>
                 <tr><th scope="col">Turma</th><th scope="col">Modalidade</th><th scope="col">Professor</th><th scope="col">Ocupação</th><th scope="col">Vagas livres</th></tr>
             </thead>
             <tbody>
                 <?php if ($turmasComVaga === []) : ?>
-                    <tr><td colspan="5" class="text-center text-muted">Nenhuma turma ativa com vaga.</td></tr>
+                    <tr><td colspan="5" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma turma ativa com vaga.</p></div></td></tr>
                 <?php endif; ?>
                 <?php foreach ($turmasComVaga as $turma) : ?>
                     <tr>
@@ -70,11 +73,12 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
                         <td><?= esc($turma['modalidade_nome']) ?></td>
                         <td><?= esc($turma['professor_nome']) ?></td>
                         <td><?= esc((string) $turma['ocupadas']) ?>/<?= esc((string) $turma['limite_vagas']) ?></td>
-                        <td><span class="badge text-bg-success"><?= esc((string) $turma['vagas_livres']) ?></span></td>
+                        <td><span class="ct-status ct-status--ok"><?= esc((string) $turma['vagas_livres']) ?></span></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+</div>
 </section>
 <?= $this->endSection() ?>

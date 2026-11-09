@@ -1,10 +1,10 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<header class="ct-page-header">
     <h1 class="h3 mb-0">Alunos</h1>
     <a href="<?= esc(url_to('alunos_novo'), 'html') ?>" class="btn btn-primary">Novo aluno</a>
-</div>
+</header>
 
 <form action="<?= esc(url_to('alunos'), 'html') ?>" method="get" class="row g-2 mb-3" role="search">
     <div class="col-12 col-md-8">
@@ -20,8 +20,9 @@
     </div>
 </form>
 
+<div class="ct-card mb-3">
 <div class="table-responsive position-relative">
-    <table class="table table-striped table-hover align-middle bg-white">
+    <table class="table table-striped table-hover align-middle">
         <caption class="visually-hidden">Lista de alunos cadastrados</caption>
         <thead>
             <tr>
@@ -35,7 +36,7 @@
         </thead>
         <tbody>
             <?php if ($alunos === []) : ?>
-                <tr><td colspan="6" class="text-center text-muted">Nenhum aluno encontrado.</td></tr>
+                <tr><td colspan="6" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum aluno encontrado.</p></div></td></tr>
             <?php endif; ?>
             <?php foreach ($alunos as $aluno) : ?>
                 <tr>
@@ -44,18 +45,19 @@
                     <td><?= esc(formatar_cpf($aluno['cpf'])) ?></td>
                     <td><?= esc(formatar_telefone($aluno['telefone'])) ?></td>
                     <td>
-                        <span class="badge <?= $aluno['situacao'] === 'ATIVO' ? 'text-bg-success' : 'text-bg-secondary' ?>">
+                        <span class="ct-status <?= $aluno['situacao'] === 'ATIVO' ? 'ct-status--ok' : 'ct-status--inativo' ?>">
                             <?= esc($aluno['situacao'] === 'ATIVO' ? 'Ativo' : 'Inativo') ?>
                         </span>
                     </td>
                     <td class="text-end text-nowrap">
-                        <a href="<?= esc(url_to('alunos_ver', $aluno['id']), 'html') ?>" class="btn btn-sm btn-outline-primary">Ver</a>
-                        <a href="<?= esc(url_to('alunos_editar', $aluno['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        <a href="<?= esc(url_to('alunos_ver', $aluno['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Ver</a>
+                        <a href="<?= esc(url_to('alunos_editar', $aluno['id']), 'html') ?>" class="btn btn-sm btn-link">Editar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+</div>
 </div>
 
 <nav aria-label="Paginação da lista de alunos"><?= $pager->links() ?></nav>

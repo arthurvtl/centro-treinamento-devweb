@@ -8,14 +8,13 @@
  */
 $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 $situacao       = $turma['situacao'];
-$estilos        = ['ATIVA' => 'text-bg-success', 'SUSPENSA' => 'text-bg-warning', 'ENCERRADA' => 'text-bg-secondary'];
 ?>
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<header class="ct-page-header">
     <h1 class="h3 mb-0"><?= esc($turma['nome']) ?>
-        <span class="badge <?= esc($estilos[$situacao] ?? 'text-bg-secondary', 'attr') ?> fs-6"><?= esc(ucfirst(strtolower($situacao))) ?></span>
+        <span class="ct-status <?= esc(classe_status($situacao), 'attr') ?>"><?= esc(ucfirst(strtolower($situacao))) ?></span>
     </h1>
     <div class="d-flex flex-wrap gap-2">
         <?php if ($situacao === 'ATIVA') : ?>
@@ -25,7 +24,7 @@ $estilos        = ['ATIVA' => 'text-bg-success', 'SUSPENSA' => 'text-bg-warning'
             <a href="<?= esc(url_to('turmas_editar', $turma['id']), 'html') ?>" class="btn btn-outline-secondary">Editar</a>
             <form action="<?= esc(url_to($situacao === 'ATIVA' ? 'turmas_suspender' : 'turmas_reativar', $turma['id']), 'html') ?>" method="post">
                 <?= csrf_field() ?>
-                <button type="submit" class="btn btn-outline-warning"><?= $situacao === 'ATIVA' ? 'Suspender' : 'Reativar' ?></button>
+                <button type="submit" class="btn btn-outline-secondary"><?= $situacao === 'ATIVA' ? 'Suspender' : 'Reativar' ?></button>
             </form>
         <?php endif; ?>
         <?php if ($ehProprietario && $situacao !== 'ENCERRADA') : ?>
@@ -42,7 +41,7 @@ $estilos        = ['ATIVA' => 'text-bg-success', 'SUSPENSA' => 'text-bg-warning'
             </form>
         <?php endif; ?>
     </div>
-</div>
+</header>
 
 <section class="card card-body mb-4" aria-labelledby="tituloTurma">
     <h2 class="h5" id="tituloTurma">Dados da turma</h2>
@@ -68,9 +67,9 @@ $estilos        = ['ATIVA' => 'text-bg-success', 'SUSPENSA' => 'text-bg-warning'
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><?= esc($matricula['aluno_codigo']) ?> · <?= esc($matricula['aluno_nome']) ?></span>
                     <?php if ((int) $matricula['certificado_emitido'] === 1) : ?>
-                        <a href="<?= esc(url_to('matriculas_certificado', $matricula['id']), 'html') ?>" class="btn btn-sm btn-outline-success">Certificado</a>
+                        <a href="<?= esc(url_to('matriculas_certificado', $matricula['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Certificado</a>
                     <?php else : ?>
-                        <span class="badge text-bg-secondary">Sem certificado (frequência abaixo de 75%)</span>
+                        <span class="ct-status ct-status--inativo">Sem certificado (frequência abaixo de 75%)</span>
                     <?php endif; ?>
                 </li>
             <?php endforeach; ?>

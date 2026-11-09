@@ -11,10 +11,10 @@ $formas = rotulos_de('formas_pagamento');
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<header class="ct-page-header">
     <h1 class="h3 mb-0">Relatório financeiro</h1>
     <a href="<?= esc(url_to('relatorios'), 'html') ?>" class="btn btn-outline-secondary">Outros relatórios</a>
-</div>
+</header>
 
 <form action="<?= esc(url_to('relatorios_financeiro'), 'html') ?>" method="get" class="row g-2 mb-4">
     <div class="col-12 col-md-4">
@@ -35,19 +35,21 @@ $formas = rotulos_de('formas_pagamento');
 
 <section aria-labelledby="tituloFormas">
     <h2 class="h5" id="tituloFormas">Recebido por forma de pagamento</h2>
-    <div class="table-responsive position-relative">
-        <table class="table table-striped bg-white align-middle">
+    <div class="ct-card mb-3">
+<div class="table-responsive position-relative">
+        <table class="table table-striped table-hover align-middle">
             <caption class="visually-hidden">Recebimentos por forma de pagamento</caption>
-            <thead><tr><th scope="col">Forma</th><th scope="col">Total recebido</th></tr></thead>
+            <thead><tr><th scope="col">Forma</th><th scope="col" class="num">Total recebido</th></tr></thead>
             <tbody>
                 <?php if ($resumo['por_forma'] === []) : ?>
-                    <tr><td colspan="2" class="text-center text-muted">Nenhum recebimento neste mês.</td></tr>
+                    <tr><td colspan="2" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum recebimento neste mês.</p></div></td></tr>
                 <?php endif; ?>
                 <?php foreach ($resumo['por_forma'] as $forma => $total) : ?>
-                    <tr><td><?= esc($formas[$forma] ?? $forma) ?></td><td><?= esc(formatar_moeda($total)) ?></td></tr>
+                    <tr><td><?= esc($formas[$forma] ?? $forma) ?></td><td class="num"><?= esc(formatar_moeda($total)) ?></td></tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+</div>
 </section>
 <?= $this->endSection() ?>

@@ -12,16 +12,16 @@ $ativo          = $aluno['situacao'] === 'ATIVO';
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<header class="ct-page-header">
     <h1 class="h3 mb-0"><?= esc($aluno['nome']) ?>
-        <span class="badge <?= $ativo ? 'text-bg-success' : 'text-bg-secondary' ?> fs-6"><?= $ativo ? 'Ativo' : 'Inativo' ?></span>
+        <span class="ct-status <?= $ativo ? 'ct-status--ok' : 'ct-status--inativo' ?>"><?= $ativo ? 'Ativo' : 'Inativo' ?></span>
     </h1>
     <div class="d-flex flex-wrap gap-2">
         <a href="<?= esc(url_to('alunos_editar', $aluno['id']), 'html') ?>" class="btn btn-outline-primary">Editar</a>
-        <a href="<?= esc(url_to('mensalidades_aluno', $aluno['id']), 'html') ?>" class="btn btn-outline-success">Financeiro</a>
+        <a href="<?= esc(url_to('mensalidades_aluno', $aluno['id']), 'html') ?>" class="btn btn-outline-secondary">Financeiro</a>
         <form action="<?= esc(url_to($ativo ? 'alunos_inativar' : 'alunos_reativar', $aluno['id']), 'html') ?>" method="post">
             <?= csrf_field() ?>
-            <button type="submit" class="btn btn-outline-warning"><?= $ativo ? 'Inativar' : 'Reativar' ?></button>
+            <button type="submit" class="btn btn-outline-secondary"><?= $ativo ? 'Inativar' : 'Reativar' ?></button>
         </form>
         <?php if ($ehProprietario) : ?>
             <form action="<?= esc(url_to('alunos_excluir', $aluno['id']), 'html') ?>" method="post"
@@ -31,7 +31,7 @@ $ativo          = $aluno['situacao'] === 'ATIVO';
             </form>
         <?php endif; ?>
     </div>
-</div>
+</header>
 
 <section class="card card-body mb-4" aria-labelledby="tituloDados">
     <h2 class="h5" id="tituloDados">Dados do aluno</h2>

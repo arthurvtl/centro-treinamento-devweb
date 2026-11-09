@@ -6,25 +6,24 @@
  */
 $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 $situacao       = $matricula['situacao'];
-$estilos        = ['ATIVA' => 'text-bg-success', 'CANCELADA' => 'text-bg-danger', 'TRANSFERIDA' => 'text-bg-info', 'FINALIZADA' => 'text-bg-secondary'];
 ?>
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<header class="ct-page-header">
     <h1 class="h3 mb-0">Matrícula
-        <span class="badge <?= esc($estilos[$situacao] ?? 'text-bg-secondary', 'attr') ?> fs-6"><?= esc(ucfirst(strtolower($situacao))) ?></span>
+        <span class="ct-status <?= esc(classe_status($situacao), 'attr') ?>"><?= esc(ucfirst(strtolower($situacao))) ?></span>
     </h1>
     <div class="d-flex flex-wrap gap-2">
         <?php if ($situacao === 'ATIVA') : ?>
             <a href="<?= esc(url_to('matriculas_trocar', $matricula['id']), 'html') ?>" class="btn btn-outline-secondary">Trocar de turma</a>
             <form action="<?= esc(url_to('matriculas_cancelar', $matricula['id']), 'html') ?>" method="post" onsubmit="return confirm('Cancelar esta matrícula?');">
                 <?= csrf_field() ?>
-                <button type="submit" class="btn btn-outline-warning">Cancelar matrícula</button>
+                <button type="submit" class="btn btn-outline-secondary">Cancelar matrícula</button>
             </form>
         <?php endif; ?>
         <?php if ((int) $matricula['certificado_emitido'] === 1) : ?>
-            <a href="<?= esc(url_to('matriculas_certificado', $matricula['id']), 'html') ?>" class="btn btn-outline-success">Certificado</a>
+            <a href="<?= esc(url_to('matriculas_certificado', $matricula['id']), 'html') ?>" class="btn btn-outline-secondary">Certificado</a>
         <?php endif; ?>
         <?php if ($ehProprietario && $situacao === 'ATIVA') : ?>
             <form action="<?= esc(url_to('matriculas_excluir', $matricula['id']), 'html') ?>" method="post"
@@ -34,7 +33,7 @@ $estilos        = ['ATIVA' => 'text-bg-success', 'CANCELADA' => 'text-bg-danger'
             </form>
         <?php endif; ?>
     </div>
-</div>
+</header>
 
 <section class="card card-body mb-4" aria-labelledby="tituloDados">
     <h2 class="h5" id="tituloDados">Dados da matrícula</h2>

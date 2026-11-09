@@ -23,5 +23,5 @@ $formaEscolhida = $refazer ? (string) old('forma_pagamento') : '';
             <option value="<?= esc($valor, 'attr') ?>" <?= $formaEscolhida === $valor ? 'selected' : '' ?>><?= esc($rotulo) ?></option>
         <?php endforeach; ?>
     </select>
-    <button type="submit" class="btn btn-sm btn-success">Quitar</button>
+    <button type="submit" class="btn btn-sm btn-primary">Quitar</button>
 </form>

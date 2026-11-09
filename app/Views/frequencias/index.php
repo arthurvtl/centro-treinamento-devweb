@@ -13,7 +13,7 @@ $turmaAtual = $turma['id'] ?? 0;
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<h1 class="h3 mb-3">Frequência</h1>
+<header class="ct-page-header"><h1 class="h3 mb-0">Frequência</h1></header>
 
 <form action="<?= esc(url_to('frequencias'), 'html') ?>" method="get" class="row g-2 mb-4">
     <div class="col-12 col-md-6">
@@ -54,8 +54,9 @@ $turmaAtual = $turma['id'] ?? 0;
             <input type="hidden" name="turma_id" value="<?= esc($turma['id'], 'attr') ?>">
             <input type="hidden" name="data_aula" value="<?= esc($dataAula, 'attr') ?>">
 
-            <div class="table-responsive position-relative">
-                <table class="table table-striped align-middle bg-white">
+            <div class="ct-card mb-3">
+<div class="table-responsive position-relative">
+                <table class="table table-striped table-hover align-middle">
                     <caption class="visually-hidden">Chamada da turma</caption>
                     <thead>
                         <tr>
@@ -97,6 +98,7 @@ $turmaAtual = $turma['id'] ?? 0;
                     </tbody>
                 </table>
             </div>
+</div>
             <button type="submit" class="btn btn-primary">Salvar chamada</button>
         </form>
 

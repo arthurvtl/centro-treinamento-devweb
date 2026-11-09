@@ -11,7 +11,7 @@ $categoriaAtual   = old('categoria', $modalidade['categoria'] ?? '');
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<h1 class="h3 mb-3"><?= esc($titulo) ?></h1>
+<header class="ct-page-header"><h1 class="h3 mb-0"><?= esc($titulo) ?></h1></header>
 
 <form action="<?= esc($acao, 'html') ?>" method="post" novalidate>
     <?= csrf_field() ?>
@@ -39,12 +39,12 @@ $categoriaAtual   = old('categoria', $modalidade['categoria'] ?? '');
                 <div id="ajudaCapacidade" class="form-text">Lutas: até 20 alunos. Esportes coletivos: até 25.</div>
             </div>
             <div class="col-12">
-                <label for="descricao" class="form-label">Descrição <span class="text-muted">(opcional)</span></label>
+                <label for="descricao" class="form-label">Descrição <span class="opcional">(opcional)</span></label>
                 <textarea class="form-control" id="descricao" name="descricao" rows="2" maxlength="1000"><?= esc(old('descricao', $modalidade['descricao'] ?? '')) ?></textarea>
             </div>
         </div>
     </div>
-    <div class="d-flex gap-2">
+    <div class="ct-form-acoes">
         <button type="submit" class="btn btn-primary">Salvar</button>
         <a href="<?= esc(url_to('modalidades'), 'html') ?>" class="btn btn-outline-secondary">Cancelar</a>
     </div>

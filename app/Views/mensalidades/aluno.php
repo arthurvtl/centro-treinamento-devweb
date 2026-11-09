@@ -9,7 +9,6 @@
  * @var list<array<string, mixed>> $planos        planos ativos para vincular
  */
 $situacoes = rotulos_de('situacoes_mensalidade');
-$estilos   = ['EM_ABERTO' => 'text-bg-info', 'PAGO' => 'text-bg-success', 'ATRASADO' => 'text-bg-danger'];
 $periodicidades = rotulos_de('periodicidades');
 // Recepcionista atende o aluno (vincula plano e dá baixa), mas só o proprietário gera cobranças (RN05).
 $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
@@ -17,12 +16,12 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<header class="ct-page-header">
     <h1 class="h3 mb-0"><?= esc($aluno['nome']) ?>
-        <span class="badge <?= $adimplente ? 'text-bg-success' : 'text-bg-danger' ?> fs-6"><?= $adimplente ? 'Adimplente' : 'Inadimplente' ?></span>
+        <span class="ct-status <?= $adimplente ? 'ct-status--ok' : 'ct-status--alerta' ?>"><?= $adimplente ? 'Adimplente' : 'Inadimplente' ?></span>
     </h1>
     <a href="<?= esc(url_to('alunos_ver', $aluno['id']), 'html') ?>" class="btn btn-outline-secondary">Ficha do aluno</a>
-</div>
+</header>
 
 <section class="card card-body mb-4" aria-labelledby="tituloPlano">
     <h2 class="h5" id="tituloPlano">Plano atual</h2>
@@ -59,7 +58,7 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
                 <input type="date" class="form-control" id="vencimento" name="vencimento" required value="<?= esc(old('vencimento'), 'attr') ?>">
             </div>
             <div class="col-6 col-md-3">
-                <label for="valor" class="form-label">Valor <span class="text-muted">(vazio = valor do plano)</span></label>
+                <label for="valor" class="form-label">Valor <span class="opcional">(vazio = valor do plano)</span></label>
                 <input type="text" class="form-control" id="valor" name="valor" inputmode="decimal" value="<?= esc(old('valor'), 'attr') ?>">
             </div>
             <div class="col-12 col-md-3"><button type="submit" class="btn btn-outline-primary">Gerar</button></div>
@@ -69,14 +68,15 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 
 <section aria-labelledby="tituloHistorico">
     <h2 class="h5" id="tituloHistorico">Histórico de mensalidades e quitações</h2>
-    <div class="table-responsive position-relative">
-        <table class="table table-striped align-middle bg-white">
+    <div class="ct-card mb-3">
+<div class="table-responsive position-relative">
+        <table class="table table-striped table-hover align-middle">
             <caption class="visually-hidden">Mensalidades do aluno</caption>
             <thead>
                 <tr>
                     <th scope="col">Vencimento</th>
                     <th scope="col">Plano</th>
-                    <th scope="col">Valor</th>
+                    <th scope="col" class="num">Valor</th>
                     <th scope="col">Situação</th>
                     <th scope="col">Pagamento</th>
                     <th scope="col"><span class="visually-hidden">Ações</span></th>
@@ -84,14 +84,14 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
             </thead>
             <tbody>
                 <?php if ($mensalidades === []) : ?>
-                    <tr><td colspan="6" class="text-center text-muted">Nenhuma mensalidade registrada.</td></tr>
+                    <tr><td colspan="6" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma mensalidade registrada.</p></div></td></tr>
                 <?php endif; ?>
                 <?php foreach ($mensalidades as $mensalidade) : ?>
                     <tr>
                         <td><?= esc(formatar_data($mensalidade['vencimento'])) ?></td>
                         <td><?= esc($mensalidade['plano_nome']) ?></td>
-                        <td><?= esc(formatar_moeda($mensalidade['valor'])) ?></td>
-                        <td><span class="badge <?= esc($estilos[$mensalidade['situacao']] ?? 'text-bg-secondary', 'attr') ?>"><?= esc($situacoes[$mensalidade['situacao']] ?? $mensalidade['situacao']) ?></span></td>
+                        <td class="num"><?= esc(formatar_moeda($mensalidade['valor'])) ?></td>
+                        <td><span class="ct-status <?= esc(classe_status($mensalidade['situacao']), 'attr') ?>"><?= esc($situacoes[$mensalidade['situacao']] ?? $mensalidade['situacao']) ?></span></td>
                         <td><?= $mensalidade['situacao'] === 'PAGO'
                             ? esc(formatar_data($mensalidade['data_pagamento']) . ' · ' . (rotulos_de('formas_pagamento')[$mensalidade['forma_pagamento']] ?? ''))
                             : '—' ?></td>
@@ -106,5 +106,6 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
             </tbody>
         </table>
     </div>
+</div>
 </section>
 <?= $this->endSection() ?>
