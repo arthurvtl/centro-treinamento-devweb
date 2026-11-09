@@ -22,9 +22,9 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
 <section class="mb-4" aria-labelledby="tituloTotais">
     <h2 class="h5" id="tituloTotais">Total de alunos</h2>
     <div class="row g-3">
-        <div class="col-12 col-md-4"><div class="card card-body text-center"><span class="fs-2 fw-bold"><?= esc((string) $totais['total']) ?></span><span class="text-muted">cadastrados</span></div></div>
-        <div class="col-6 col-md-4"><div class="card card-body text-center"><span class="fs-2 fw-bold text-success"><?= esc((string) $totais['ativos']) ?></span><span class="text-muted">ativos</span></div></div>
-        <div class="col-6 col-md-4"><div class="card card-body text-center"><span class="fs-2 fw-bold text-secondary"><?= esc((string) $totais['inativos']) ?></span><span class="text-muted">inativos</span></div></div>
+        <div class="col-12 col-md-4"><?= view('componentes/indicador', ['id' => 'kpiTotal', 'rotulo' => 'Cadastrados', 'valor' => (string) $totais['total']]) ?></div>
+        <div class="col-6 col-md-4"><?= view('componentes/indicador', ['id' => 'kpiAtivos', 'rotulo' => 'Ativos', 'valor' => (string) $totais['ativos']]) ?></div>
+        <div class="col-6 col-md-4"><?= view('componentes/indicador', ['id' => 'kpiInativos', 'rotulo' => 'Inativos', 'valor' => (string) $totais['inativos']]) ?></div>
     </div>
 </section>
 

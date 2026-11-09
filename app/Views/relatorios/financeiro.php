@@ -27,10 +27,10 @@ $formas = rotulos_de('formas_pagamento');
 <p class="text-muted">Período consultado: <strong><?= esc($numeroMes . '/' . $ano) ?></strong> · <?= esc((string) $resumo['quantidade']) ?> mensalidade(s) com vencimento no mês.</p>
 
 <div class="row g-3 mb-4">
-    <div class="col-6 col-lg-3"><div class="card card-body"><span class="text-muted">Previsto (vencimentos)</span><span class="fs-4 fw-bold"><?= esc(formatar_moeda($resumo['previsto'])) ?></span></div></div>
-    <div class="col-6 col-lg-3"><div class="card card-body"><span class="text-muted">Recebido no mês</span><span class="fs-4 fw-bold text-success"><?= esc(formatar_moeda($resumo['recebido'])) ?></span></div></div>
-    <div class="col-6 col-lg-3"><div class="card card-body"><span class="text-muted">Em aberto</span><span class="fs-4 fw-bold text-info"><?= esc(formatar_moeda($resumo['em_aberto'])) ?></span></div></div>
-    <div class="col-6 col-lg-3"><div class="card card-body"><span class="text-muted">Atrasado</span><span class="fs-4 fw-bold text-danger"><?= esc(formatar_moeda($resumo['atrasado'])) ?></span></div></div>
+    <div class="col-6 col-lg-3"><?= view('componentes/indicador', ['id' => 'kpiPrevisto', 'rotulo' => 'Previsto', 'valor' => formatar_moeda($resumo['previsto']), 'legenda' => 'vencimentos do mês']) ?></div>
+    <div class="col-6 col-lg-3"><?= view('componentes/indicador', ['id' => 'kpiRecebido', 'rotulo' => 'Recebido no mês', 'valor' => formatar_moeda($resumo['recebido']), 'legenda' => 'pagamentos feitos no mês']) ?></div>
+    <div class="col-6 col-lg-3"><?= view('componentes/indicador', ['id' => 'kpiEmAberto', 'rotulo' => 'Em aberto', 'valor' => formatar_moeda($resumo['em_aberto']), 'legenda' => 'a vencer']) ?></div>
+    <div class="col-6 col-lg-3"><?= view('componentes/indicador', ['id' => 'kpiAtrasado', 'rotulo' => 'Atrasado', 'valor' => formatar_moeda($resumo['atrasado']), 'legenda' => 'vencido e não pago', 'alerta' => true]) ?></div>
 </div>
 
 <section aria-labelledby="tituloFormas">
