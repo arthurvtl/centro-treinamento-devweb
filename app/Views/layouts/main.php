@@ -17,11 +17,12 @@ $secaoAtual = service('uri')->getSegment(1);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= esc($titulo ?? 'Sistema CT') ?> · Sistema CT</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= esc(base_url('css/app.css'), 'html') ?>" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body>
 <a class="visually-hidden-focusable" href="#conteudo">Pular para o conteúdo</a>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Menu principal">
+    <nav class="navbar navbar-expand-lg bg-white border-bottom" aria-label="Menu principal">
         <div class="container">
             <a class="navbar-brand" href="<?= esc(site_url('painel'), 'html') ?>">Sistema CT</a>
             <?php if ($logado) : ?>
@@ -38,12 +39,13 @@ $secaoAtual = service('uri')->getSegment(1);
                             </li>
                         <?php endforeach; ?>
                     </ul>
-                    <span class="navbar-text me-3">
-                        <?= esc(session()->get('usuario_nome')) ?> (<?= esc($ehDono ? 'Proprietário' : 'Recepcionista') ?>)
+                    <span class="navbar-text me-3 ct-usuario">
+                        <?= esc(session()->get('usuario_nome')) ?>
+                        <span class="ct-perfil"><?= esc($ehDono ? 'Proprietário' : 'Recepcionista') ?></span>
                     </span>
                     <form action="<?= esc(site_url('sair'), 'html') ?>" method="post" class="d-inline">
                         <?= csrf_field() ?>
-                        <button type="submit" class="btn btn-outline-light btn-sm">Sair</button>
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">Sair</button>
                     </form>
                 </div>
             <?php endif; ?>
@@ -53,26 +55,33 @@ $secaoAtual = service('uri')->getSegment(1);
 
 <main class="container py-4" id="conteudo">
     <?php if (session()->getFlashdata('sucesso')) : ?>
-        <div class="alert alert-success" role="alert"><?= esc(session()->getFlashdata('sucesso')) ?></div>
+        <div class="alert alert-success alert-dismissible fade show" role="status">
+            <strong>Pronto:</strong> <?= esc(session()->getFlashdata('sucesso')) ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+        </div>
     <?php endif; ?>
     <?php if (session()->getFlashdata('erro')) : ?>
-        <div class="alert alert-danger" role="alert"><?= esc(session()->getFlashdata('erro')) ?></div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Atenção:</strong> <?= esc(session()->getFlashdata('erro')) ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+        </div>
     <?php endif; ?>
     <?php if ($erros !== []) : ?>
-        <div class="alert alert-danger" role="alert">
-            <p class="mb-1 fw-semibold">Corrija os campos abaixo:</p>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <p class="mb-1"><strong>Atenção:</strong> corrija os campos abaixo.</p>
             <ul class="mb-0">
                 <?php foreach ($erros as $mensagem) : ?>
                     <li><?= esc($mensagem) ?></li>
                 <?php endforeach; ?>
             </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
         </div>
     <?php endif; ?>
 
     <?= $this->renderSection('conteudo') ?>
 </main>
 
-<footer class="container pb-4 text-muted small">Sistema CT · Desenvolvimento Web · IFES</footer>
+<footer class="container pb-4 small text-secondary">Sistema CT · Desenvolvimento Web · IFES</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
