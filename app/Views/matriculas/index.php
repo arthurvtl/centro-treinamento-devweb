@@ -42,7 +42,7 @@
         </thead>
         <tbody>
             <?php if ($matriculas === []) : ?>
-                <tr><td colspan="5" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma matrícula ativa encontrada.</p></div></td></tr>
+                <tr><td colspan="5"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma matrícula ativa encontrada.</p></div></td></tr>
             <?php endif; ?>
             <?php foreach ($matriculas as $matricula) : ?>
                 <tr>

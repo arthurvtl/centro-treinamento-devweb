@@ -29,7 +29,7 @@
         </thead>
         <tbody>
             <?php if ($professores === []) : ?>
-                <tr><td colspan="6" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum professor cadastrado.</p></div></td></tr>
+                <tr><td colspan="6"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum professor cadastrado.</p></div></td></tr>
             <?php endif; ?>
             <?php foreach ($professores as $professor) : ?>
                 <?php $ativo = $professor['situacao'] === 'ATIVO'; ?>

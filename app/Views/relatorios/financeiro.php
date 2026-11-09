@@ -42,7 +42,7 @@ $formas = rotulos_de('formas_pagamento');
             <thead><tr><th scope="col">Forma</th><th scope="col" class="num">Total recebido</th></tr></thead>
             <tbody>
                 <?php if ($resumo['por_forma'] === []) : ?>
-                    <tr><td colspan="2" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum recebimento neste mês.</p></div></td></tr>
+                    <tr><td colspan="2"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum recebimento neste mês.</p></div></td></tr>
                 <?php endif; ?>
                 <?php foreach ($resumo['por_forma'] as $forma => $total) : ?>
                     <tr><td><?= esc($formas[$forma] ?? $forma) ?></td><td class="num"><?= esc(formatar_moeda($total)) ?></td></tr>

@@ -31,7 +31,7 @@
         </thead>
         <tbody>
             <?php if ($inadimplentes === []) : ?>
-                <tr><td colspan="6" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum aluno inadimplente.</p></div></td></tr>
+                <tr><td colspan="6"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum aluno inadimplente.</p></div></td></tr>
             <?php endif; ?>
             <?php foreach ($inadimplentes as $item) : ?>
                 <tr>

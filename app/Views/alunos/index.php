@@ -36,7 +36,7 @@
         </thead>
         <tbody>
             <?php if ($alunos === []) : ?>
-                <tr><td colspan="6" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum aluno encontrado.</p></div></td></tr>
+                <tr><td colspan="6"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum aluno encontrado.</p></div></td></tr>
             <?php endif; ?>
             <?php foreach ($alunos as $aluno) : ?>
                 <tr>

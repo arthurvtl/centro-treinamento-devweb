@@ -31,7 +31,7 @@
         </thead>
         <tbody>
             <?php if ($resumos === []) : ?>
-                <tr><td colspan="4" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum aluno matriculado.</p></div></td></tr>
+                <tr><td colspan="4"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum aluno matriculado.</p></div></td></tr>
             <?php endif; ?>
             <?php foreach ($resumos as $resumo) : ?>
                 <?php $abaixo = $resumo['percentual'] !== null && $resumo['percentual'] < $minimo; ?>

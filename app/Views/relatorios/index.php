@@ -38,7 +38,7 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
             <thead><tr><th scope="col">Modalidade</th><th scope="col">Categoria</th><th scope="col">Alunos</th></tr></thead>
             <tbody>
                 <?php if ($modalidades === []) : ?>
-                    <tr><td colspan="3" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma modalidade cadastrada.</p></div></td></tr>
+                    <tr><td colspan="3"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma modalidade cadastrada.</p></div></td></tr>
                 <?php endif; ?>
                 <?php foreach ($modalidades as $modalidade) : ?>
                     <tr>
@@ -65,7 +65,7 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
             </thead>
             <tbody>
                 <?php if ($turmasComVaga === []) : ?>
-                    <tr><td colspan="5" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma turma ativa com vaga.</p></div></td></tr>
+                    <tr><td colspan="5"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma turma ativa com vaga.</p></div></td></tr>
                 <?php endif; ?>
                 <?php foreach ($turmasComVaga as $turma) : ?>
                     <tr>

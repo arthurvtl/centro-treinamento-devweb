@@ -84,7 +84,7 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
             </thead>
             <tbody>
                 <?php if ($mensalidades === []) : ?>
-                    <tr><td colspan="6" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma mensalidade registrada.</p></div></td></tr>
+                    <tr><td colspan="6"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma mensalidade registrada.</p></div></td></tr>
                 <?php endif; ?>
                 <?php foreach ($mensalidades as $mensalidade) : ?>
                     <tr>

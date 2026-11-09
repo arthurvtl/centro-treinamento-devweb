@@ -42,7 +42,7 @@ $ativo          = $plano['situacao'] === 'ATIVO';
             </thead>
             <tbody>
                 <?php if ($alunos === []) : ?>
-                    <tr><td colspan="3" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum aluno com este plano.</p></div></td></tr>
+                    <tr><td colspan="3"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum aluno com este plano.</p></div></td></tr>
                 <?php endif; ?>
                 <?php foreach ($alunos as $aluno) : ?>
                     <tr>

@@ -53,7 +53,7 @@ $categorias = rotulos_de('categorias');
             </thead>
             <tbody>
                 <?php if ($turmas === []) : ?>
-                    <tr><td colspan="4" data-label=""><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma turma.</p></div></td></tr>
+                    <tr><td colspan="4"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma turma.</p></div></td></tr>
                 <?php endif; ?>
                 <?php foreach ($turmas as $turma) : ?>
                     <tr>
