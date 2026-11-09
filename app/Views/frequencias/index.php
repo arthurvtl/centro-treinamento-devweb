@@ -43,11 +43,11 @@ $turmaAtual = $turma['id'] ?? 0;
     </h2>
 
     <?php if ($turma['situacao'] !== 'ATIVA') : ?>
-        <div class="alert alert-warning" role="status">
+        <div class="alert alert-secondary" role="status">
             Turma <?= esc(strtolower($turma['situacao'])) ?>: não é possível lançar frequência.
         </div>
     <?php elseif ($alunos === []) : ?>
-        <div class="alert alert-info" role="status">Nenhum aluno matriculado nesta turma.</div>
+        <div class="alert alert-secondary" role="status">Nenhum aluno matriculado nesta turma.</div>
     <?php else : ?>
         <form action="<?= esc(url_to('frequencias_registrar'), 'html') ?>" method="post">
             <?= csrf_field() ?>
@@ -56,7 +56,7 @@ $turmaAtual = $turma['id'] ?? 0;
 
             <div class="ct-card mb-3">
 <div class="table-responsive position-relative">
-                <table class="table table-striped table-hover align-middle">
+                <table class="table table-striped table-hover align-middle ct-chamada">
                     <caption class="visually-hidden">Chamada da turma</caption>
                     <thead>
                         <tr>
@@ -75,16 +75,14 @@ $turmaAtual = $turma['id'] ?? 0;
                             ?>
                             <tr>
                                 <td><?= esc($aluno['aluno_codigo']) ?> · <?= esc($aluno['aluno_nome']) ?></td>
-                                <td class="text-nowrap">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="situacao[<?= esc($matriculaId, 'attr') ?>]"
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Situação de <?= esc($aluno['aluno_nome']) ?>">
+                                        <input type="radio" class="btn-check" name="situacao[<?= esc($matriculaId, 'attr') ?>]"
                                                id="presente_<?= esc($matriculaId, 'attr') ?>" value="PRESENTE" <?= $situacaoAtual === 'PRESENTE' ? 'checked' : '' ?>>
-                                        <label class="form-check-label" for="presente_<?= esc($matriculaId, 'attr') ?>">Presente</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="situacao[<?= esc($matriculaId, 'attr') ?>]"
+                                        <label class="btn btn-outline-secondary" for="presente_<?= esc($matriculaId, 'attr') ?>">Presente</label>
+                                        <input type="radio" class="btn-check" name="situacao[<?= esc($matriculaId, 'attr') ?>]"
                                                id="falta_<?= esc($matriculaId, 'attr') ?>" value="FALTA" <?= $situacaoAtual === 'FALTA' ? 'checked' : '' ?>>
-                                        <label class="form-check-label" for="falta_<?= esc($matriculaId, 'attr') ?>">Falta</label>
+                                        <label class="btn btn-outline-secondary" for="falta_<?= esc($matriculaId, 'attr') ?>">Falta</label>
                                     </div>
                                 </td>
                                 <td>
