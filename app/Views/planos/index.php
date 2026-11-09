@@ -30,7 +30,10 @@ $periodicidades = rotulos_de('periodicidades');
         </thead>
         <tbody>
             <?php if ($planos === []) : ?>
-                <tr><td colspan="6"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum plano cadastrado.</p></div></td></tr>
+                <tr><td colspan="6"><div class="ct-vazio">
+                    <p class="mb-1 fw-semibold">Nenhum plano cadastrado.</p>
+                    <a href="<?= esc(url_to('planos_novo'), 'html') ?>" class="btn btn-outline-secondary btn-sm"><?= esc('Cadastrar plano') ?></a>
+                </div></td></tr>
             <?php endif; ?>
             <?php foreach ($planos as $plano) : ?>
                 <?php $ativo = $plano['situacao'] === 'ATIVO'; ?>

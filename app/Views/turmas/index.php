@@ -33,7 +33,12 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
         </thead>
         <tbody>
             <?php if ($turmas === []) : ?>
-                <tr><td colspan="7"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma turma cadastrada.</p></div></td></tr>
+                <tr><td colspan="7"><div class="ct-vazio">
+                    <p class="mb-1 fw-semibold">Nenhuma turma cadastrada.</p>
+                    <?php if ($ehProprietario) : ?>
+                        <a href="<?= esc(url_to('turmas_novo'), 'html') ?>" class="btn btn-outline-secondary btn-sm">Cadastrar turma</a>
+                    <?php endif; ?>
+                </div></td></tr>
             <?php endif; ?>
             <?php foreach ($turmas as $turma) : ?>
                 <tr>

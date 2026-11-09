@@ -54,7 +54,13 @@ $situacoes = rotulos_de('situacoes_mensalidade');
         </thead>
         <tbody>
             <?php if ($mensalidades === []) : ?>
-                <tr><td colspan="6"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma mensalidade encontrada.</p></div></td></tr>
+                <tr><td colspan="6"><div class="ct-vazio">
+                    <p class="mb-1 fw-semibold">Nenhuma mensalidade encontrada.</p>
+                    <?php if ($busca !== '' || $situacao !== '') : ?>
+                        <p class="text-secondary small mb-3">Nenhuma mensalidade combina com o filtro escolhido.</p>
+                        <a href="<?= esc(url_to('mensalidades'), 'html') ?>" class="btn btn-outline-secondary btn-sm">Limpar filtros</a>
+                    <?php endif; ?>
+                </div></td></tr>
             <?php endif; ?>
             <?php foreach ($mensalidades as $mensalidade) : ?>
                 <tr>

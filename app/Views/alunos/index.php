@@ -36,7 +36,16 @@
         </thead>
         <tbody>
             <?php if ($alunos === []) : ?>
-                <tr><td colspan="6"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum aluno encontrado.</p></div></td></tr>
+                <tr><td colspan="6"><div class="ct-vazio">
+                    <p class="mb-1 fw-semibold">Nenhum aluno encontrado.</p>
+                    <?php if ($busca !== '') : ?>
+                        <p class="text-secondary small mb-3">Confira a grafia ou busque pelo código.</p>
+                        <a href="<?= esc(url_to('alunos'), 'html') ?>" class="btn btn-outline-secondary btn-sm">Limpar busca</a>
+                    <?php else : ?>
+                        <p class="text-secondary small mb-3">Comece cadastrando o primeiro aluno.</p>
+                    <a href="<?= esc(url_to('alunos_novo'), 'html') ?>" class="btn btn-outline-secondary btn-sm"><?= esc('Cadastrar aluno') ?></a>
+                    <?php endif; ?>
+                </div></td></tr>
             <?php endif; ?>
             <?php foreach ($alunos as $aluno) : ?>
                 <tr>

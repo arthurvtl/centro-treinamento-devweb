@@ -29,7 +29,10 @@ $categorias = rotulos_de('categorias');
         </thead>
         <tbody>
             <?php if ($modalidades === []) : ?>
-                <tr><td colspan="5"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma modalidade cadastrada.</p></div></td></tr>
+                <tr><td colspan="5"><div class="ct-vazio">
+                    <p class="mb-1 fw-semibold">Nenhuma modalidade cadastrada.</p>
+                    <a href="<?= esc(url_to('modalidades_novo'), 'html') ?>" class="btn btn-outline-secondary btn-sm"><?= esc('Cadastrar modalidade') ?></a>
+                </div></td></tr>
             <?php endif; ?>
             <?php foreach ($modalidades as $modalidade) : ?>
                 <tr>

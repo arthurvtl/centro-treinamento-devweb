@@ -42,7 +42,15 @@
         </thead>
         <tbody>
             <?php if ($matriculas === []) : ?>
-                <tr><td colspan="5"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma matrícula ativa encontrada.</p></div></td></tr>
+                <tr><td colspan="5"><div class="ct-vazio">
+                    <p class="mb-1 fw-semibold">Nenhuma matrícula ativa encontrada.</p>
+                    <?php if ($busca !== '') : ?>
+                        <p class="text-secondary small mb-3">Nenhum aluno com esse nome ou código tem matrícula ativa.</p>
+                        <a href="<?= esc(url_to('matriculas'), 'html') ?>" class="btn btn-outline-secondary btn-sm">Limpar busca</a>
+                    <?php else : ?>
+                    <a href="<?= esc(url_to('matriculas_nova'), 'html') ?>" class="btn btn-outline-secondary btn-sm"><?= esc('Nova matrícula') ?></a>
+                    <?php endif; ?>
+                </div></td></tr>
             <?php endif; ?>
             <?php foreach ($matriculas as $matricula) : ?>
                 <tr>
