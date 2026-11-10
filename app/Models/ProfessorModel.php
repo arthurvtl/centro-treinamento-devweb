@@ -58,7 +58,8 @@ class ProfessorModel extends Model
      */
     public function buscarComModalidades(): array
     {
-        return $this->select('professores.*, GROUP_CONCAT(modalidades.nome ORDER BY modalidades.nome SEPARATOR ", ") AS modalidades')
+        // Aspas simples delimitam textos também quando o MySQL usa ANSI_QUOTES (Aiven).
+        return $this->select("professores.*, GROUP_CONCAT(modalidades.nome ORDER BY modalidades.nome SEPARATOR ', ') AS modalidades", false)
             ->join('professor_modalidade', 'professor_modalidade.professor_id = professores.id', 'left')
             ->join('modalidades', 'modalidades.id = professor_modalidade.modalidade_id', 'left')
             ->groupBy('professores.id')

@@ -75,7 +75,7 @@ class FrequenciaModel extends Model
     {
         $linhas = $this->db->table('matriculas')
             ->select('matriculas.id AS matricula_id, alunos.id AS aluno_id, alunos.nome AS aluno_nome, alunos.codigo AS aluno_codigo, '
-                . 'COUNT(frequencias.id) AS aulas, COALESCE(SUM(frequencias.situacao = "PRESENTE"), 0) AS presencas', false)
+                . "COUNT(frequencias.id) AS aulas, COALESCE(SUM(frequencias.situacao = 'PRESENTE'), 0) AS presencas", false)
             ->join('alunos', 'alunos.id = matriculas.aluno_id')
             ->join('frequencias', 'frequencias.matricula_id = matriculas.id', 'left')
             ->where('matriculas.turma_id', $turmaId)
