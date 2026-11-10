@@ -1,25 +1,5 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="robots" content="noindex">
-
-    <title><?= lang('Errors.whoops') ?></title>
-
-    <style>
-        <?= preg_replace('#[\r\n\t ]+#', ' ', file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'debug.css')) ?>
-    </style>
-</head>
-<body>
-
-    <div class="container text-center">
-
-        <h1 class="headline"><?= lang('Errors.whoops') ?></h1>
-
-        <p class="lead"><?= lang('Errors.weHitASnag') ?></p>
-
-    </div>
-
-</body>
-
-</html>
+<?php
+// Não expõe exceções, consultas ou credenciais na resposta de produção.
+$titulo = 'Não foi possível concluir a solicitação';
+$descricao = 'Tente novamente em instantes. Se o problema continuar, avise o responsável pelo sistema.';
+require __DIR__ . '/mensagem.php';

@@ -39,7 +39,7 @@ class Database extends Config
         'swapPre'      => '',
         'encrypt'      => false,
         'compress'     => false,
-        'strictOn'     => false,
+        'strictOn'     => true, // Mantém validação estrita dos dados também na conexão da aplicação.
         'failover'     => [],
         'port'         => 3306,
         'numberNative' => false,

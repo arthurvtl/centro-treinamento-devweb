@@ -41,6 +41,8 @@
   --bs-body-bg: var(--ct-bg);
   --bs-body-color: var(--ct-text);
   --bs-secondary-color: var(--ct-muted);
+  /* A utilidade text-secondary usa RGB, independentemente de secondary-color. */
+  --bs-secondary-rgb: 95, 102, 112;
   --bs-border-color: var(--ct-border);
   --bs-border-radius: .5rem;
   --bs-body-font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;

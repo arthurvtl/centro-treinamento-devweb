@@ -18,6 +18,8 @@ O sistema roda online com custo zero:
 - `app/Config/Database.php` ativa o SSL quando a variável `DB_SSL_CA` existe. Localmente ela não existe e nada muda.
 - Cada push na `main` gera um novo deploy automático no Render.
 
+O MySQL do Aiven usa `ANSI_QUOTES`: textos nas expressões SQL devem usar aspas simples; aspas duplas identificam colunas. A aplicação mantém o modo estrito ativo. Os seeders de demonstração rodam em uma transação: se um módulo falhar, a carga inteira é desfeita, permitindo nova tentativa sem dados parciais.
+
 ## Variáveis de ambiente (painel do Render → Environment)
 
 As credenciais ficam só no painel do Render, nunca no código (mesma regra do `.env` local).
