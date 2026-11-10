@@ -4,6 +4,8 @@ Sistema web para centros de treinamento de lutas e esportes coletivos. Substitui
 
 Projeto da disciplina de Desenvolvimento Web (IFES). A análise de negócio completa está em [`docs/analise/documento-analise.md`](docs/analise/documento-analise.md).
 
+**Sistema online:** https://sistema-ct-0umn.onrender.com (logins na seção [Logins de demonstração](#logins-de-demonstração)). Hospedado no plano gratuito do Render, com banco MySQL no Aiven; o primeiro acesso após um período parado pode levar até 1 minuto. Detalhes em [`docs/deploy.md`](docs/deploy.md).
+
 ## Integrantes
 
 - ARTHUR MARQUES
