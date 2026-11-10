@@ -18,7 +18,7 @@
 </header>
 
 <div class="ct-card mb-3">
-<div class="table-responsive position-relative">
+<div class="table-responsive position-relative" tabindex="0" role="region" aria-label="Presença dos alunos da turma">
     <table class="table table-striped table-hover align-middle">
         <caption class="visually-hidden">Presença dos alunos da turma</caption>
         <thead>
