@@ -9,13 +9,13 @@
                 <form action="<?= esc(site_url('login'), 'html') ?>" method="post" novalidate>
                     <?= csrf_field() ?>
                     <div class="mb-3">
-                        <label for="login_email" class="form-label">E-mail</label>
-                        <input type="email" class="form-control" id="login_email" name="login_email"
-                               value="<?= esc(old('login_email')) ?>" required autofocus>
+                        <label for="login_email" class="form-label">Usuário</label>
+                        <input type="text" class="form-control" id="login_email" name="login_email" autocomplete="username"
+                               autocapitalize="none" spellcheck="false" value="<?= esc(old('login_email'), 'attr') ?>" required autofocus>
                     </div>
                     <div class="mb-3">
                         <label for="senha" class="form-label">Senha</label>
-                        <input type="password" class="form-control" id="senha" name="senha" required>
+                        <input type="password" class="form-control" id="senha" name="senha" autocomplete="current-password" required>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Entrar</button>
                 </form>

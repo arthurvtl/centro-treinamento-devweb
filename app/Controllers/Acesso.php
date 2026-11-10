@@ -36,7 +36,7 @@ class Acesso extends BaseController
         $usuario = $usuarioModel->autenticar($dados['login_email'], $dados['senha']);
 
         if ($usuario === null) {
-            return redirect()->back()->withInput()->with('erro', 'E-mail ou senha inválidos.');
+            return redirect()->back()->withInput()->with('erro', 'Usuário ou senha inválidos.');
         }
 
         // Troca o id da sessão no login para impedir fixação de sessão.

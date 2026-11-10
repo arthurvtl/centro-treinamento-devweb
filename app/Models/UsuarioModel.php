@@ -19,34 +19,41 @@ class UsuarioModel extends Model
 
     /**
      * Regras do formulário de login. `senha` não é coluna da tabela: só é validada, nunca gravada.
+     *
+     * O campo `login_email` guarda o identificador de acesso, que pode ser um e-mail ou um usuário
+     * simples (ex.: `dono`), por isso não exige formato de e-mail. No login não há tamanho mínimo de
+     * senha: quem confere se a senha está certa é o `password_verify`, e uma regra de tamanho aqui
+     * só barraria senhas curtas já cadastradas.
      */
     protected $validationRules = [
-        'login_email' => 'required|valid_email|max_length[150]',
-        'senha'       => 'required|min_length[6]',
+        'login_email' => 'required|max_length[150]|regex_match[/^[A-Za-z0-9._@-]+$/]',
+        'senha'       => 'required|max_length[72]',
     ];
 
     protected $validationMessages = [
         'login_email' => [
-            'required'    => 'Informe o e-mail de acesso.',
-            'valid_email' => 'Informe um e-mail válido.',
+            'required'    => 'Informe o usuário.',
+            'max_length'  => 'O usuário deve ter no máximo 150 caracteres.',
+            'regex_match' => 'O usuário só pode ter letras, números, ponto, hífen, sublinhado ou @.',
         ],
         'senha' => [
             'required'   => 'Informe a senha.',
-            'min_length' => 'A senha deve ter pelo menos 6 caracteres.',
+            'max_length' => 'A senha deve ter no máximo 72 caracteres.',
         ],
     ];
 
     /**
-     * Confere e-mail e senha e devolve o usuário autenticado (RF20, HU07).
+     * Confere usuário e senha e devolve o usuário autenticado (RF20, HU07).
      *
-     * Retorna null tanto para e-mail inexistente quanto para senha errada, de propósito:
-     * mensagem única não revela se o e-mail está cadastrado. Usuário INATIVO não entra.
+     * Retorna null tanto para usuário inexistente quanto para senha errada, de propósito:
+     * mensagem única não revela se o usuário está cadastrado. Usuário INATIVO não entra.
      *
+     * @param string $identificador conteúdo da coluna `login_email` (e-mail ou usuário simples)
      * @return array<string, mixed>|null
      */
-    public function autenticar(string $email, string $senha): ?array
+    public function autenticar(string $identificador, string $senha): ?array
     {
-        $usuario = $this->where('login_email', $email)->where('situacao', 'ATIVO')->first();
+        $usuario = $this->where('login_email', $identificador)->where('situacao', 'ATIVO')->first();
 
         if ($usuario === null || ! password_verify($senha, $usuario['senha_hash'])) {
             return null;
