@@ -1,0 +1,7 @@
+.git
+.env
+vendor
+writable/backups
+writable/session/ci_session*
+writable/logs/*.log
+docs
