@@ -15,7 +15,7 @@ $professorAtual  = (int) old('professor_id', $turma['professor_id'] ?? 0);
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<h1 class="h3 mb-3"><?= esc($titulo) ?></h1>
+<header class="ct-page-header"><h1 class="h3 mb-0"><?= esc($titulo) ?></h1></header>
 
 <form action="<?= esc($acao, 'html') ?>" method="post" novalidate>
     <?= csrf_field() ?>
@@ -81,13 +81,13 @@ $professorAtual  = (int) old('professor_id', $turma['professor_id'] ?? 0);
                        value="<?= esc(old('data_inicio', $turma['data_inicio'] ?? '')) ?>">
             </div>
             <div class="col-6 col-md-2">
-                <label for="data_termino" class="form-label">Data de término <span class="text-muted">(opcional)</span></label>
+                <label for="data_termino" class="form-label">Data de término <span class="opcional">(opcional)</span></label>
                 <input type="date" class="form-control" id="data_termino" name="data_termino"
                        value="<?= esc(old('data_termino', $turma['data_termino'] ?? '')) ?>">
             </div>
         </div>
     </fieldset>
-    <div class="d-flex gap-2">
+    <div class="ct-form-acoes">
         <button type="submit" class="btn btn-primary">Salvar</button>
         <a href="<?= esc(url_to('turmas'), 'html') ?>" class="btn btn-outline-secondary">Cancelar</a>
     </div>

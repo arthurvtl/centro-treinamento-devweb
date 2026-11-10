@@ -79,3 +79,23 @@ if (! function_exists('rotulos_de')) {
         return $conjuntos[$conjunto] ?? [];
     }
 }
+
+if (! function_exists('classe_status')) {
+    /**
+     * Devolve a classe CSS (.ct-status--*) que representa visualmente uma situação.
+     *
+     * Quatro formas que se distinguem em preto e branco: preenchido claro (em dia), contorno
+     * (em aberto), preenchido escuro (exige atenção) e tracejado (fora de uso). O texto da
+     * situação continua escrito no badge, então a informação nunca depende só da forma.
+     */
+    function classe_status(string $situacao): string
+    {
+        return match ($situacao) {
+            'ATIVO', 'ATIVA', 'PAGO', 'ADIMPLENTE'                          => 'ct-status--ok',
+            'EM_ABERTO', 'TRANSFERIDA'                                      => 'ct-status--aberto',
+            'ATRASADO', 'SUSPENSA', 'CANCELADA', 'INADIMPLENTE'             => 'ct-status--alerta',
+            default                                                         => 'ct-status--inativo',
+        };
+    }
+}
+

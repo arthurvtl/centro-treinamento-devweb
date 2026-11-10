@@ -3,7 +3,7 @@
 <?= $this->section('conteudo') ?>
 <div class="row justify-content-center">
     <div class="col-12 col-md-6 col-lg-4">
-        <section class="card shadow-sm" aria-labelledby="tituloLogin">
+        <section class="card" aria-labelledby="tituloLogin">
             <div class="card-body">
                 <h1 class="h4 mb-3" id="tituloLogin">Entrar no sistema</h1>
                 <form action="<?= esc(site_url('login'), 'html') ?>" method="post" novalidate>

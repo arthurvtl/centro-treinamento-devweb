@@ -8,38 +8,44 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<h1 class="h3 mb-1">Inadimplentes</h1>
-<p class="text-muted">Alunos com mensalidade vencida e não quitada.</p>
+<header class="ct-page-header">
+    <div>
+        <h1 class="h3 mb-0">Inadimplentes</h1>
+        <p class="text-secondary small mb-0">Alunos com mensalidade vencida e não quitada.</p>
+    </div>
+</header>
 
+<div class="ct-card mb-3">
 <div class="table-responsive position-relative">
-    <table class="table table-striped align-middle bg-white">
+    <table class="table table-striped table-hover align-middle">
         <caption class="visually-hidden">Alunos inadimplentes</caption>
         <thead>
             <tr>
                 <th scope="col">Aluno</th>
                 <th scope="col">Telefone</th>
                 <th scope="col">Mensalidades em atraso</th>
-                <th scope="col">Total devido</th>
+                <th scope="col" class="num">Total devido</th>
                 <th scope="col">Vencida desde</th>
                 <th scope="col"><span class="visually-hidden">Ações</span></th>
             </tr>
         </thead>
         <tbody>
             <?php if ($inadimplentes === []) : ?>
-                <tr><td colspan="6" class="text-center text-muted">Nenhum aluno inadimplente.</td></tr>
+                <tr><td colspan="6"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhum aluno inadimplente.</p></div></td></tr>
             <?php endif; ?>
             <?php foreach ($inadimplentes as $item) : ?>
                 <tr>
                     <td><?= esc($item['aluno_codigo']) ?> · <?= esc($item['aluno_nome']) ?></td>
                     <td><?= esc(formatar_telefone($item['telefone'])) ?></td>
                     <td><?= esc((string) $item['quantidade']) ?></td>
-                    <td><?= esc(formatar_moeda($item['total'])) ?></td>
+                    <td class="num"><?= esc(formatar_moeda($item['total'])) ?></td>
                     <td><?= esc(formatar_data($item['mais_antigo'])) ?></td>
-                    <td class="text-end"><a href="<?= esc(url_to('mensalidades_aluno', $item['aluno_id']), 'html') ?>" class="btn btn-sm btn-outline-primary">Ver financeiro</a></td>
+                    <td class="text-end"><a href="<?= esc(url_to('mensalidades_aluno', $item['aluno_id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Ver financeiro</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+</div>
 </div>
 <a href="<?= esc(url_to('mensalidades'), 'html') ?>" class="btn btn-link px-0">Voltar para as mensalidades</a>
 <?= $this->endSection() ?>

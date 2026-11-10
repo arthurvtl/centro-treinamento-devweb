@@ -9,13 +9,14 @@ $categorias = rotulos_de('categorias');
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<header class="ct-page-header">
     <h1 class="h3 mb-0">Modalidades</h1>
     <a href="<?= esc(url_to('modalidades_novo'), 'html') ?>" class="btn btn-primary">Nova modalidade</a>
-</div>
+</header>
 
+<div class="ct-card mb-3">
 <div class="table-responsive position-relative">
-    <table class="table table-striped table-hover align-middle bg-white">
+    <table class="table table-striped table-hover align-middle">
         <caption class="visually-hidden">Modalidades cadastradas</caption>
         <thead>
             <tr>
@@ -28,7 +29,10 @@ $categorias = rotulos_de('categorias');
         </thead>
         <tbody>
             <?php if ($modalidades === []) : ?>
-                <tr><td colspan="5" class="text-center text-muted">Nenhuma modalidade cadastrada.</td></tr>
+                <tr><td colspan="5"><div class="ct-vazio">
+                    <p class="mb-1 fw-semibold">Nenhuma modalidade cadastrada.</p>
+                    <a href="<?= esc(url_to('modalidades_novo'), 'html') ?>" class="btn btn-outline-secondary btn-sm"><?= esc('Cadastrar modalidade') ?></a>
+                </div></td></tr>
             <?php endif; ?>
             <?php foreach ($modalidades as $modalidade) : ?>
                 <tr>
@@ -37,8 +41,8 @@ $categorias = rotulos_de('categorias');
                     <td><?= esc((string) $modalidade['capacidade_padrao']) ?> alunos</td>
                     <td><?= esc($modalidade['descricao'] ?: '—') ?></td>
                     <td class="text-end text-nowrap">
-                        <a href="<?= esc(url_to('modalidades_ver', $modalidade['id']), 'html') ?>" class="btn btn-sm btn-outline-primary">Ver</a>
-                        <a href="<?= esc(url_to('modalidades_editar', $modalidade['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        <a href="<?= esc(url_to('modalidades_ver', $modalidade['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Ver</a>
+                        <a href="<?= esc(url_to('modalidades_editar', $modalidade['id']), 'html') ?>" class="btn btn-sm btn-link">Editar</a>
                         <form action="<?= esc(url_to('modalidades_excluir', $modalidade['id']), 'html') ?>" method="post" class="d-inline"
                               onsubmit="return confirm('Excluir esta modalidade?');">
                             <?= csrf_field() ?>
@@ -49,5 +53,6 @@ $categorias = rotulos_de('categorias');
             <?php endforeach; ?>
         </tbody>
     </table>
+</div>
 </div>
 <?= $this->endSection() ?>

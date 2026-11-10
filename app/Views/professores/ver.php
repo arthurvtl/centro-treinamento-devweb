@@ -11,12 +11,12 @@ $ativo = $professor['situacao'] === 'ATIVO';
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<header class="ct-page-header">
     <h1 class="h3 mb-0"><?= esc($professor['nome']) ?>
-        <span class="badge <?= $ativo ? 'text-bg-success' : 'text-bg-secondary' ?> fs-6"><?= $ativo ? 'Ativo' : 'Inativo' ?></span>
+        <span class="ct-status <?= $ativo ? 'ct-status--ok' : 'ct-status--inativo' ?>"><?= $ativo ? 'Ativo' : 'Inativo' ?></span>
     </h1>
     <a href="<?= esc(url_to('professores_editar', $professor['id']), 'html') ?>" class="btn btn-outline-primary">Editar</a>
-</div>
+</header>
 
 <section class="card card-body mb-4" aria-labelledby="tituloDados">
     <h2 class="h5" id="tituloDados">Dados do professor</h2>
@@ -41,8 +41,9 @@ $ativo = $professor['situacao'] === 'ATIVO';
 
 <section class="mb-4" aria-labelledby="tituloTurmas">
     <h2 class="h5" id="tituloTurmas">Turmas</h2>
-    <div class="table-responsive position-relative">
-        <table class="table table-striped align-middle bg-white">
+    <div class="ct-card mb-3">
+<div class="table-responsive position-relative">
+        <table class="table table-striped table-hover align-middle">
             <caption class="visually-hidden">Turmas do professor</caption>
             <thead>
                 <tr>
@@ -54,7 +55,7 @@ $ativo = $professor['situacao'] === 'ATIVO';
             </thead>
             <tbody>
                 <?php if ($turmas === []) : ?>
-                    <tr><td colspan="4" class="text-center text-muted">Nenhuma turma.</td></tr>
+                    <tr><td colspan="4"><div class="ct-vazio"><p class="mb-0 fw-semibold">Nenhuma turma.</p></div></td></tr>
                 <?php endif; ?>
                 <?php foreach ($turmas as $turma) : ?>
                     <tr>
@@ -67,6 +68,7 @@ $ativo = $professor['situacao'] === 'ATIVO';
             </tbody>
         </table>
     </div>
+</div>
 </section>
 <a href="<?= esc(url_to('professores'), 'html') ?>" class="btn btn-link px-0">Voltar para a lista</a>
 <?= $this->endSection() ?>

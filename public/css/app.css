@@ -1,0 +1,544 @@
+/*
+ * Sistema CT — folha de estilo da interface.
+ *
+ * Carregada DEPOIS do Bootstrap 5.3 (veja app/Views/layouts/main.php). Direção visual: tons de cinza,
+ * um único acento grafite, fonte do sistema, superfícies brancas sobre fundo cinza-claro, situações
+ * legíveis em preto e branco (pelo texto e pela forma, nunca só pela cor) e campos de formulário de 44 px.
+ *
+ * Sem fontes externas, sem biblioteca de ícones e sem !important: onde o Bootstrap precisa ser
+ * vencido, sobrescrevemos as variáveis CSS dele ou usamos seletor com a mesma especificidade.
+ *
+ * Seções
+ *   1. Tokens de cor e tipografia
+ *   2. Base
+ *   3. Botões
+ *   4. Situações (badges "ct-status")
+ *   5. Barra de navegação
+ *   6. Cabeçalho de página
+ *   7. Cartões, tabelas e paginação
+ *   8. Chamada: botões Presente/Falta
+ *   9. Indicadores (KPI) e atalhos do painel
+ *  10. Formulários
+ *  11. Alertas
+ *  12. Foco e acessibilidade
+ *  13. Estados vazios
+ */
+
+/* ==========================================================================
+   1. Tokens de cor e tipografia
+   ========================================================================== */
+:root {
+  --ct-bg: #f5f6f8;
+  --ct-surface: #ffffff;
+  --ct-surface-alt: #fafbfc;
+  --ct-border: #e3e5e8;
+  --ct-border-forte: #c9cdd2;
+  --ct-text: #1a1d21;
+  --ct-muted: #5f6670;            /* contraste AA sobre branco */
+  --ct-accent: #1f2937;           /* único acento: grafite */
+
+  /* Variáveis do Bootstrap que definem o tema base. */
+  --bs-body-bg: var(--ct-bg);
+  --bs-body-color: var(--ct-text);
+  --bs-secondary-color: var(--ct-muted);
+  --bs-border-color: var(--ct-border);
+  --bs-border-radius: .5rem;
+  --bs-body-font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bs-link-color-rgb: 31, 41, 55;
+  --bs-link-hover-color-rgb: 0, 0, 0;
+  --bs-primary: #1f2937;
+  --bs-primary-rgb: 31, 41, 55;
+}
+
+/* ==========================================================================
+   2. Base
+   ========================================================================== */
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+.h3 {
+  letter-spacing: -.01em;
+  font-weight: 600;
+}
+
+/* Números e datas alinham em coluna quando têm a mesma largura de dígito. */
+.tabular,
+td,
+.ct-kpi-valor {
+  font-variant-numeric: tabular-nums;
+}
+
+.card {
+  --bs-card-border-color: var(--ct-border);
+  --bs-card-border-radius: .5rem;
+  --bs-card-bg: var(--ct-surface);
+}
+
+/* Componentes que o Bootstrap pinta com o fundo da página (cinza) passam a ser brancos, como os cartões:
+   campos, caixas de marcação, listas e a paginação. */
+.form-control,
+.form-select {
+  background-color: var(--ct-surface);
+}
+
+.form-check-input:not(:checked) {
+  background-color: var(--ct-surface);
+}
+
+.list-group {
+  --bs-list-group-bg: var(--ct-surface);
+}
+
+.pagination {
+  --bs-pagination-bg: var(--ct-surface);
+}
+
+/* ==========================================================================
+   3. Botões
+   Um primário grafite por tela; o resto é contorno cinza. Os tons de verde, amarelo e vermelho do
+   Bootstrap viram cinza: o texto do botão (e a confirmação) já dizem o que a ação faz.
+   ========================================================================== */
+.btn {
+  font-weight: 500;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--ct-accent);
+  --bs-btn-border-color: var(--ct-accent);
+  --bs-btn-hover-bg: #000;
+  --bs-btn-hover-border-color: #000;
+  --bs-btn-active-bg: #000;
+  --bs-btn-active-border-color: #000;
+  --bs-btn-disabled-bg: #6b7280;
+  --bs-btn-disabled-border-color: #6b7280;
+}
+
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-outline-success,
+.btn-outline-warning,
+.btn-outline-danger,
+.btn-outline-dark {
+  --bs-btn-color: var(--ct-text);
+  --bs-btn-border-color: var(--ct-border-forte);
+  --bs-btn-hover-color: var(--ct-text);
+  --bs-btn-hover-bg: #eef0f2;
+  --bs-btn-hover-border-color: #b8bdc4;
+  --bs-btn-active-color: var(--ct-text);
+  --bs-btn-active-bg: #e3e5e8;
+  --bs-btn-active-border-color: #b8bdc4;
+  --bs-btn-disabled-color: #8a9099;
+  --bs-btn-disabled-border-color: var(--ct-border);
+}
+
+.btn-link {
+  --bs-btn-color: var(--ct-text);
+  --bs-btn-hover-color: #000;
+}
+
+/* Quitar mensalidade (botão verde do Bootstrap) passa a ser o primário grafite. */
+.btn-success {
+  --bs-btn-bg: var(--ct-accent);
+  --bs-btn-border-color: var(--ct-accent);
+  --bs-btn-hover-bg: #000;
+  --bs-btn-hover-border-color: #000;
+  --bs-btn-active-bg: #000;
+  --bs-btn-active-border-color: #000;
+}
+
+/* ==========================================================================
+   4. Situações (badges)
+   Quatro formas que se distinguem em preto e branco; a palavra continua escrita no badge.
+   ========================================================================== */
+.ct-status {
+  display: inline-flex;
+  align-items: center;
+  gap: .35em;
+  padding: .2em .6em;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.ct-status::before {
+  content: "";
+  width: .5em;
+  height: .5em;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Ativo, Ativa, Pago, Adimplente: preenchido claro. */
+.ct-status--ok {
+  background: #eef0f2;
+  color: var(--ct-text);
+}
+
+/* Em aberto, Transferida: contorno sólido. */
+.ct-status--aberto {
+  background: #fff;
+  color: #3b4149;
+  border-color: #9aa0a8;
+}
+
+/* Atrasado, Suspensa, Cancelada, Inadimplente: preenchido escuro. */
+.ct-status--alerta {
+  background: var(--ct-text);
+  color: #fff;
+}
+
+/* Inativo, Encerrada, Finalizada: tracejado, com o ponto vazado. */
+.ct-status--inativo {
+  background: #fff;
+  color: #6b7280;
+  border: 1px dashed #9aa0a8;
+}
+
+.ct-status--inativo::before {
+  background: transparent;
+  border: 1px solid currentColor;
+}
+
+/* ==========================================================================
+   5. Barra de navegação
+   Branca com borda inferior; a seção atual ganha uma barra grafite.
+   ========================================================================== */
+.navbar {
+  --bs-navbar-padding-y: .6rem;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: -.02em;
+  margin-right: .75rem;
+}
+
+/* Com os 9 módulos do proprietário a barra pode não caber em janelas médias: quebra linha em vez de estourar. */
+.navbar-expand-lg .navbar-collapse {
+  flex-wrap: wrap;
+  row-gap: .25rem;
+}
+
+.navbar-expand-lg .navbar-nav {
+  flex-wrap: wrap;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+  color: var(--ct-muted);
+  font-weight: 500;
+  border-radius: .375rem;
+  padding-inline: .4rem;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link:hover {
+  color: var(--ct-text);
+  background: #f0f1f3;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link.active {
+  color: var(--ct-text);
+  box-shadow: inset 0 -2px 0 var(--ct-accent);
+}
+
+/* Usuário logado: nome em destaque e perfil como selo neutro. */
+.ct-usuario {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-weight: 500;
+  color: var(--ct-text);
+}
+
+.ct-perfil {
+  display: inline-block;
+  padding: .1rem .55rem;
+  border: 1px solid var(--ct-border-forte);
+  border-radius: 999px;
+  background: var(--ct-surface);
+  color: var(--ct-muted);
+  font-size: .75rem;
+  font-weight: 500;
+}
+
+
+/* ==========================================================================
+   6. Cabeçalho de página
+   Título e subtítulo à esquerda; ação principal à direita (largura total no celular).
+   ========================================================================== */
+.ct-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--ct-border);
+}
+
+
+/* ==========================================================================
+   7. Cartões, tabelas e paginação
+   ========================================================================== */
+.ct-card {
+  background: var(--ct-surface);
+  border: 1px solid var(--ct-border);
+  border-radius: .5rem;
+  overflow: hidden;
+}
+
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: var(--ct-surface-alt);
+  --bs-table-hover-bg: #f2f3f5;
+  margin-bottom: 0;
+}
+
+.table > thead th {
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--ct-muted);
+  font-weight: 600;
+  background: var(--ct-surface-alt);
+  border-bottom-width: 1px;
+  white-space: nowrap;
+}
+
+.table > :not(caption) > * > * {
+  padding: .7rem .9rem;
+}
+
+/* Valores em dinheiro alinham à direita. */
+.table td.num,
+.table th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Linha que merece atenção (ex.: presença abaixo de 75%): faixa lateral e peso, sem cor nova. */
+.table > tbody > tr.ct-linha-alerta > * {
+  background: #eef0f2;
+  font-weight: 600;
+}
+
+.table > tbody > tr.ct-linha-alerta > :first-child {
+  box-shadow: inset 4px 0 0 var(--ct-text);
+}
+
+.pagination {
+  --bs-pagination-color: var(--ct-text);
+  --bs-pagination-hover-color: var(--ct-text);
+  --bs-pagination-hover-bg: #eef0f2;
+  --bs-pagination-active-bg: var(--ct-accent);
+  --bs-pagination-active-border-color: var(--ct-accent);
+  --bs-pagination-border-color: var(--ct-border);
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   8. Chamada: botões Presente/Falta
+   Botões grandes de toque; o marcado fica grafite sólido (legível em preto e branco).
+   ========================================================================== */
+.ct-chamada .btn-group > .btn {
+  min-height: 44px;
+  min-width: 5.5rem;
+}
+
+.btn-check:checked + .btn-outline-secondary {
+  background: var(--ct-accent);
+  border-color: var(--ct-accent);
+  color: #fff;
+}
+
+
+/* ==========================================================================
+   9. Indicadores (KPI) e atalhos do painel
+   Monocromáticos: rótulo pequeno, número grande, legenda opcional.
+   ========================================================================== */
+.ct-kpi {
+  background: var(--ct-surface);
+  border: 1px solid var(--ct-border);
+  border-radius: .5rem;
+  padding: 1rem 1.1rem;
+  height: 100%;
+}
+
+.ct-kpi-rotulo {
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--ct-muted);
+  font-weight: 600;
+  margin: 0 0 .35rem;
+}
+
+.ct-kpi-valor {
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  font-weight: 700;
+  margin: 0;
+}
+
+.ct-kpi-legenda {
+  font-size: .8rem;
+  color: var(--ct-muted);
+  margin: .25rem 0 0;
+}
+
+/* Destaque sem cor: faixa lateral grafite. */
+.ct-kpi--alerta {
+  border-left: 4px solid var(--ct-text);
+}
+
+.ct-atalho {
+  display: block;
+  padding: 1rem;
+  background: var(--ct-surface);
+  border: 1px solid var(--ct-border);
+  border-radius: .5rem;
+  color: var(--ct-text);
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+}
+
+.ct-atalho:hover {
+  border-color: #b8bdc4;
+  background: var(--ct-surface-alt);
+  color: var(--ct-text);
+}
+
+/* ==========================================================================
+   10. Formulários
+   ========================================================================== */
+fieldset.card {
+  padding: 1.25rem;
+}
+
+fieldset.card > legend {
+  float: none;
+  width: auto;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding: 0;
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: .3rem;
+}
+
+.form-label .opcional,
+legend .opcional {
+  font-weight: 400;
+  color: var(--ct-muted);
+  font-size: .85em;
+}
+
+/* Campos de pelo menos 44 px. Os pequenos das tabelas (-sm) ficam como estão. */
+.form-control:not(.form-control-sm),
+.form-select:not(.form-select-sm) {
+  min-height: 44px;
+  border-color: #cfd3d8;
+}
+
+/* Barra de ações do formulário: Salvar e Cancelar numa linha, no fim do formulário. */
+.ct-form-acoes {
+  display: flex;
+  gap: .5rem;
+  padding-top: .5rem;
+}
+
+/* ==========================================================================
+   11. Alertas
+   Fundo branco com faixa lateral; o texto abre com "Pronto:" ou "Atenção:". Todos os tipos do
+   Bootstrap usam o mesmo visual neutro.
+   ========================================================================== */
+.alert {
+  --bs-alert-bg: var(--ct-surface);
+  --bs-alert-color: var(--ct-text);
+  --bs-alert-border-color: var(--ct-border);
+  border-left-width: 4px;
+}
+
+.alert-success {
+  border-left-color: #3f3f46;
+}
+
+.alert-danger {
+  border-left-color: #111;
+}
+
+.alert-warning,
+.alert-info,
+.alert-secondary {
+  --bs-alert-bg: var(--ct-surface);
+  --bs-alert-color: var(--ct-text);
+  --bs-alert-border-color: var(--ct-border);
+  border-left-color: #6b7280;
+}
+
+.alert-danger ul {
+  padding-left: 1.1rem;
+}
+
+/* ==========================================================================
+   12. Foco e acessibilidade
+   O halo azul do Bootstrap some no tema cinza: foco com contorno escuro bem marcado.
+   ========================================================================== */
+:focus-visible {
+  outline: 2px solid var(--ct-text);
+  outline-offset: 2px;
+}
+
+.btn:focus-visible,
+.btn-check:focus-visible + .btn,
+.btn-close:focus-visible,
+.navbar-toggler:focus-visible,
+.page-link:focus-visible {
+  outline: 2px solid var(--ct-text);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--ct-surface);
+  border-color: var(--ct-text);
+  box-shadow: 0 0 0 .2rem rgba(17, 17, 17, .12);
+}
+
+.form-check-input:focus {
+  border-color: var(--ct-text);
+  box-shadow: 0 0 0 .2rem rgba(17, 17, 17, .12);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .form-control,
+  .form-select,
+  .alert,
+  .fade,
+  .collapsing,
+  .navbar-toggler {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   13. Estados vazios
+   Uma frase e, quando faz sentido, a próxima ação.
+   ========================================================================== */
+.ct-vazio {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--ct-text);
+}
+

@@ -7,15 +7,14 @@
  * @var string                     $busca
  */
 $situacoes = rotulos_de('situacoes_mensalidade');
-$estilos   = ['EM_ABERTO' => 'text-bg-info', 'PAGO' => 'text-bg-success', 'ATRASADO' => 'text-bg-danger'];
 ?>
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<header class="ct-page-header">
     <h1 class="h3 mb-0">Mensalidades</h1>
-    <a href="<?= esc(url_to('mensalidades_inadimplentes'), 'html') ?>" class="btn btn-outline-danger">Ver inadimplentes</a>
-</div>
+    <a href="<?= esc(url_to('mensalidades_inadimplentes'), 'html') ?>" class="btn btn-outline-secondary">Ver inadimplentes</a>
+</header>
 
 <form action="<?= esc(url_to('mensalidades'), 'html') ?>" method="get" class="row g-2 mb-3" role="search">
     <div class="col-12 col-md-5">
@@ -39,31 +38,38 @@ $estilos   = ['EM_ABERTO' => 'text-bg-info', 'PAGO' => 'text-bg-success', 'ATRAS
     </div>
 </form>
 
+<div class="ct-card mb-3">
 <div class="table-responsive position-relative">
-    <table class="table table-striped align-middle bg-white">
+    <table class="table table-striped table-hover align-middle">
         <caption class="visually-hidden">Mensalidades</caption>
         <thead>
             <tr>
                 <th scope="col">Aluno</th>
                 <th scope="col">Plano</th>
                 <th scope="col">Vencimento</th>
-                <th scope="col">Valor</th>
+                <th scope="col" class="num">Valor</th>
                 <th scope="col">Situação</th>
                 <th scope="col"><span class="visually-hidden">Ações</span></th>
             </tr>
         </thead>
         <tbody>
             <?php if ($mensalidades === []) : ?>
-                <tr><td colspan="6" class="text-center text-muted">Nenhuma mensalidade encontrada.</td></tr>
+                <tr><td colspan="6"><div class="ct-vazio">
+                    <p class="mb-1 fw-semibold">Nenhuma mensalidade encontrada.</p>
+                    <?php if ($busca !== '' || $situacao !== '') : ?>
+                        <p class="text-secondary small mb-3">Nenhuma mensalidade combina com o filtro escolhido.</p>
+                        <a href="<?= esc(url_to('mensalidades'), 'html') ?>" class="btn btn-outline-secondary btn-sm">Limpar filtros</a>
+                    <?php endif; ?>
+                </div></td></tr>
             <?php endif; ?>
             <?php foreach ($mensalidades as $mensalidade) : ?>
                 <tr>
                     <td><a href="<?= esc(url_to('mensalidades_aluno', $mensalidade['aluno_id']), 'html') ?>"><?= esc($mensalidade['aluno_codigo']) ?> · <?= esc($mensalidade['aluno_nome']) ?></a></td>
                     <td><?= esc($mensalidade['plano_nome']) ?></td>
                     <td><?= esc(formatar_data($mensalidade['vencimento'])) ?></td>
-                    <td><?= esc(formatar_moeda($mensalidade['valor'])) ?></td>
+                    <td class="num"><?= esc(formatar_moeda($mensalidade['valor'])) ?></td>
                     <td>
-                        <span class="badge <?= esc($estilos[$mensalidade['situacao']] ?? 'text-bg-secondary', 'attr') ?>"><?= esc($situacoes[$mensalidade['situacao']] ?? $mensalidade['situacao']) ?></span>
+                        <span class="ct-status <?= esc(classe_status($mensalidade['situacao']), 'attr') ?>"><?= esc($situacoes[$mensalidade['situacao']] ?? $mensalidade['situacao']) ?></span>
                         <?php if ($mensalidade['situacao'] === 'PAGO') : ?>
                             <small class="text-muted d-block"><?= esc(formatar_data($mensalidade['data_pagamento'])) ?> · <?= esc(rotulos_de('formas_pagamento')[$mensalidade['forma_pagamento']] ?? '') ?></small>
                         <?php endif; ?>
@@ -78,6 +84,7 @@ $estilos   = ['EM_ABERTO' => 'text-bg-info', 'PAGO' => 'text-bg-success', 'ATRAS
             <?php endforeach; ?>
         </tbody>
     </table>
+</div>
 </div>
 
 <nav aria-label="Paginação das mensalidades"><?= $pager->links() ?></nav>

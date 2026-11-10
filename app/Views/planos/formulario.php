@@ -12,7 +12,7 @@ $valorAtual = old('valor', isset($plano['valor']) ? number_format((float) $plano
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<h1 class="h3 mb-3"><?= esc($titulo) ?></h1>
+<header class="ct-page-header"><h1 class="h3 mb-0"><?= esc($titulo) ?></h1></header>
 
 <form action="<?= esc($acao, 'html') ?>" method="post" novalidate>
     <?= csrf_field() ?>
@@ -38,12 +38,12 @@ $valorAtual = old('valor', isset($plano['valor']) ? number_format((float) $plano
                 </select>
             </div>
             <div class="col-12">
-                <label for="beneficios" class="form-label">Benefícios <span class="text-muted">(opcional)</span></label>
+                <label for="beneficios" class="form-label">Benefícios <span class="opcional">(opcional)</span></label>
                 <textarea class="form-control" id="beneficios" name="beneficios" rows="2" maxlength="1000"><?= esc(old('beneficios', $plano['beneficios'] ?? '')) ?></textarea>
             </div>
         </div>
     </div>
-    <div class="d-flex gap-2">
+    <div class="ct-form-acoes">
         <button type="submit" class="btn btn-primary">Salvar</button>
         <a href="<?= esc(url_to('planos'), 'html') ?>" class="btn btn-outline-secondary">Cancelar</a>
     </div>

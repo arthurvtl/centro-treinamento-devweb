@@ -5,20 +5,20 @@
  * @var list<array<string, mixed>> $turmas
  */
 $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
-$estilosSituacao = ['ATIVA' => 'text-bg-success', 'SUSPENSA' => 'text-bg-warning', 'ENCERRADA' => 'text-bg-secondary'];
 ?>
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<header class="ct-page-header">
     <h1 class="h3 mb-0">Turmas</h1>
     <?php if ($ehProprietario) : ?>
         <a href="<?= esc(url_to('turmas_novo'), 'html') ?>" class="btn btn-primary">Nova turma</a>
     <?php endif; ?>
-</div>
+</header>
 
+<div class="ct-card mb-3">
 <div class="table-responsive position-relative">
-    <table class="table table-striped table-hover align-middle bg-white">
+    <table class="table table-striped table-hover align-middle">
         <caption class="visually-hidden">Turmas e vagas ocupadas</caption>
         <thead>
             <tr>
@@ -33,7 +33,12 @@ $estilosSituacao = ['ATIVA' => 'text-bg-success', 'SUSPENSA' => 'text-bg-warning
         </thead>
         <tbody>
             <?php if ($turmas === []) : ?>
-                <tr><td colspan="7" class="text-center text-muted">Nenhuma turma cadastrada.</td></tr>
+                <tr><td colspan="7"><div class="ct-vazio">
+                    <p class="mb-1 fw-semibold">Nenhuma turma cadastrada.</p>
+                    <?php if ($ehProprietario) : ?>
+                        <a href="<?= esc(url_to('turmas_novo'), 'html') ?>" class="btn btn-outline-secondary btn-sm">Cadastrar turma</a>
+                    <?php endif; ?>
+                </div></td></tr>
             <?php endif; ?>
             <?php foreach ($turmas as $turma) : ?>
                 <tr>
@@ -42,11 +47,12 @@ $estilosSituacao = ['ATIVA' => 'text-bg-success', 'SUSPENSA' => 'text-bg-warning
                     <td><?= esc($turma['professor_nome']) ?></td>
                     <td><?= esc(str_replace(',', ', ', $turma['dias_semana'])) ?> · <?= esc(substr($turma['hora_inicio'], 0, 5)) ?>–<?= esc(substr($turma['hora_termino'], 0, 5)) ?></td>
                     <td><?= esc((string) $turma['ocupadas']) ?>/<?= esc((string) $turma['limite_vagas']) ?></td>
-                    <td><span class="badge <?= esc($estilosSituacao[$turma['situacao']] ?? 'text-bg-secondary', 'attr') ?>"><?= esc(ucfirst(strtolower($turma['situacao']))) ?></span></td>
-                    <td class="text-end"><a href="<?= esc(url_to('turmas_ver', $turma['id']), 'html') ?>" class="btn btn-sm btn-outline-primary">Ver</a></td>
+                    <td><span class="ct-status <?= esc(classe_status($turma['situacao']), 'attr') ?>"><?= esc(ucfirst(strtolower($turma['situacao']))) ?></span></td>
+                    <td class="text-end"><a href="<?= esc(url_to('turmas_ver', $turma['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Ver</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+</div>
 </div>
 <?= $this->endSection() ?>

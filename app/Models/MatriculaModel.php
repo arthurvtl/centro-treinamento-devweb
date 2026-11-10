@@ -145,4 +145,12 @@ class MatriculaModel extends Model
     {
         return $this->db->table('frequencias')->where('matricula_id', $matriculaId)->countAllResults() > 0;
     }
+
+    /**
+     * Conta as matrículas ativas, ou seja, os vínculos atuais entre alunos e turmas (indicador do painel).
+     */
+    public function contarAtivas(): int
+    {
+        return $this->where('situacao', 'ATIVA')->countAllResults();
+    }
 }

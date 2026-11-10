@@ -259,4 +259,14 @@ class MensalidadeModel extends Model
             ->where('mensalidades.id', $mensalidadeId)
             ->first();
     }
+
+    /**
+     * Conta as mensalidades vencidas e não pagas (RN07), para o indicador do painel do proprietário.
+     */
+    public function contarAtrasadas(): int
+    {
+        $this->atualizarAtrasadas();
+
+        return $this->where('situacao', 'ATRASADO')->countAllResults();
+    }
 }

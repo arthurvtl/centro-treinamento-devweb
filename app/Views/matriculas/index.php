@@ -9,10 +9,10 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('conteudo') ?>
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+<header class="ct-page-header">
     <h1 class="h3 mb-0">Matrículas</h1>
     <a href="<?= esc(url_to('matriculas_nova'), 'html') ?>" class="btn btn-primary">Nova matrícula</a>
-</div>
+</header>
 
 <form action="<?= esc(url_to('matriculas'), 'html') ?>" method="get" class="row g-2 mb-3" role="search">
     <div class="col-12 col-md-8">
@@ -27,8 +27,9 @@
     </div>
 </form>
 
+<div class="ct-card mb-3">
 <div class="table-responsive position-relative">
-    <table class="table table-striped table-hover align-middle bg-white">
+    <table class="table table-striped table-hover align-middle">
         <caption class="visually-hidden">Matrículas ativas</caption>
         <thead>
             <tr>
@@ -41,7 +42,15 @@
         </thead>
         <tbody>
             <?php if ($matriculas === []) : ?>
-                <tr><td colspan="5" class="text-center text-muted">Nenhuma matrícula ativa encontrada.</td></tr>
+                <tr><td colspan="5"><div class="ct-vazio">
+                    <p class="mb-1 fw-semibold">Nenhuma matrícula ativa encontrada.</p>
+                    <?php if ($busca !== '') : ?>
+                        <p class="text-secondary small mb-3">Nenhum aluno com esse nome ou código tem matrícula ativa.</p>
+                        <a href="<?= esc(url_to('matriculas'), 'html') ?>" class="btn btn-outline-secondary btn-sm">Limpar busca</a>
+                    <?php else : ?>
+                    <a href="<?= esc(url_to('matriculas_nova'), 'html') ?>" class="btn btn-outline-secondary btn-sm"><?= esc('Nova matrícula') ?></a>
+                    <?php endif; ?>
+                </div></td></tr>
             <?php endif; ?>
             <?php foreach ($matriculas as $matricula) : ?>
                 <tr>
@@ -50,7 +59,7 @@
                     <td><?= esc($matricula['modalidade_nome']) ?></td>
                     <td><?= esc(formatar_data($matricula['data_matricula'])) ?></td>
                     <td class="text-end text-nowrap">
-                        <a href="<?= esc(url_to('matriculas_ver', $matricula['id']), 'html') ?>" class="btn btn-sm btn-outline-primary">Ver</a>
+                        <a href="<?= esc(url_to('matriculas_ver', $matricula['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Ver</a>
                         <a href="<?= esc(url_to('matriculas_trocar', $matricula['id']), 'html') ?>" class="btn btn-sm btn-outline-secondary">Trocar de turma</a>
                         <form action="<?= esc(url_to('matriculas_cancelar', $matricula['id']), 'html') ?>" method="post" class="d-inline"
                               onsubmit="return confirm('Cancelar esta matrícula?');">
@@ -62,6 +71,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+</div>
 </div>
 
 <nav aria-label="Paginação das matrículas"><?= $pager->links() ?></nav>
