@@ -79,10 +79,12 @@ Abra <http://localhost:8080> no navegador.
 
 ## Logins de demonstração
 
-| Perfil | E-mail | Senha |
+| Perfil | Usuário | Senha |
 |---|---|---|
-| Proprietário ("Dono") | `dono@ct.local` | `ct123456` |
-| Recepcionista ("Recepção") | `recepcao@ct.local` | `ct123456` |
+| Proprietário ("Dono") | `dono` | `admin` |
+| Recepcionista ("Recepção") | `recepcao` | `admin` |
+
+> São credenciais **somente de demonstração**, criadas pelo `db:seed`. Para usar o sistema com dados reais, troque as senhas (ou apague os usuários e cadastre os seus) antes de publicar. A tela de login pede "Usuário" e "Senha"; a coluna do banco continua se chamando `login_email` e aceita tanto um usuário simples quanto um e-mail.
 
 ### Dados de demonstração
 
