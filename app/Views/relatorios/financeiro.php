@@ -36,7 +36,7 @@ $formas = rotulos_de('formas_pagamento');
 <section aria-labelledby="tituloFormas">
     <h2 class="h5" id="tituloFormas">Recebido por forma de pagamento</h2>
     <div class="ct-card mb-3">
-<div class="table-responsive position-relative">
+<div class="table-responsive position-relative" tabindex="0" role="region" aria-label="Recebido por forma de pagamento">
         <table class="table table-striped table-hover align-middle">
             <caption class="visually-hidden">Recebimentos por forma de pagamento</caption>
             <thead><tr><th scope="col">Forma</th><th scope="col" class="num">Total recebido</th></tr></thead>

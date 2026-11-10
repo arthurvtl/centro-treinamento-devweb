@@ -32,7 +32,7 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
     <h2 class="h5" id="tituloModalidades">Alunos por modalidade</h2>
     <p class="text-muted small mb-2">Considera alunos com matrícula ativa; cada aluno conta uma vez por modalidade.</p>
     <div class="ct-card mb-3">
-<div class="table-responsive position-relative">
+<div class="table-responsive position-relative" tabindex="0" role="region" aria-label="Alunos por modalidade">
         <table class="table table-striped table-hover align-middle">
             <caption class="visually-hidden">Alunos por modalidade</caption>
             <thead><tr><th scope="col">Modalidade</th><th scope="col">Categoria</th><th scope="col">Alunos</th></tr></thead>
@@ -57,7 +57,7 @@ $ehProprietario = session()->get('usuario_perfil') === 'proprietario';
     <h2 class="h5" id="tituloVagas">Turmas com vagas disponíveis</h2>
     <p class="text-muted small mb-2">Só turmas ativas: suspensas e encerradas não aceitam matrícula.</p>
     <div class="ct-card mb-3">
-<div class="table-responsive position-relative">
+<div class="table-responsive position-relative" tabindex="0" role="region" aria-label="Turmas com vagas disponíveis">
         <table class="table table-striped table-hover align-middle">
             <caption class="visually-hidden">Turmas com vagas</caption>
             <thead>
