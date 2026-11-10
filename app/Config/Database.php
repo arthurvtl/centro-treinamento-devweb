@@ -200,5 +200,17 @@ class Database extends Config
         if (ENVIRONMENT === 'testing') {
             $this->defaultGroup = 'tests';
         }
+
+        // Deploy: o banco em nuvem (Aiven) só aceita conexão criptografada.
+        // Quando o ambiente informa o caminho do certificado CA, a conexão passa a usar SSL
+        // com verificação do servidor. No ambiente local a variável não existe e nada muda.
+        $caminhoCertificadoCa = env('DB_SSL_CA');
+
+        if (is_string($caminhoCertificadoCa) && $caminhoCertificadoCa !== '') {
+            $this->default['encrypt'] = [
+                'ssl_ca'     => $caminhoCertificadoCa,
+                'ssl_verify' => true,
+            ];
+        }
     }
 }
