@@ -76,6 +76,25 @@ td,
   --bs-card-bg: var(--ct-surface);
 }
 
+/* Componentes que o Bootstrap pinta com o fundo da página (cinza) passam a ser brancos, como os cartões:
+   campos, caixas de marcação, listas e a paginação. */
+.form-control,
+.form-select {
+  background-color: var(--ct-surface);
+}
+
+.form-check-input:not(:checked) {
+  background-color: var(--ct-surface);
+}
+
+.list-group {
+  --bs-list-group-bg: var(--ct-surface);
+}
+
+.pagination {
+  --bs-pagination-bg: var(--ct-surface);
+}
+
 /* ==========================================================================
    3. Botões
    Um primário grafite por tela; o resto é contorno cinza. Os tons de verde, amarelo e vermelho do
@@ -196,13 +215,24 @@ td,
 .navbar-brand {
   font-weight: 700;
   letter-spacing: -.02em;
+  margin-right: .75rem;
+}
+
+/* Com os 9 módulos do proprietário a barra pode não caber em janelas médias: quebra linha em vez de estourar. */
+.navbar-expand-lg .navbar-collapse {
+  flex-wrap: wrap;
+  row-gap: .25rem;
+}
+
+.navbar-expand-lg .navbar-nav {
+  flex-wrap: wrap;
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
   color: var(--ct-muted);
   font-weight: 500;
   border-radius: .375rem;
-  padding-inline: .75rem;
+  padding-inline: .4rem;
 }
 
 .navbar-expand-lg .navbar-nav .nav-link:hover {
@@ -217,13 +247,15 @@ td,
 
 /* Usuário logado: nome em destaque e perfil como selo neutro. */
 .ct-usuario {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
   font-weight: 500;
   color: var(--ct-text);
 }
 
 .ct-perfil {
   display: inline-block;
-  margin-left: .35rem;
   padding: .1rem .55rem;
   border: 1px solid var(--ct-border-forte);
   border-radius: 999px;
@@ -477,6 +509,7 @@ legend .opcional {
 
 .form-control:focus,
 .form-select:focus {
+  background-color: var(--ct-surface);
   border-color: var(--ct-text);
   box-shadow: 0 0 0 .2rem rgba(17, 17, 17, .12);
 }
