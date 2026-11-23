@@ -6,6 +6,7 @@ use App\Models\AlunoModel;
 use App\Models\MatriculaModel;
 use App\Models\MensalidadeModel;
 use App\Models\TurmaModel;
+use App\Models\VendaModel;
 
 /**
  * Monta os indicadores do painel inicial conforme o perfil (HU06, RN05).
@@ -19,11 +20,12 @@ class IndicadoresService
         private readonly MatriculaModel $matriculaModel = new MatriculaModel(),
         private readonly TurmaModel $turmaModel = new TurmaModel(),
         private readonly MensalidadeModel $mensalidadeModel = new MensalidadeModel(),
+        private readonly VendaModel $vendaModel = new VendaModel(),
     ) {
     }
 
     /**
-     * Devolve os indicadores do painel: 3 para a recepção e 4 para o proprietário.
+     * Devolve os indicadores do painel: 4 para a recepção e 5 para o proprietário.
      *
      * Os números financeiros (mensalidades atrasadas e total recebido no mês) só aparecem para o
      * proprietário, porque a recepcionista não acessa relatórios financeiros (RN05). Quem atende no
@@ -39,6 +41,9 @@ class IndicadoresService
             $this->indicador('kpiAlunos', 'Alunos ativos', (string) $this->alunoModel->contarPorSituacao()['ativos'], 'cadastros em uso'),
             $this->indicador('kpiMatriculas', 'Matrículas ativas', (string) $this->matriculaModel->contarAtivas(), 'alunos em turmas'),
         ];
+
+        $vendasHoje = $this->vendaModel->resumirHoje();
+        $indicadores[] = $this->indicador('kpiVendasHoje', 'Vendas da loja hoje', (string) $vendasHoje['quantidade'], formatar_moeda($vendasHoje['total']) . ' vendidos');
 
         if ($perfil !== 'proprietario') {
             $indicadores[] = $this->indicador('kpiVagas', 'Turmas com vaga', (string) count($this->turmaModel->buscarComVagasDisponiveis()), 'aceitando matrícula');

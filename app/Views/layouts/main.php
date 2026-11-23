@@ -83,5 +83,6 @@ $secaoAtual = service('uri')->getSegment(1);
 
 <footer class="container pb-4 small text-secondary">Sistema CT · Desenvolvimento Web · IFES</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<?= $this->renderSection('scripts') ?>
 </body>
 </html>
