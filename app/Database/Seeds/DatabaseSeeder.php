@@ -47,5 +47,7 @@ class DatabaseSeeder extends Seeder
         $this->call('FrequenciaSeeder');    // 8 semanas de chamadas e encerramento da turma iniciante
         $this->call('PlanoSeeder');         // planos e vínculos aluno-plano
         $this->call('MensalidadeSeeder');   // mensalidades pagas, em aberto e atrasadas
+        $this->call('ProdutoSeeder');       // catálogo da loja
+        $this->call('VendaSeeder');         // 6 meses de vendas da loja
     }
 }

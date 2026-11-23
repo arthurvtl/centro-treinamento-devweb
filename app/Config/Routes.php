@@ -86,13 +86,35 @@ $routes->group('', ['filter' => 'autenticado'], static function (RouteCollection
         $routes->post('(:num)/excluir', 'Matriculas::excluir/$1', ['as' => 'matriculas_excluir', 'filter' => 'perfil:proprietario']);
     });
 
-    // Frequência (HU04): recepcionista e proprietário
+    // Frequência (HU04): só consulta. A presença é registrada automaticamente pela catraca de acesso
+    // (integração assumida, fora do escopo desta entrega); por isso não há rotas de lançamento manual.
     $routes->group('frequencias', static function (RouteCollection $routes): void {
         $routes->get('', 'Frequencias::index', ['as' => 'frequencias']);
-        $routes->post('registrar', 'Frequencias::registrar', ['as' => 'frequencias_registrar']);
-        $routes->post('turma/(:num)/chamada/(:segment)/excluir', 'Frequencias::excluir/$1/$2', ['as' => 'frequencias_excluir']);
         $routes->get('turma/(:num)/baixa-frequencia', 'Frequencias::baixaFrequencia/$1', ['as' => 'frequencias_baixa']);
     });
+
+    // Loja (HU07): venda de produtos no balcão. Recepcionista e proprietário; exclusão de produto só do proprietário.
+    $routes->group('vendas', static function (RouteCollection $routes): void {
+        $routes->get('', 'Vendas::index', ['as' => 'vendas']);
+        $routes->get('nova', 'Vendas::nova', ['as' => 'vendas_nova']);
+        $routes->post('criar', 'Vendas::criar', ['as' => 'vendas_criar']);
+        $routes->get('(:num)', 'Vendas::ver/$1', ['as' => 'vendas_ver']);
+        $routes->post('(:num)/cancelar', 'Vendas::cancelar/$1', ['as' => 'vendas_cancelar']);
+    });
+
+    $routes->group('produtos', static function (RouteCollection $routes): void {
+        $routes->get('', 'Produtos::index', ['as' => 'produtos']);
+        $routes->get('novo', 'Produtos::novo', ['as' => 'produtos_novo']);
+        $routes->post('criar', 'Produtos::criar', ['as' => 'produtos_criar']);
+        $routes->get('(:num)/editar', 'Produtos::editar/$1', ['as' => 'produtos_editar']);
+        $routes->post('(:num)/atualizar', 'Produtos::atualizar/$1', ['as' => 'produtos_atualizar']);
+        $routes->post('(:num)/inativar', 'Produtos::inativar/$1', ['as' => 'produtos_inativar']);
+        $routes->post('(:num)/reativar', 'Produtos::reativar/$1', ['as' => 'produtos_reativar']);
+        $routes->post('(:num)/excluir', 'Produtos::excluir/$1', ['as' => 'produtos_excluir', 'filter' => 'perfil:proprietario']);
+    });
+
+    // Análise do negócio (HU08): visão gerencial com receita, ocupação, retenção e loja. Só o proprietário (RN05).
+    $routes->get('analise', 'Analise::index', ['as' => 'analise', 'filter' => 'perfil:proprietario']);
 
     // Planos (HU05): somente o proprietário. Definir preços e planos é gestão do negócio (RN05).
     $routes->group('planos', ['filter' => 'perfil:proprietario'], static function (RouteCollection $routes): void {

@@ -95,7 +95,8 @@ O `php spark db:seed DatabaseSeeder` carrega uma demonstração realista, toda f
 - **60 alunos** de 7 a 60 anos, sendo 12 menores com responsável legal (parentescos variados), 10 com condição de saúde preenchida e 4 inativos; matrículas espalhadas pelos últimos 12 meses.
 - **7 modalidades**: 4 lutas (jiu-jitsu, muay thai, boxe, judô, capacidade 20) e 3 esportes coletivos (futsal, vôlei, basquete, capacidade 25), com 8 professores habilitados (alguns em duas modalidades).
 - **13 turmas** de manhã, tarde e noite, infantis e adultas: uma **lotada** (Jiu-jitsu Adulto Noite, 20 de 20), uma quase lotada (Futsal Misto Sábado, 22 de 25), uma **suspensa** (Judô Adulto) e uma **encerrada** (Jiu-jitsu Iniciante Manhã, com 10 certificados e 2 alunos inativados pela regra RN09).
-- Matrículas ativas, transferidas e canceladas (cada aluno ativo em 1 ou 2 turmas) e **8 semanas de chamadas**, com alguns alunos abaixo de 75% de presença.
+- Matrículas ativas, transferidas e canceladas (cada aluno ativo em 1 ou 2 turmas) e **8 semanas de presença registrada pela catraca**, com alguns alunos abaixo de 75% de presença.
+- **Loja** com 17 produtos (vestuário, equipamentos, suplementos e bebidas) e cerca de 170 vendas em 6 meses; 3 produtos estão com estoque baixo para mostrar o alerta de reposição.
 - **5 planos** (mensal básico, mensal plus, trimestral, semestral e família) e mensalidades dos últimos meses: a maioria paga (PIX, cartão e dinheiro), algumas em aberto e **8 alunos inadimplentes**. O modelo de dados não tem periodicidade anual, por isso não há plano anual.
 
 A demonstração é **determinística**: usa uma semente fixa, então a estrutura é sempre a mesma. As datas são relativas ao dia em que o seed roda, para o sistema parecer em uso no dia da apresentação.
@@ -110,7 +111,10 @@ A demonstração é **determinística**: usa uma semente fixa, então a estrutur
 | Excluir matrícula ativa sem frequência (lançada por engano) | Sim | Não |
 | Turmas: consultar | Sim | Sim |
 | Turmas: criar, editar, suspender, encerrar | Sim | Não |
-| Frequência (lançar, corrigir e excluir a chamada) | Sim | Sim |
+| Frequência (consulta; a presença vem da catraca, sem lançamento manual) | Sim | Sim |
+| Loja: vender, cancelar venda, cadastrar e repor produtos | Sim | Sim |
+| Excluir produto nunca vendido | Sim | Não |
+| Análise do negócio (receita, ocupação, evasão, loja) | Sim | Não |
 | Professores e modalidades | Sim | Não |
 | Financeiro do aluno, vincular plano e dar baixa em mensalidade | Sim | Sim |
 | Planos, lista de mensalidades, inadimplentes, gerar, editar e excluir mensalidade em aberto | Sim | Não |
@@ -128,7 +132,9 @@ A autorização é conferida no servidor pelos filtros de rota, e não apenas es
 | Professores e modalidades | RF04, RF05 | RN01, RN02, RN03 |
 | Turmas (suspender, reativar, encerrar) | RF06, RF22, RF23 | RN03, RN09, RN10 |
 | Matrículas e troca de turma | RF07, RF08, RF09 | RN01, RN02, RN04, RN10 |
-| Frequência e alunos abaixo de 75% | RF10, RF11 | RN09, RN10 |
+| Frequência (consulta da catraca) e alunos abaixo de 75% | RF10, RF11 | RN09, RN10 |
+| Loja: produtos, estoque e vendas | RF26 a RF28 | RN12 a RN14 |
+| Análise do negócio (visão do proprietário) | RF29 | RN05 |
 | Planos, mensalidades e inadimplência | RF12 a RF15, RF24, RF25 | RN07, RN08, RN11 |
 | Relatórios | RF16 a RF19 | RN05 |
 

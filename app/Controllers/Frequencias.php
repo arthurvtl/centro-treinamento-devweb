@@ -5,11 +5,14 @@ namespace App\Controllers;
 use App\Models\FrequenciaModel;
 use App\Models\MatriculaModel;
 use App\Models\TurmaModel;
-use App\Services\FrequenciaService;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 /**
- * Telas de frequência: chamada por turma e data e alunos abaixo de 75% (HU04: RF10, RF11).
+ * Telas de frequência: consulta da presença por turma e data e alunos abaixo de 75% (HU04: RF10, RF11).
+ *
+ * A presença NÃO é lançada à mão: o aluno passa por uma catraca de acesso (biometria ou cartão) que
+ * registra a entrada automaticamente. Essa integração com o equipamento é assumida pelo projeto
+ * e não foi implementada; o sistema apenas lê os registros e os analisa.
  */
 class Frequencias extends BaseController
 {
@@ -23,7 +26,7 @@ class Frequencias extends BaseController
     }
 
     /**
-     * Tela de chamada: escolhe turma e data e, com a turma escolhida, lista os alunos para marcar.
+     * Consulta de presença: escolhe turma e data e, com a turma escolhida, lista as entradas registradas pela catraca.
      */
     public function index()
     {
@@ -49,50 +52,6 @@ class Frequencias extends BaseController
         }
 
         return view('frequencias/index', $dados);
-    }
-
-    /**
-     * Grava a chamada da turma na data informada (RF10).
-     */
-    public function registrar()
-    {
-        $turmaId  = (int) $this->request->getPost('turma_id');
-        $dataAula = (string) $this->request->getPost('data_aula');
-
-        $resultado = (new FrequenciaService())->registrarChamada(
-            $turmaId,
-            $dataAula,
-            (array) $this->request->getPost('situacao'),
-            (array) $this->request->getPost('observacao'),
-        );
-
-        $redirecionamento = redirect()->to($this->urlDaChamada($turmaId, $dataAula));
-
-        // Em caso de erro, devolve as marcações digitadas para a pessoa não precisar refazer a chamada.
-        if (! $resultado['sucesso']) {
-            $redirecionamento->withInput();
-        }
-
-        return $redirecionamento->with($resultado['sucesso'] ? 'sucesso' : 'erro', $resultado['mensagem']);
-    }
-
-    /**
-     * Desfaz a chamada de uma turma numa data, lançada por engano (HU04).
-     */
-    public function excluir(int $turmaId, string $dataAula)
-    {
-        $resultado = (new FrequenciaService())->excluirChamada($turmaId, $dataAula);
-
-        return redirect()->to($this->urlDaChamada($turmaId, $dataAula))
-            ->with($resultado['sucesso'] ? 'sucesso' : 'erro', $resultado['mensagem']);
-    }
-
-    /**
-     * Monta o endereço da tela de chamada de uma turma numa data.
-     */
-    private function urlDaChamada(int $turmaId, string $dataAula): string
-    {
-        return url_to('frequencias') . '?turma_id=' . $turmaId . '&data=' . urlencode($dataAula);
     }
 
     /**

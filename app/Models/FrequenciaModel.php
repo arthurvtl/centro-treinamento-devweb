@@ -46,9 +46,9 @@ class FrequenciaModel extends Model
     ];
 
     /**
-     * Devolve os lançamentos já feitos de uma turma numa data, indexados pelo id da matrícula.
+     * Devolve os registros de presença de uma turma numa data, indexados pelo id da matrícula.
      *
-     * Serve para a tela de chamada mostrar o que já foi registrado e permitir corrigir.
+     * Os registros chegam da catraca de acesso; a tela de frequência só os consulta.
      *
      * @return array<int, array<string, mixed>>
      */
@@ -91,23 +91,5 @@ class FrequenciaModel extends Model
         }
 
         return $linhas;
-    }
-
-    /**
-     * Apaga todos os lançamentos de uma turma numa data e devolve quantos foram apagados.
-     *
-     * Serve para desfazer uma chamada lançada por engano (HU04); depois dá para lançar de novo.
-     */
-    public function excluirLancamentosDaAula(int $turmaId, string $dataAula): int
-    {
-        $ids = array_column($this->buscarLancamentosDaAula($turmaId, $dataAula), 'id');
-
-        if ($ids === []) {
-            return 0;
-        }
-
-        $this->whereIn('id', $ids)->delete();
-
-        return count($ids);
     }
 }

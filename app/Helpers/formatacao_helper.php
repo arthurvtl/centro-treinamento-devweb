@@ -70,6 +70,7 @@ if (! function_exists('rotulos_de')) {
     {
         $conjuntos = [
             'categorias'            => \App\Models\ModalidadeModel::CATEGORIAS,
+            'categorias_produto'    => \App\Models\ProdutoModel::CATEGORIAS,
             'periodicidades'        => \App\Models\PlanoModel::PERIODICIDADES,
             'formas_pagamento'      => \App\Models\MensalidadeModel::FORMAS_PAGAMENTO,
             'situacoes_mensalidade' => \App\Models\MensalidadeModel::SITUACOES,
