@@ -61,6 +61,7 @@ digraph Classes {
     <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
       <tr><td><b>Frequencia</b></td></tr>
       <tr><td align="left" balign="left">- id : int<br/>- dataAula : Date<br/>- presenca : Presenca<br/>- observacao : String</td></tr>
+      <tr><td align="left" balign="left">«registrada pela catraca»</td></tr>
     </table>>];
 
   Plano [label=<
@@ -83,6 +84,26 @@ digraph Classes {
       <tr><td align="left" balign="left">+ registrarPagamento(data, forma) : void<br/>+ isAtrasada() : bool</td></tr>
     </table>>];
 
+  Produto [label=<
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>Produto</b></td></tr>
+      <tr><td align="left" balign="left">- id : int<br/>- nome : String<br/>- categoria : CategoriaProduto<br/>- precoCusto : decimal<br/>- precoVenda : decimal<br/>- estoqueAtual : int<br/>- estoqueMinimo : int<br/>- situacao : SituacaoCadastro</td></tr>
+      <tr><td align="left" balign="left">+ temEstoque(qtd) : bool<br/>+ isEstoqueBaixo() : bool</td></tr>
+    </table>>];
+
+  Venda [label=<
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>Venda</b></td></tr>
+      <tr><td align="left" balign="left">- id : int<br/>- formaPagamento : FormaPagamento<br/>- valorTotal : decimal<br/>- dataVenda : DateTime<br/>- situacao : SituacaoVenda</td></tr>
+      <tr><td align="left" balign="left">+ registrar() : void<br/>+ cancelar() : void</td></tr>
+    </table>>];
+
+  ItemVenda [label=<
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#000000">
+      <tr><td><b>ItemVenda</b></td></tr>
+      <tr><td align="left" balign="left">- id : int<br/>- quantidade : int<br/>- precoUnitario : decimal<br/>- custoUnitario : decimal</td></tr>
+    </table>>];
+
   // ---------- Enumerações ----------
   Enums [label=<
     <table border="0" cellborder="0" cellspacing="6" cellpadding="0">
@@ -91,12 +112,14 @@ digraph Classes {
       <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>Presenca</b></td></tr><tr><td align="left" balign="left">PRESENTE<br/>FALTA</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>Periodicidade</b></td></tr><tr><td align="left" balign="left">MENSAL<br/>TRIMESTRAL<br/>SEMESTRAL</td></tr></table></td></tr>
       <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>FormaPagamento</b></td></tr><tr><td align="left" balign="left">PIX<br/>CARTAO<br/>DINHEIRO</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>SituacaoMensalidade</b></td></tr><tr><td align="left" balign="left">EM_ABERTO<br/>PAGO<br/>ATRASADO</td></tr></table></td></tr>
       <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>SituacaoAlunoPlano</b></td></tr><tr><td align="left" balign="left">ATIVO<br/>ENCERRADO</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>SituacaoCadastro</b></td></tr><tr><td align="left" balign="left">ATIVO<br/>INATIVO</td></tr></table></td></tr>
+      <tr><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>CategoriaProduto</b></td></tr><tr><td align="left" balign="left">VESTUARIO<br/>EQUIPAMENTO<br/>SUPLEMENTO<br/>BEBIDA<br/>OUTROS</td></tr></table></td><td><table border="1" cellborder="0" cellspacing="0" cellpadding="3" color="#000000"><tr><td><font point-size="9">«enumeration»</font><br/><b>SituacaoVenda</b></td></tr><tr><td align="left" balign="left">CONCLUIDA<br/>CANCELADA</td></tr></table></td></tr>
     </table>>];
 
   // ---------- Layout (linhas) ----------
   { rank=same; Usuario; ResponsavelLegal; Aluno; Plano; Enums; }
   { rank=same; Professor; Modalidade; Turma; Matricula; AlunoPlano; }
-  { rank=same; Frequencia; Mensalidade; }
+  { rank=same; Frequencia; Mensalidade; Venda; }
+  { rank=same; Produto; ItemVenda; }
 
   // ---------- Associações ----------
   Aluno -> ResponsavelLegal [xlabel="possui", headlabel="0..1", taillabel="1"];
@@ -109,5 +132,9 @@ digraph Classes {
   Aluno -> AlunoPlano       [xlabel="assina", headlabel="0..*", taillabel="1"];
   Plano -> AlunoPlano       [xlabel="contratado em", headlabel="0..*", taillabel="1"];
   AlunoPlano -> Mensalidade [xlabel="gera", headlabel="0..*", taillabel="1"];
+  Aluno -> Venda            [xlabel="compra", headlabel="0..*", taillabel="0..1"];
+  Usuario -> Venda          [xlabel="registra", headlabel="0..*", taillabel="1"];
+  Venda -> ItemVenda        [xlabel="contém", headlabel="1..*", taillabel="1"];
+  Produto -> ItemVenda      [xlabel="vendido em", headlabel="0..*", taillabel="1"];
 
 }

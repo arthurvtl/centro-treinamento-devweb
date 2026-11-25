@@ -40,7 +40,7 @@ Planejar e desenvolver, de forma incremental, um sistema web que centralize os p
 - Centralizar os cadastros de alunos, responsáveis, professores e modalidades.
 - Organizar turmas com horários, professor responsável, situação e limite de vagas.
 - Controlar matrículas, transferências e ocupação das turmas.
-- Registrar presença e falta por aula.
+- Consultar a presença e a falta por aula, registradas automaticamente por catraca de acesso.
 - Cadastrar planos e registrar mensalidades, pagamentos e atrasos.
 - Disponibilizar consultas e relatórios operacionais e financeiros conforme o perfil de acesso.
 - Aplicar autenticação, autorização, validação no servidor e medidas básicas de segurança.
@@ -48,7 +48,7 @@ Planejar e desenvolver, de forma incremental, um sistema web que centralize os p
 
 ## 1.4 Delimitação do escopo
 
-- **Incluído no escopo planejado:** cadastro e consulta dos dados centrais; gestão de modalidades, professores e turmas; matrícula e controle de lotação; frequência; planos e mensalidades; relatórios básicos; autenticação e permissões; interface responsiva; documentação técnica.
+- **Incluído no escopo planejado:** cadastro e consulta dos dados centrais; gestão de modalidades, professores e turmas; matrícula e controle de lotação; frequência (consulta; o registro é automático por catraca, assumido); planos e mensalidades; loja de produtos; relatórios básicos e análise gerencial; autenticação e permissões; interface responsiva; documentação técnica.
 - **Fora do MVP inicial:** aplicativo móvel nativo, integração bancária, conciliação automática, cobrança automática por WhatsApp, integração com gateways de pagamento e recursos avançados de BI. Esses itens podem ser avaliados em versões futuras, após validação do núcleo do produto (ver decisões da análise SWOT, seção 9).
 
 # 2. Problema de negócio e oportunidade
@@ -165,13 +165,13 @@ O segmento inicial são centros de treinamento esportivo independentes de pequen
 | **Nome** | Camila Santos |
 | **Idade** | 27 anos |
 | **Profissão / papel** | Recepcionista e apoio administrativo, cursando Administração à noite |
-| **Contexto de uso** | Atende presencialmente e por mensagens, cadastra alunos, atualiza contatos, faz matrículas e registra presenças, inclusive em horários de pico (18h às 21h) |
+| **Contexto de uso** | Atende presencialmente e por mensagens, cadastra alunos, atualiza contatos, faz matrículas e vende produtos no balcão, inclusive em horários de pico (18h às 21h) |
 | **Comportamento digital** | Alterna entre o computador da recepção (WhatsApp Web e planilha abertos) e o celular. Digita rápido, usa atalhos e prefere formulários curtos. Está acostumada com apps de banco e de delivery e espera o mesmo nível de clareza |
-| **Objetivos** | Cadastrar e matricular sem erro; encontrar um aluno pelo nome ou código; registrar a chamada em menos de 2 minutos por turma |
+| **Objetivos** | Cadastrar e matricular sem erro; encontrar um aluno pelo nome ou código; vender um produto no balcão em menos de 1 minuto, com o estoque atualizado sozinho |
 | **Dores** | Formulários longos; não saber se a turma ainda tem vaga; mensagens de erro que não explicam o que corrigir; retrabalho quando o proprietário altera a planilha |
 | **Necessidades de usabilidade** | Formulários curtos e com campos claros; busca por nome ou código; mensagens de validação que indiquem o que corrigir; confirmação visual de sucesso ou falha; navegação compatível com telas menores; prevenção de erros como matrícula em turma lotada ou suspensa |
 
-**Restrições de acesso:** Camila pode cadastrar e atualizar alunos, organizar matrículas e registrar frequência. Não pode acessar relatórios financeiros restritos nem alterar configurações exclusivas do proprietário. A autorização é verificada no servidor, e não apenas pela ocultação de botões (RN05).
+**Restrições de acesso:** Camila pode cadastrar e atualizar alunos, organizar matrículas, vender na loja e consultar a frequência. Não pode acessar relatórios financeiros restritos nem alterar configurações exclusivas do proprietário. A autorização é verificada no servidor, e não apenas pela ocultação de botões (RN05).
 
 ## 4.5 Fundamentação das personas
 
@@ -237,7 +237,7 @@ Cálculo: população ÷ 10.000 × 4,4 centros (densidade do ES), com 25% no seg
 
 ### 4.7.2 Em que tipo de negócio aplicar
 
-O núcleo do sistema (turmas com limite de vagas, matrícula, chamada por aula, mensalidade e adimplência) não é exclusivo de academias de luta. A mesma lógica atende outros negócios sem mudar o modelo de dados, apenas cadastrando novas modalidades e categorias:
+O núcleo do sistema (turmas com limite de vagas, matrícula, presença por aula, mensalidade e adimplência) não é exclusivo de academias de luta. A mesma lógica atende outros negócios sem mudar o modelo de dados, apenas cadastrando novas modalidades e categorias:
 
 | Tipo de negócio | Aderência | Observação |
 |---|---|---|
@@ -263,14 +263,16 @@ O núcleo do sistema (turmas com limite de vagas, matrícula, chamada por aula, 
 | Modalidades | Organizar os tipos de treinamento | Nome, descrição, categoria, capacidade padrão |
 | Turmas | Definir oferta, horários, capacidade e situação | Turma, modalidade, professor, horários |
 | Matrículas | Associar alunos às turmas e controlar o vínculo | Aluno, turma, datas e situação |
-| Frequência | Registrar presença ou falta por aula | Matrícula, data da aula, situação |
+| Frequência | Consultar a presença ou falta por aula, registrada automaticamente pela catraca de acesso (integração assumida) | Matrícula, data da aula, situação |
+| Loja | Cadastrar produtos, controlar estoque e registrar vendas no balcão | Produto, venda, item da venda |
 | Planos e cobranças | Controlar plano ativo, mensalidades e quitações | Plano, vínculo aluno-plano, mensalidade, pagamento |
 | Relatórios | Consolidar indicadores operacionais e financeiros | Cadastros, turmas, frequência e cobranças |
+| Análise gerencial | Dar ao proprietário visão analítica de receita, inadimplência, ocupação, evasão, frequência e loja | Mensalidades, vendas, matrículas e frequência |
 | Acesso | Autenticar usuários e aplicar permissões | Usuário, perfil e credenciais |
 
 # 6. Requisitos funcionais e histórias de usuário
 
-Os códigos RF01–RF25 preservam a numeração do documento-base. A prioridade funcional original é mantida como referência; a ordem de implementação é definida pelo backlog e pela matriz MoSCoW (seção 10).
+Os códigos RF01–RF25 preservam a numeração do documento-base; RF26–RF29 foram acrescentados depois, a partir dos apontamentos do professor (loja e análise gerencial). A prioridade funcional original é mantida como referência; a ordem de implementação é definida pelo backlog e pela matriz MoSCoW (seção 10).
 
 ## 6.1 Módulo de alunos
 
@@ -333,15 +335,18 @@ Critérios de aceitação:
 
 | Código | Requisito funcional | Prioridade |
 |---|---|---|
-| RF10 | Registrar presença ou falta dos alunos em cada aula. | Essencial |
+| RF10 | Consultar a presença ou falta dos alunos em cada aula. O registro é feito automaticamente por catraca de acesso (biometria ou cartão); o sistema não tem lançamento manual de chamada. | Essencial |
 | RF11 | Identificar alunos com excesso de faltas. | Importante |
 
-**HU04:** Como recepcionista, quero registrar presença ou falta por aula, para manter o histórico de frequência e identificar alunos com baixa assiduidade.
+**HU04:** Como recepcionista, quero consultar a presença registrada pela catraca por turma e data, para acompanhar o histórico de frequência e identificar alunos com baixa assiduidade.
+
+*Premissa:* a catraca de acesso (biometria ou cartão) grava a entrada do aluno sem intervenção humana. Essa integração com o equipamento é assumida pelo projeto e **não** foi implementada; os registros de demonstração são gerados por carga de dados.
 
 Critérios de aceitação:
 
 - A frequência é associada a uma matrícula válida e a uma data de aula.
-- Não é permitido lançar frequência em turma suspensa ou encerrada.
+- Não existe lançamento manual: a tela de frequência só consulta o que a catraca registrou.
+- Turma suspensa ou encerrada não recebe registro de frequência.
 - O sistema evita registros duplicados para a mesma matrícula e aula.
 - A consulta de frequência identifica alunos abaixo de 75% de presença (critério do RN09).
 
@@ -404,7 +409,40 @@ Critérios de aceitação:
 - Senhas não são armazenadas em texto puro (hash com `password_hash`).
 - O encerramento da sessão impede a reutilização normal da área autenticada.
 
-## 6.8 Rastreabilidade: histórias, requisitos e implementação
+## 6.8 Módulo de loja
+
+| Código | Requisito funcional | Prioridade |
+|---|---|---|
+| RF26 | Cadastrar produtos da loja (roupas, equipamentos, suplementos, bebidas) com categoria, preço de custo, preço de venda, estoque atual e estoque mínimo, e inativar ou excluir produto. | Desejável |
+| RF27 | Registrar venda no balcão, com um ou mais produtos, aluno opcional (ou cliente avulso) e forma de pagamento (PIX, cartão ou dinheiro), baixando o estoque. | Desejável |
+| RF28 | Cancelar venda devolvendo os produtos ao estoque e alertar sobre produtos com estoque igual ou abaixo do mínimo. | Desejável |
+
+**HU08:** Como recepcionista, quero vender produtos do centro no balcão e acompanhar o estoque, para atender o aluno sem planilhas e saber quando repor mercadoria.
+
+Critérios de aceitação:
+
+- A venda exige ao menos um produto com quantidade maior que zero e uma forma de pagamento válida.
+- Só produto ativo e com estoque é vendido, e a venda não pode deixar o estoque negativo (RN12, RN14).
+- O preço de venda e o custo do momento ficam gravados em cada item, e reajustes posteriores não alteram vendas antigas (RN13).
+- O cancelamento devolve as quantidades ao estoque e não pode ser repetido.
+- Produto já vendido não é excluído, apenas inativado (RN14).
+- A recepcionista e o proprietário usam a loja; só o proprietário exclui produto.
+
+## 6.9 Módulo de análise gerencial
+
+| Código | Requisito funcional | Prioridade |
+|---|---|---|
+| RF29 | Apresentar ao proprietário uma visão analítica com receita mensal (mensalidades e loja), variação sobre o mês anterior, inadimplência por faixa de atraso, ocupação por turma, evasão, alunos com presença abaixo de 75%, presença por modalidade, receita por plano e desempenho da loja (ranking de produtos, categorias, margem e ticket médio). | Desejável |
+
+**HU09:** Como proprietário, quero ver indicadores e gráficos de receita, inadimplência, ocupação, retenção, frequência e loja, para decidir com base em dados e não apenas em totais.
+
+Critérios de aceitação:
+
+- Cada gráfico tem uma tabela equivalente com os mesmos números.
+- Os números vêm dos registros do banco e acompanham as vendas, mensalidades e matrículas existentes.
+- A tela é acessível apenas ao proprietário (RN05); a recepcionista recebe acesso negado.
+
+## 6.10 Rastreabilidade: histórias, requisitos e implementação
 
 A coluna **Implementação** liga cada história à entrega no repositório (Pull Request no GitHub), onde estão o código, a descrição do que foi feito e como testar.
 
@@ -413,10 +451,12 @@ A coluna **Implementação** liga cada história à entrega no repositório (Pul
 | HU01 — Cadastro de alunos | RF01–RF03 | CRUD de alunos com formulário de responsável legal condicional | Camila | **Implementado** (PR #2) |
 | HU02 — Professores e modalidades | RF04–RF05 | CRUD de professores e modalidades; seleção de modalidades habilitadas | Marcos | **Implementado** (PR #3) |
 | HU03 — Turmas e matrículas | RF06–RF09, RF22–RF23 | CRUD de turmas; matrícula com checagem de vaga; troca de turma; suspender/encerrar | Camila / Marcos | **Implementado** (PR #4 e #7) |
-| HU04 — Frequência | RF10–RF11 | Tela de chamada por turma e data; lista de alunos abaixo de 75% | Camila | **Implementado** (PR #5) |
+| HU04 — Frequência | RF10–RF11 | Consulta de presença por turma e data (registro pela catraca, sem chamada manual); lista de alunos abaixo de 75% | Camila | **Implementado** (PR #5 e #25) |
 | HU05 — Planos e cobranças | RF12–RF15, RF24–RF25 | CRUD de planos; vínculo aluno-plano; mensalidades e quitação; lista de inadimplentes | Marcos | **Implementado** (PR #6 e #8) |
 | HU06 — Relatórios | RF16–RF19 | Painel com totais, alunos por modalidade, vagas e financeiro mensal | Marcos | **Implementado** (PR #7) |
 | HU07 — Acesso | RF20–RF21 | Login/logout; filtros de autenticação e de perfil nas rotas | Marcos | **Implementado** (PR #1) |
+| HU08 — Loja | RF26–RF28 | Produtos e estoque; venda no balcão com baixa de estoque; cancelamento com devolução | Camila | **Implementado** (PR #25) |
+| HU09 — Análise gerencial | RF29 | Tela de análise com indicadores, gráficos e tabelas para o proprietário | Marcos | **Implementado** (PR #25) |
 
 # 7. Requisitos não funcionais
 
@@ -440,13 +480,16 @@ As regras abaixo mantêm a consistência dos dados e impedem que operações inv
 | RN02 | Turmas de esportes coletivos têm capacidade máxima inicial de 25 alunos. | Bloquear nova matrícula quando as matrículas ativas atingirem 25. |
 | RN03 | Um professor só pode ministrar modalidade para a qual esteja habilitado. | Validar a associação professor-modalidade ao criar ou editar turma. |
 | RN04 | Aluno menor de idade precisa de responsável legal cadastrado. | Impedir a conclusão do cadastro ou matrícula sem responsável válido. |
-| RN05 | O recepcionista pode cadastrar, matricular e registrar frequência, mas não acessar relatórios financeiros restritos. | Validar permissões no servidor em telas, rotas e operações. |
+| RN05 | O recepcionista pode cadastrar, matricular, vender na loja e consultar frequência, mas não acessar relatórios financeiros restritos nem a análise gerencial. | Validar permissões no servidor em telas, rotas e operações. |
 | RN06 | O código do aluno é gerado automaticamente e não pode ser alterado manualmente. | Gerar identificador único na criação e rejeitar alteração pelo formulário. |
 | RN07 | Mensalidade não paga fica atrasada após a data de vencimento. | Calcular a situação com base em vencimento e quitação, sem inconsistências entre telas. |
 | RN08 | Cada aluno deve possuir exatamente um plano de pagamento ativo. | Impedir mais de um plano ativo simultâneo para o mesmo aluno. |
 | RN09 | Ao encerrar a turma, as matrículas são finalizadas; frequência mínima de 75% gera certificado; aluno sem outra turma ativa fica inativo. | Executar e validar o fluxo de encerramento e a apuração de frequência. |
-| RN10 | Turma suspensa não recebe novas matrículas nem lançamentos de frequência, mas preserva vínculos e vagas. | Bloquear operações proibidas sem apagar o histórico existente. |
+| RN10 | Turma suspensa não recebe novas matrículas nem registros de frequência, mas preserva vínculos e vagas. | Bloquear operações proibidas sem apagar o histórico existente. |
 | RN11 | O plano é adimplente somente quando as mensalidades vigentes estiverem quitadas; mensalidade vencida e não paga o torna inadimplente. | Recalcular a situação após vencimento, quitação ou alteração autorizada. |
+| RN12 | A venda não pode deixar o estoque de um produto negativo. | Conferir o saldo antes de vender e baixar o estoque de forma atômica; recusar com mensagem clara se faltar. |
+| RN13 | O preço de venda e o custo do produto ficam gravados no item da venda. | Copiar os valores do momento para o item, preservando o histórico e as margens mesmo após reajustes. |
+| RN14 | Só produto ativo e com estoque pode ser vendido; produto já vendido não é excluído, apenas inativado. | Bloquear venda de produto inativo ou sem saldo e a exclusão de produto com vendas. |
 
 # 9. Análise SWOT
 
@@ -480,9 +523,9 @@ A matriz MoSCoW organiza o escopo conforme a necessidade de entrega: **Must have
 | Classe | Itens priorizados | Requisitos | Justificativa |
 |---|---|---|---|
 | **Must have** | Autenticação e perfis; CRUD de alunos (com responsável legal), professores, modalidades e turmas; matrícula com validação de vagas e situação; regras críticas (RN01–RN06, RN08, RN10); validação no servidor; CSRF, escape de saída e POST para alterações | RF01–RF08, RF20–RF22 | Sem esses itens não há fluxo central confiável nem a base técnica exigida. Implementam o diferencial definido na estratégia ofensiva da SWOT (S1+O3) e a estratégia defensiva de segurança (W4+T4). |
-| **Should have** | Registro de frequência; planos e mensalidades; adimplência e lista de inadimplentes; troca de turma; responsividade; backup documentado | RF09–RF15, RF24–RF25 | Completa a rotina operacional e resolve as dores de Marcos (inadimplência) e Camila (chamada). |
-| **Could have** | Painel resumido; relatórios por modalidade e financeiro mensal; encerramento com certificado em layout aprimorado; filtros adicionais | RF16–RF19, RF23 | Agrega valor, mas não deve comprometer os fluxos centrais e os critérios obrigatórios. |
-| **Won't have (MVP)** | Integração bancária; cobrança automática por WhatsApp; aplicativo nativo; gateway de pagamento; multiempresa | — | Aumenta custo, dependências externas e complexidade de segurança (W3, W4, W5). Reavaliar após validar o MVP com os primeiros clientes. |
+| **Should have** | Consulta de frequência (registro automático por catraca); planos e mensalidades; adimplência e lista de inadimplentes; troca de turma; responsividade; backup documentado | RF09–RF15, RF24–RF25 | Completa a rotina operacional e resolve as dores de Marcos (inadimplência) e Camila (chamada, que passa a ser automática pela catraca). |
+| **Could have** | Painel resumido; relatórios por modalidade e financeiro mensal; encerramento com certificado em layout aprimorado; filtros adicionais; loja (produtos, estoque e vendas); análise gerencial do proprietário | RF16–RF19, RF23, RF26–RF29 | Agrega valor, mas não deve comprometer os fluxos centrais e os critérios obrigatórios. |
+| **Won't have (MVP)** | Integração física com a catraca (assumida: os registros de presença chegam prontos); integração bancária; cobrança automática por WhatsApp; aplicativo nativo; gateway de pagamento; multiempresa | — | Aumenta custo, dependências externas e complexidade de segurança (W3, W4, W5). Reavaliar após validar o MVP com os primeiros clientes. |
 
 ## 10.1 Estratégia de entrega do MVP
 
