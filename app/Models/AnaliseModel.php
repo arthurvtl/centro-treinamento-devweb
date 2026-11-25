@@ -5,7 +5,7 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 /**
- * Consultas de apoio à tela de análise do proprietário (HU08, RF29).
+ * Consultas de apoio à tela de análise do proprietário (HU09, RF29).
  *
  * Só lê dados de outras tabelas: nada é gravado aqui. Os métodos devolvem números agregados
  * (somas, contagens, médias); montar percentuais e variações é papel do AnaliseService.

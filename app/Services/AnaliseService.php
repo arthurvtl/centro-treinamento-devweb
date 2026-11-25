@@ -9,7 +9,7 @@ use App\Models\ProdutoModel;
 use App\Models\TurmaModel;
 
 /**
- * Monta a visão analítica do proprietário: receita, inadimplência, ocupação, retenção, frequência e loja (HU08, RF29, RN05).
+ * Monta a visão analítica do proprietário: receita, inadimplência, ocupação, retenção, frequência e loja (HU09, RF29, RN05).
  *
  * Reúne os números do AnaliseModel e calcula o que depende de combinação entre eles
  * (variação mensal, percentuais, margem). A View só desenha o resultado.

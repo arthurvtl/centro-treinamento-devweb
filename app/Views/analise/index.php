@@ -1,6 +1,6 @@
 <?php
 /**
- * Análise do negócio: visão gerencial do proprietário (HU08, RF29, RN05).
+ * Análise do negócio: visão gerencial do proprietário (HU09, RF29, RN05).
  *
  * Cada gráfico tem uma tabela com os mesmos números logo abaixo, para quem usa leitor de tela ou
  * está sem acesso à internet (a biblioteca de gráficos vem de CDN).
